@@ -13,5 +13,5 @@ var ControllerGenerator = module.exports = function ControllerGenerator(args, op
 util.inherits(ControllerGenerator, yeoman.generators.NamedBase);
 
 ControllerGenerator.prototype.files = function files() {
-  this.template('controller.coffee', 'assets/js/controller/' + _.slugify(this.name) + '-controller.coffee');
+  this.template('template.coffee', 'assets/js/controller/' + _.slugify(this.name) + '-controller.coffee');
 };
