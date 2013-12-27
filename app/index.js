@@ -94,6 +94,7 @@ RadianGenerator.prototype.app = function app() {
       this.copy('assets/js/factory/stub-factory.coffee', 'assets/js/factory/stub-factory.coffee');
       this.copy('assets/js/service/stub-service.coffee', 'assets/js/service/stub-service.coffee');
       this.copy('assets/js/vo/stub-vo.coffee', 'assets/js/vo/stub-vo.coffee');
+      this.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
     }
   } else {
     this.directory('assets', 'assets');
