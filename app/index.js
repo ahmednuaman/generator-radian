@@ -87,6 +87,15 @@ RadianGenerator.prototype.app = function app() {
     this.mkdir('test/unit/factory');
     this.mkdir('test/unit/service');
     this.mkdir('test/unit/vo');
+
+    if (this.includeStubs) {
+      this.copy('assets/js/collection/stub-collection.coffee', 'assets/js/collection/stub-collection.coffee');
+      this.copy('assets/js/controller/stub-controller.coffee', 'assets/js/controller/stub-controller.coffee');
+      this.copy('assets/js/directive/stub-directive.coffee', 'assets/js/directive/stub-directive.coffee');
+      this.copy('assets/js/factory/stub-factory.coffee', 'assets/js/factory/stub-factory.coffee');
+      this.copy('assets/js/service/stub-service.coffee', 'assets/js/service/stub-service.coffee');
+      this.copy('assets/js/vo/stub-vo.coffee', 'assets/js/vo/stub-vo.coffee');
+    }
   } else {
     this.directory('assets', 'assets');
     this.directory('test', 'test');
