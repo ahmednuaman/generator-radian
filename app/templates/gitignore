@@ -1,0 +1,15 @@
+.sass-*
+*.css
+*.html
+*.js
+*.log
+*.map
+*.sassc
+*.sublime-workspace
+assets/img/*.png
+!assets/img/logo.png
+assets/vendor
+build
+docs
+node_modules
+test/report

@@ -24,39 +24,58 @@ RadianGenerator.prototype.askFor = function askFor() {
 
   var prompts = [{
     type: 'confirm',
-    name: 'someOption',
-    message: 'Would you like to enable this option?',
+    name: 'appName',
+    message: 'What do you want to call your ngApp?'
+  }, {
+    type: 'confirm',
+    name: 'includeExample',
+    message: 'Do you want the example site code?',
     default: true
   }];
 
   this.prompt(prompts, function (props) {
-    this.someOption = props.someOption;
+    this.appName = props.appName;
+    this.includeExample = props.includeExample;
 
     cb();
   }.bind(this));
 };
 
 RadianGenerator.prototype.app = function app() {
-  this.mkdir('assets');
-  this.mkdir('assets/css');
-  this.mkdir('assets/css/partial');
-  this.mkdir('assets/img');
-  this.mkdir('assets/js');
-  this.mkdir('assets/js/collection');
-  this.mkdir('assets/js/directive');
-  this.mkdir('assets/js/factory');
-  this.mkdir('assets/js/service');
-  this.mkdir('assets/js/vo');
-  this.mkdir('assets/partial');
-  this.mkdir('assets/partial/directive');
-  this.mkdir('grunt');
-  this.mkdir('test');
-  this.mkdir('test/unit');
+  this.template('_bower.json', 'bower.json');
+  this.template('_package.json', 'package.json');
+  this.template('_index.jade', 'index.jade');
 
-  this.copy('_package.json', 'package.json');
-  this.copy('_bower.json', 'bower.json');
+  this.copy('crawler.coffee', 'crawler.coffee');
+  this.copy('Gruntfile.coffee', 'Gruntfile.coffee');
+  this.copy('server.coffee', 'server.coffee');
+
+  if (!this.includeExample) {
+    this.copy('assets/js/app.coffee', 'assets/js/app.coffee');
+    this.copy('assets/js/startup.coffee', 'assets/js/startup.coffee');
+
+    this.mkdir('assets/js/controller');
+    this.mkdir('assets/css/partial');
+    this.mkdir('assets/img');
+    this.mkdir('assets/js/collection');
+    this.mkdir('assets/js/factory');
+    this.mkdir('assets/js/service');
+    this.mkdir('assets/js/vo');
+    this.mkdir('assets/partial');
+  } else {
+    this.copy('assets', 'assets');
+    this.copy('grunt', 'grunt');
+    this.copy('test', 'test');
+  }
+
+  this.template('assets/css/styles.sass', 'assets/css/styles.sass');
+  this.template('assets/js/config.coffee', 'assets/js/config.coffee');
+  this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
+  this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
 };
 
 RadianGenerator.prototype.projectfiles = function projectfiles() {
+  this.copy('bowerrc', '.bowerrc');
   this.copy('editorconfig', '.editorconfig');
+  this.copy('gitignore', '.gitignore');
 };
