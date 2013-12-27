@@ -5,7 +5,8 @@
   "keywords": [
     "yeoman-generator",
     "radian",
-    "angular"
+    "angular",
+    "angularjs"
   ],
   "homepage": "https://github.com/ahmednuaman/generator-radian",
   "bugs": "https://github.com/ahmednuaman/generator-radian/issues",
