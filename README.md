@@ -1,6 +1,7 @@
-# generator-radian [![Build Status](https://secure.travis-ci.org/ahmednuaman/generator-radian.png?branch=master)](https://travis-ci.org/ahmednuaman/generator-radian)
+# generator-radian
+[![Build Status](https://travis-ci.org/ahmednuaman/radian.png?branch=master)](https://travis-ci.org/ahmednuaman/radian)
 
-A generator for [Yeoman](http://yeoman.io).
+A [Radian](http://radian.io) generator for [Yeoman](http://yeoman.io).
 
 
 ## Getting Started
@@ -19,6 +20,10 @@ Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](
 $ npm install -g yo
 ```
 
+### What is Radian?
+
+Radian is a scalable AngularJS framework, find out more here: [http://radian.io](http://radian.io)
+
 ### Yeoman Generators
 
 Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
@@ -34,6 +39,14 @@ Finally, initiate the generator:
 ```
 $ yo radian
 ```
+
+You can also use the generator to create stub files for a `controller`, `service`, `factory`, `directive`, `collection` and `vo`, by running `yo radian:TYPE 'NAME'`, eg:
+
+```
+$ yo radian:controller 'Foo Bar'
+```
+
+And this'll create a new controller called `FooBarController` (the ngApp name is `fooBarController`) here: `assets/js/controller/foo-bar-controller.coffee` and a unit test spec file here: `test/unit/controller/foo-bar-controller-spec.coffee`.
 
 ### Getting To Know Yeoman
 
