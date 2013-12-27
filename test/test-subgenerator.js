@@ -22,7 +22,7 @@ describe('radian generator', function () {
       generator.run([], function () {
         helpers.assertFiles([
           'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
-          'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee'
+          'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
         ]);
         done();
       });

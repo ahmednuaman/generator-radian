@@ -14,4 +14,5 @@ util.inherits(ServiceGenerator, yeoman.generators.NamedBase);
 
 ServiceGenerator.prototype.files = function files() {
   this.template('_template.coffee', 'assets/js/service/' + this._.slugify(this.name) + '-service.coffee');
+  this.template('_spec.coffee', 'test/unit/service/' + this._.slugify(this.name) + '-service-spec.coffee');
 };

@@ -14,4 +14,5 @@ util.inherits(VOGenerator, yeoman.generators.NamedBase);
 
 VOGenerator.prototype.files = function files() {
   this.copy('_template.coffee', 'assets/js/vo/' + this._.slugify(this.name) + '-vo.coffee');
+  this.template('_spec.coffee', 'test/unit/vo/' + this._.slugify(this.name) + '-vo-spec.coffee');
 };

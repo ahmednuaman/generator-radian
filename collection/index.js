@@ -14,4 +14,5 @@ util.inherits(CollectionGenerator, yeoman.generators.NamedBase);
 
 CollectionGenerator.prototype.files = function files() {
   this.copy('_template.coffee', 'assets/js/collection/' + this._.slugify(this.name) + '-collection.coffee');
+  this.template('_spec.coffee', 'test/unit/collection/' + this._.slugify(this.name) + '-collection-spec.coffee');
 };
