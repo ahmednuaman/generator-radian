@@ -3,7 +3,6 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 
-
 var RadianGenerator = module.exports = function RadianGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 

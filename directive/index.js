@@ -1,4 +1,5 @@
 'use strict';
+var _ = require('_');
 var util = require('util');
 var yeoman = require('yeoman-generator');
 
