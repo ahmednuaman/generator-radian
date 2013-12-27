@@ -20,15 +20,15 @@ define [
   # This deals with issues around misuse of the `$rootScope`/`$scope` to pass data up and down the chain and keeps
   # everything testable.
   # Jump to [`factory/page-title-factory.coffee`](page-title-factory.html) ☛
-  'factory/page-title-factory'<% } %>
-], (cfg, A) ->
+  'factory/page-title-factory'
+<% } %>], (cfg, A) ->
   # Every controller class in radian follows the same pattern. It's also preferable to explicity specify the `$inject`
   # modules as this code will be minified.
   class AppController
     @$inject = [
       '$scope'
-      <% if (includeExample) { %>'pageTitleFactory'<% } %>
-    ]
+      <% if (includeExample) { %>'pageTitleFactory'
+    <% } %>]
 
     constructor: (@$scope, @pageTitleFactory) ->
       @init()

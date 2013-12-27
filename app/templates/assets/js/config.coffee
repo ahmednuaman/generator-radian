@@ -4,6 +4,6 @@
 define [], () ->
   ngApp: '<%= _.camelize(appName) %>'
   <% if (includeExample) { %>api:
-    data: '/data/menu.json'<% } %>
-  path:
+    data: '/data/menu.json'
+  <% } %>path:
     partial: '/assets/partial/'

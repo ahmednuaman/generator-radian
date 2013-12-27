@@ -6,8 +6,8 @@ define [
   <% if (includeExample) { %># Jump to [`controller/error-controller.coffee`](error-controller.html) ☛
   'controller/error-controller'
   # Jump to [`controller/home-controller.coffee`](home-controller.html) ☛
-  'controller/home-controller'<% } %>
-], (cfg, A) ->
+  'controller/home-controller'
+<% } %>], (cfg, A) ->
   <% if (includeExample) { %>docsResolver = ($route, $window) ->
     file = $route.current.params.file || 'app.html'
 
@@ -17,8 +17,8 @@ define [
     '$route'
     '$window'
   ]
-  <% } %>
-  routes = ($routeProvider, $locationProvider) ->
+
+  <% } %>routes = ($routeProvider, $locationProvider) ->
     $routeProvider
       <% if (includeExample) { %>.when '/code',
         templateUrl: cfg.path.partial + 'code-partial.html'
@@ -32,8 +32,8 @@ define [
 
       .when '/error',
         templateUrl: cfg.path.partial + 'error-partial.html'
-      <% } %>
-      .when '/',
+
+      <% } %>.when '/',
         templateUrl: cfg.path.partial + 'home-partial.html'
 
     $routeProvider.otherwise
