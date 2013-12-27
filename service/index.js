@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('_');
 var util = require('util');
 var yeoman = require('yeoman-generator');
 
@@ -8,11 +7,11 @@ var ServiceGenerator = module.exports = function ServiceGenerator(args, options,
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
-  console.log('You called the service subgenerator with the argument ' + this.name + '.');
+  console.log('Creating a service called ' + this.name + '.');
 };
 
 util.inherits(ServiceGenerator, yeoman.generators.NamedBase);
 
 ServiceGenerator.prototype.files = function files() {
-  this.template('template.coffee', 'assets/js/service/' + _.slugify(this.name) + '-service.coffee');
+  this.template('_template.coffee', 'assets/js/service/' + this._.slugify(this.name) + '-service.coffee');
 };

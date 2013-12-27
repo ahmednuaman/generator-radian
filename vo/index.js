@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('_');
 var util = require('util');
 var yeoman = require('yeoman-generator');
 
@@ -8,11 +7,11 @@ var VOGenerator = module.exports = function VOGenerator(args, options, config) {
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
-  console.log('You called the vo subgenerator with the argument ' + this.name + '.');
+  console.log('Creating a vo called ' + this.name + '.');
 };
 
 util.inherits(VOGenerator, yeoman.generators.NamedBase);
 
 VOGenerator.prototype.files = function files() {
-  this.copy('template.coffee', 'assets/js/vo/' + _.slugify(this.name) + '-vo.coffee');
+  this.copy('_template.coffee', 'assets/js/vo/' + this._.slugify(this.name) + '-vo.coffee');
 };

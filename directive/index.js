@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('_');
 var util = require('util');
 var yeoman = require('yeoman-generator');
 
@@ -8,11 +7,11 @@ var DirectiveGenerator = module.exports = function DirectiveGenerator(args, opti
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
-  console.log('You called the directive subgenerator with the argument ' + this.name + '.');
+  console.log('Creating a directive called ' + this.name + '.');
 };
 
 util.inherits(DirectiveGenerator, yeoman.generators.NamedBase);
 
 DirectiveGenerator.prototype.files = function files() {
-  this.template('template.coffee', 'assets/js/directive/' + _.slugify(this.name) + '-directive.coffee');
+  this.template('_template.coffee', 'assets/js/directive/' + this._.slugify(this.name) + '-directive.coffee');
 };

@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('_');
 var util = require('util');
 var yeoman = require('yeoman-generator');
 
@@ -8,11 +7,11 @@ var FactoryGenerator = module.exports = function FactoryGenerator(args, options,
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
-  console.log('You called the factory subgenerator with the argument ' + this.name + '.');
+  console.log('Creating a factory called ' + this.name + '.');
 };
 
 util.inherits(FactoryGenerator, yeoman.generators.NamedBase);
 
 FactoryGenerator.prototype.files = function files() {
-  this.template('template.coffee', 'assets/js/factory/' + _.slugify(this.name) + '-factory.coffee');
+  this.template('_template.coffee', 'assets/js/factory/' + this._.slugify(this.name) + '-factory.coffee');
 };
