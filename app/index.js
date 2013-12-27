@@ -37,8 +37,21 @@ RadianGenerator.prototype.askFor = function askFor() {
 };
 
 RadianGenerator.prototype.app = function app() {
-  this.mkdir('app');
-  this.mkdir('app/templates');
+  this.mkdir('assets');
+  this.mkdir('assets/css');
+  this.mkdir('assets/css/partial');
+  this.mkdir('assets/img');
+  this.mkdir('assets/js');
+  this.mkdir('assets/js/collection');
+  this.mkdir('assets/js/directive');
+  this.mkdir('assets/js/factory');
+  this.mkdir('assets/js/service');
+  this.mkdir('assets/js/vo');
+  this.mkdir('assets/partial');
+  this.mkdir('assets/partial/directive');
+  this.mkdir('grunt');
+  this.mkdir('test');
+  this.mkdir('test/unit');
 
   this.copy('_package.json', 'package.json');
   this.copy('_bower.json', 'bower.json');
@@ -46,5 +59,4 @@ RadianGenerator.prototype.app = function app() {
 
 RadianGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('editorconfig', '.editorconfig');
-  this.copy('jshintrc', '.jshintrc');
 };
