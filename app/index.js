@@ -36,7 +36,22 @@ RadianGenerator.prototype.askFor = function askFor() {
     this.appName = props.appName;
     this.includeExample = props.includeExample;
 
-    cb();
+    if (!this.includeExample) {
+      prompts = [{
+        type: 'confirm',
+        name: 'includeStubs',
+        message: 'Do you want the stub files?',
+        default: true
+      }];
+
+      this.prompt(prompts, function (props) {
+        this.includeStubs = props.includeStubs;
+
+        cb();
+      }.bind(this));
+    } else {
+      cb();
+    }
   }.bind(this));
 };
 
@@ -48,7 +63,8 @@ RadianGenerator.prototype.app = function app() {
   this.copy('crawler.coffee', 'crawler.coffee');
   this.copy('Gruntfile.coffee', 'Gruntfile.coffee');
   this.copy('server.coffee', 'server.coffee');
-  this.copy('grunt', 'grunt');
+
+  this.directory('grunt', 'grunt');
 
   if (!this.includeExample) {
     this.copy('assets/js/app.coffee', 'assets/js/app.coffee');
@@ -72,8 +88,8 @@ RadianGenerator.prototype.app = function app() {
     this.mkdir('test/unit/service');
     this.mkdir('test/unit/vo');
   } else {
-    this.copy('assets', 'assets');
-    this.copy('test', 'test');
+    this.directory('assets', 'assets');
+    this.directory('test', 'test');
   }
 
   this.template('assets/css/styles.sass', 'assets/css/styles.sass');
