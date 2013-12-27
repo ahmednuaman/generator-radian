@@ -23,7 +23,6 @@ RadianGenerator.prototype.askFor = function askFor() {
   console.log(this.yeoman);
 
   var prompts = [{
-    type: 'confirm',
     name: 'appName',
     message: 'What do you want to call your ngApp?'
   }, {
