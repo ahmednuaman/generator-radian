@@ -1,4 +1,3 @@
-# This is a stub collection. It does nothing.
 define [
   'lodash'
   'vo/stub-vo'
