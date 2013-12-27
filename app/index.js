@@ -48,22 +48,31 @@ RadianGenerator.prototype.app = function app() {
   this.copy('crawler.coffee', 'crawler.coffee');
   this.copy('Gruntfile.coffee', 'Gruntfile.coffee');
   this.copy('server.coffee', 'server.coffee');
+  this.copy('grunt', 'grunt');
 
   if (!this.includeExample) {
     this.copy('assets/js/app.coffee', 'assets/js/app.coffee');
     this.copy('assets/js/startup.coffee', 'assets/js/startup.coffee');
+    this.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
+    this.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
 
     this.mkdir('assets/js/controller');
     this.mkdir('assets/css/partial');
     this.mkdir('assets/img');
     this.mkdir('assets/js/collection');
+    this.mkdir('assets/js/directive');
     this.mkdir('assets/js/factory');
     this.mkdir('assets/js/service');
     this.mkdir('assets/js/vo');
     this.mkdir('assets/partial');
+    this.mkdir('test/unit/collection');
+    this.mkdir('test/unit/controller');
+    this.mkdir('test/unit/directive');
+    this.mkdir('test/unit/factory');
+    this.mkdir('test/unit/service');
+    this.mkdir('test/unit/vo');
   } else {
     this.copy('assets', 'assets');
-    this.copy('grunt', 'grunt');
     this.copy('test', 'test');
   }
 

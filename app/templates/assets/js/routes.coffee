@@ -3,15 +3,12 @@ define [
   # Jump to [`config.coffee`](config.html) ☛
   'config'
   'angular'
-  <% if (includeExample) { %>
-  # Jump to [`controller/error-controller.coffee`](error-controller.html) ☛
+  <% if (includeExample) { %># Jump to [`controller/error-controller.coffee`](error-controller.html) ☛
   'controller/error-controller'
   # Jump to [`controller/home-controller.coffee`](home-controller.html) ☛
-  'controller/home-controller'
-  <% } %>
+  'controller/home-controller'<% } %>
 ], (cfg, A) ->
-  <% if (includeExample) { %>
-  docsResolver = ($route, $window) ->
+  <% if (includeExample) { %>docsResolver = ($route, $window) ->
     file = $route.current.params.file || 'app.html'
 
     $window.location.href = "/docs/#{file}"
@@ -23,8 +20,7 @@ define [
   <% } %>
   routes = ($routeProvider, $locationProvider) ->
     $routeProvider
-      <% if (includeExample) { %>
-      .when '/code',
+      <% if (includeExample) { %>.when '/code',
         templateUrl: cfg.path.partial + 'code-partial.html'
 
       .when '/docs/:file?',
