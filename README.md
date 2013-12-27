@@ -1,5 +1,5 @@
 # generator-radian
-[![Build Status](https://travis-ci.org/ahmednuaman/radian.png?branch=master)](https://travis-ci.org/ahmednuaman/radian)
+[![Build Status](https://travis-ci.org/ahmednuaman/generator-radian.png?branch=v0.0.1)](https://travis-ci.org/ahmednuaman/generator-radian)
 
 A [Radian](http://radian.io) generator for [Yeoman](http://yeoman.io).
 
