@@ -62,6 +62,7 @@ RadianGenerator.prototype.app = function app() {
   this.copy('crawler.coffee', 'crawler.coffee');
   this.copy('Gruntfile.coffee', 'Gruntfile.coffee');
   this.copy('server.coffee', 'server.coffee');
+  this.copy('assets/css/styles.sass', 'assets/css/styles.sass');
 
   this.directory('grunt', 'grunt');
 
@@ -101,7 +102,7 @@ RadianGenerator.prototype.app = function app() {
     this.directory('test', 'test');
   }
 
-  this.template('assets/css/styles.sass', 'assets/css/styles.sass');
+  this.template('assets/css/_partials.sass', 'assets/css/_partials.sass');
   this.template('assets/js/config.coffee', 'assets/js/config.coffee');
   this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
   this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
