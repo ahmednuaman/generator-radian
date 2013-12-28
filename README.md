@@ -3,7 +3,6 @@
 
 A [Radian](http://radian.io) generator for [Yeoman](http://yeoman.io).
 
-
 ## Getting Started
 
 ### What is Yeoman?
@@ -47,6 +46,14 @@ $ yo radian:controller 'Foo Bar'
 ```
 
 And this'll create a new controller called `FooBarController` (the ngApp name is `fooBarController`) here: `assets/js/controller/foo-bar-controller.coffee` and a unit test spec file here: `test/unit/controller/foo-bar-controller-spec.coffee`.
+
+There is also a special generator for partials, simply run:
+
+```
+$ yo radian:partial 'Foo Bar'
+```
+
+And this'll create a new partial `assets/partial/foo-bar-partial.jade` as well as a new `sass` partial `assets/css/partial/_foo-bar.sass`.
 
 ### Getting To Know Yeoman
 
