@@ -20,10 +20,21 @@ describe('radian generator', function () {
 
     app.run([], function () {
       generator.run([], function () {
-        helpers.assertFiles([
-          'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
-          'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
-        ]);
+        helpers.mockPrompt(app, {
+          'overwrite': 'y'
+        });
+
+        helpers.assertFiles(
+          generatorType === 'partial' ?
+            [
+              'assets/css/partial/_' + _.slugify(name) + '.sass',
+              'assets/partial/' + _.slugify(name) + '-partial.jade'
+            ] :
+            [
+              'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
+              'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
+            ]
+        );
         done();
       });
     });
@@ -67,5 +78,9 @@ describe('radian generator', function () {
 
   it('should create a stub vo', function (done) {
     generatorTest('vo', done);
+  });
+
+  xit('should create a stub jade and sass partial', function (done) {
+    generatorTest('partial', done);
   });
 });
