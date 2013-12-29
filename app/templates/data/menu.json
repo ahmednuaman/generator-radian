@@ -1,0 +1,18 @@
+{
+  "items": [{
+    "title": "What is Radian?",
+    "href": "/"
+  }, {
+    "title": "See the code",
+    "href": "/code"
+  }, {
+    "title": "Read the docs",
+    "href": "/docs"
+  }, {
+    "title": "FAQs",
+    "href": "/faqs"
+  }, {
+    "title": "Repo",
+    "href": "http://github.com/ahmednuaman/radian"
+  }]
+}

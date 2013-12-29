@@ -99,6 +99,7 @@ RadianGenerator.prototype.app = function app() {
     }
   } else {
     this.directory('assets', 'assets');
+    this.directory('data', 'data');
     this.directory('test', 'test');
   }
 
