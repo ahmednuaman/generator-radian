@@ -74,7 +74,7 @@ RadianGenerator.prototype.app = function app() {
 
     if (!this.includeExample) {
       remote.copy('assets/js/app.coffee', 'assets/js/app.coffee');
-      remote.copy('assets/js/partials.coffee', 'assets/js/partials.coffee');
+      // remote.copy('assets/js/partials.coffee', 'assets/js/partials.coffee'); not til this is implemented on radian
       remote.copy('assets/js/startup.coffee', 'assets/js/startup.coffee');
       remote.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
       remote.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
@@ -104,16 +104,16 @@ RadianGenerator.prototype.app = function app() {
         remote.copy('assets/js/vo/stub-vo.coffee', 'assets/js/vo/stub-vo.coffee');
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
+
+      this.template('assets/css/_partials.sass', 'assets/css/_partials.sass');
+      this.template('assets/js/config.coffee', 'assets/js/config.coffee');
+      this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
+      this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
     } else {
       remote.directory('assets', 'assets');
       remote.directory('data', 'data');
       remote.directory('test', 'test');
     }
-
-    this.template('assets/css/_partials.sass', 'assets/css/_partials.sass');
-    this.template('assets/js/config.coffee', 'assets/js/config.coffee');
-    this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
-    this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
 
     done();
   }.bind(this));

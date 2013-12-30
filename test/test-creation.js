@@ -100,6 +100,8 @@ describe('radian generator', function () {
       this.app = helpers.createGenerator('radian:app', [
         '../../app'
       ]);
+      this.app.options['skip-install'] = true;
+
       done();
     }.bind(this));
   });
@@ -112,7 +114,7 @@ describe('radian generator', function () {
       'includeExample': false,
       'includeStubs': false
     });
-    this.app.options['skip-install'] = true;
+
     this.app.run({}, function () {
       helpers.assertFiles(expected);
       done();
@@ -127,7 +129,7 @@ describe('radian generator', function () {
       'includeExample': false,
       'includeStubs': true
     });
-    this.app.options['skip-install'] = true;
+
     this.app.run({}, function () {
       helpers.assertFiles(expected);
       done();
@@ -141,7 +143,7 @@ describe('radian generator', function () {
       'appName': 'foo bar',
       'includeExample': true
     });
-    this.app.options['skip-install'] = true;
+
     this.app.run({}, function () {
       helpers.assertFiles(expected);
       done();

@@ -52,6 +52,7 @@ describe('radian generator', function () {
         '../../app'
       ]);
       app.options['skip-install'] = true;
+
       done();
     });
   });
