@@ -1,5 +1,5 @@
 define [
-  'vo/<%= _.slugify(this.name) %>-vo'
+  'vo/<%= _.slugify(name) %>-vo'
 ], (vo) ->
   describe 'Stub VO', () ->
     it 'should return a nice VO', () ->

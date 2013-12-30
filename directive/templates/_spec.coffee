@@ -1,13 +1,13 @@
 define [
   'config'
   'angular'
-  'directive/<%= _.slugify(this.name) %>-directive'
+  'directive/<%= _.slugify(name) %>-directive'
 ], (cfg, A) ->
-  describe '<%= _.humanize(this.name) %> directive', () ->
+  describe '<%= _.humanize(name) %> directive', () ->
     $httpBackend = null
     $scope = null
     createDirective = null
-    el = A.element '<div data-<%= _.slugify(this.name) %> data-ng-model="dataItems"></div>'
+    el = A.element '<div data-<%= _.slugify(name) %> data-ng-model="dataItems"></div>'
 
     beforeEach module cfg.ngApp
 
@@ -29,8 +29,8 @@ define [
     data = [1, 2, 3, 4]
 
     it 'should load', () ->
-      $httpBackend.expectGET(cfg.path.partial + 'directive/<%= _.slugify(this.name) %>-partial.html').respond 201, """
-      <div class="<%= _.slugify(this.name) %>-component">
+      $httpBackend.expectGET(cfg.path.partial + 'directive/<%= _.slugify(name) %>-partial.html').respond 201, """
+      <div class="<%= _.slugify(name) %>-component">
         <ul>
           <li data-ng-repeat="item in items">
             {{item}}

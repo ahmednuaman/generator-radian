@@ -1,9 +1,9 @@
 define [
   'config'
   'angular'
-  'controller/<%= _.slugify(this.name) %>-controller'
+  'controller/<%= _.slugify(name) %>-controller'
 ], (cfg, A) ->
-  describe '<%= _.humanize(this.name) %> controller', () ->
+  describe '<%= _.humanize(name) %> controller', () ->
     $scope = null
     createController = null
 
@@ -16,7 +16,7 @@ define [
       $scope = $rootScope.$new()
 
       createController = () ->
-        $controller '<%= _.camelize(this.name) %>Controller',
+        $controller '<%= _.camelize(name) %>Controller',
           $scope: $scope
 
     it 'should load', () ->

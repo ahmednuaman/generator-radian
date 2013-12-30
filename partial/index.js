@@ -13,11 +13,11 @@ var PartialGenerator = module.exports = function PartialGenerator(args, options,
 util.inherits(PartialGenerator, yeoman.generators.NamedBase);
 
 PartialGenerator.prototype.files = function files() {
-  var partialsFilePath = 'assets/css/_partials.sass';
-  var partialsFile = this.readFileAsString(partialsFilePath);
+  var partialsFilePath = 'assets/css/_partials.sass',
+      partialsFileContent = this.readFileAsString(partialsFilePath);
 
   this.template('_partial.jade', 'assets/partial/' + this._.slugify(this.name) + '-partial.jade');
   this.template('_partial.sass', 'assets/css/partial/_' + this._.slugify(this.name) + '.sass');
 
-  this.write('assets/css/_partials.sass', partialsFile + "\n@import 'partial/" + this._.slugify(this.name) + "'");
+  this.writeFileFromString(partialsFileContent + "\n@import 'partial/" + this._.slugify(this.name) + "'", partialsFilePath);
 };

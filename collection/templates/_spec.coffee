@@ -1,10 +1,10 @@
 define [
   'config'
   'angular'
-  'collection/<%= _.slugify(this.name) %>-collection'
+  'collection/<%= _.slugify(name) %>-collection'
   'vo/stub-vo'
 ], (cfg, A, collection, vo) ->
-  describe '<%= _.humanize(this.name) %> collection', () ->
+  describe '<%= _.humanize(name) %> collection', () ->
     $q = null
     $rootScope = null
 

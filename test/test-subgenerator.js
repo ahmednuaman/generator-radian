@@ -20,21 +20,33 @@ describe('radian generator', function () {
 
     app.run([], function () {
       generator.run([], function () {
-        helpers.mockPrompt(app, {
-          'overwrite': 'y'
-        });
+        var files = generatorType === 'partial' ?
+          [
+            'assets/css/partial/_' + _.slugify(name) + '.sass',
+            'assets/partial/' + _.slugify(name) + '-partial.jade'
+          ] :
+          [
+            'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
+            'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
+          ];
 
-        helpers.assertFiles(
-          generatorType === 'partial' ?
-            [
-              'assets/css/partial/_' + _.slugify(name) + '.sass',
-              'assets/partial/' + _.slugify(name) + '-partial.jade'
-            ] :
-            [
-              'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
-              'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
-            ]
-        );
+        helpers.assertFiles(files);
+
+        if (generatorType === 'partial') {
+          helpers.assertFile('assets/css/_partials.sass', new RegExp(_.slugify(name)));
+          helpers.assertFile('assets/css/partial/_' + _.slugify(name) + '.sass', new RegExp('#' + _.slugify(name)));
+          helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.jade', new RegExp('div#' + _.slugify(name)));
+        } else if (generatorType !== 'vo' && generatorType !== 'collection') {
+          helpers.assertFile(
+            'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
+            new RegExp(_.camelize(name + ' ' + generatorType))
+          );
+          helpers.assertFile(
+            'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee',
+            new RegExp(_.slugify(name + ' ' + generatorType))
+          );
+        }
+
         done();
       });
     });
@@ -81,7 +93,7 @@ describe('radian generator', function () {
     generatorTest('vo', done);
   });
 
-  xit('should create a stub jade and sass partial', function (done) {
+  it('should create a stub jade and sass partial', function (done) {
     generatorTest('partial', done);
   });
 });
