@@ -55,62 +55,69 @@ RadianGenerator.prototype.askFor = function askFor() {
 };
 
 RadianGenerator.prototype.app = function app() {
-  this.template('_bower.json', 'bower.json');
-  this.template('_package.json', 'package.json');
-  this.template('_index.jade', 'index.jade');
+  var appPath = this.appPath,
+      inAppPath;
 
-  this.copy('crawler.coffee', 'crawler.coffee');
-  this.copy('Gruntfile.coffee', 'Gruntfile.coffee');
-  this.copy('server.coffee', 'server.coffee');
-  this.copy('assets/css/styles.sass', 'assets/css/styles.sass');
+  inAppPath = function(file) {
+    path.join(appPath, file);
+  };
 
-  this.directory('grunt', 'grunt');
+  this.template('_bower.json', inAppPath('bower.json'));
+  this.template('_package.json', inAppPath('package.json'));
+  this.template('_index.jade', inAppPath('index.jade'));
 
-  if (!this.includeExample) {
-    this.copy('assets/js/app.coffee', 'assets/js/app.coffee');
-    this.copy('assets/js/startup.coffee', 'assets/js/startup.coffee');
-    this.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
-    this.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
+  this.remote('ahmednuaman', 'radian', 'v0.1.4', function (err, remote) {
+    remote.copy('bowerrc', inAppPath('.bowerrc'));
+    remote.copy('editorconfig', inAppPath('.editorconfig'));
+    remote.copy('gitignore', inAppPath('.gitignore'));
+    remote.copy('crawler.coffee', inAppPath('crawler.coffee'));
+    remote.copy('Gruntfile.coffee', inAppPath('Gruntfile.coffee'));
+    remote.copy('server.coffee', inAppPath('server.coffee'));
+    remote.copy('assets/css/styles.sass', inAppPath('assets/css/styles.sass'));
 
-    this.mkdir('assets/js/controller');
-    this.mkdir('assets/css/partial');
-    this.mkdir('assets/img');
-    this.mkdir('assets/js/collection');
-    this.mkdir('assets/js/directive');
-    this.mkdir('assets/js/factory');
-    this.mkdir('assets/js/service');
-    this.mkdir('assets/js/vo');
-    this.mkdir('assets/partial');
-    this.mkdir('test/unit/collection');
-    this.mkdir('test/unit/controller');
-    this.mkdir('test/unit/directive');
-    this.mkdir('test/unit/factory');
-    this.mkdir('test/unit/service');
-    this.mkdir('test/unit/vo');
+    remote.directory('grunt', inAppPath('grunt'));
 
-    if (this.includeStubs) {
-      this.copy('assets/js/collection/stub-collection.coffee', 'assets/js/collection/stub-collection.coffee');
-      this.copy('assets/js/controller/stub-controller.coffee', 'assets/js/controller/stub-controller.coffee');
-      this.copy('assets/js/directive/stub-directive.coffee', 'assets/js/directive/stub-directive.coffee');
-      this.copy('assets/js/factory/stub-factory.coffee', 'assets/js/factory/stub-factory.coffee');
-      this.copy('assets/js/service/stub-service.coffee', 'assets/js/service/stub-service.coffee');
-      this.copy('assets/js/vo/stub-vo.coffee', 'assets/js/vo/stub-vo.coffee');
-      this.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
+    if (!this.includeExample) {
+      remote.copy('assets/js/app.coffee', inAppPath('assets/js/app.coffee'));
+      remote.copy('assets/js/partials.coffee', inAppPath('assets/js/partials.coffee'));
+      remote.copy('assets/js/startup.coffee', inAppPath('assets/js/startup.coffee'));
+      remote.copy('test/unit/karma.conf.coffee', inAppPath('test/unit/karma.conf.coffee'));
+      remote.copy('test/unit/test-main.coffee', inAppPath('test/unit/test-main.coffee'));
+
+      this.mkdir(inAppPath('assets/js/controller'));
+      this.mkdir(inAppPath('assets/css/partial'));
+      this.mkdir(inAppPath('assets/img'));
+      this.mkdir(inAppPath('assets/js/collection'));
+      this.mkdir(inAppPath('assets/js/directive'));
+      this.mkdir(inAppPath('assets/js/factory'));
+      this.mkdir(inAppPath('assets/js/service'));
+      this.mkdir(inAppPath('assets/js/vo'));
+      this.mkdir(inAppPath('assets/partial'));
+      this.mkdir(inAppPath('test/unit/collection'));
+      this.mkdir(inAppPath('test/unit/controller'));
+      this.mkdir(inAppPath('test/unit/directive'));
+      this.mkdir(inAppPath('test/unit/factory'));
+      this.mkdir(inAppPath('test/unit/service'));
+      this.mkdir(inAppPath('test/unit/vo'));
+
+      if (this.includeStubs) {
+        remote.copy('assets/js/collection/stub-collection.coffee', inAppPath('assets/js/collection/stub-collection.coffee'));
+        remote.copy('assets/js/controller/stub-controller.coffee', inAppPath('assets/js/controller/stub-controller.coffee'));
+        remote.copy('assets/js/directive/stub-directive.coffee', inAppPath('assets/js/directive/stub-directive.coffee'));
+        remote.copy('assets/js/factory/stub-factory.coffee', inAppPath('assets/js/factory/stub-factory.coffee'));
+        remote.copy('assets/js/service/stub-service.coffee', inAppPath('assets/js/service/stub-service.coffee'));
+        remote.copy('assets/js/vo/stub-vo.coffee', inAppPath('assets/js/vo/stub-vo.coffee'));
+        remote.copy('assets/partial/directive/stub-partial.jade', inAppPath('assets/partial/directive/stub-partial.jade'));
+      }
+    } else {
+      remote.directory('assets', inAppPath('assets'));
+      remote.directory('data', inAppPath('data'));
+      remote.directory('test', inAppPath('test'));
     }
-  } else {
-    this.directory('assets', 'assets');
-    this.directory('data', 'data');
-    this.directory('test', 'test');
-  }
 
-  this.template('assets/css/_partials.sass', 'assets/css/_partials.sass');
-  this.template('assets/js/config.coffee', 'assets/js/config.coffee');
-  this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
-  this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
-};
-
-RadianGenerator.prototype.projectfiles = function projectfiles() {
-  this.copy('bowerrc', '.bowerrc');
-  this.copy('editorconfig', '.editorconfig');
-  this.copy('gitignore', '.gitignore');
+    this.template('assets/css/_partials.sass', 'assets/css/_partials.sass');
+    this.template('assets/js/config.coffee', 'assets/js/config.coffee');
+    this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
+    this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
+  }.bind(this));
 };
