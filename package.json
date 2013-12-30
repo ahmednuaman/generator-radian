@@ -4,6 +4,11 @@
   "description": "A Yeoman generator for http://radian.io",
   "keywords": [
     "yeoman-generator",
+    "scaffold",
+    "framework",
+    "component",
+    "front-end",
+    "app",
     "radian",
     "angular",
     "angularjs"
