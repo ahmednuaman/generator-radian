@@ -10,7 +10,7 @@ define [
   # [`$route.reload()`](http://docs.angularjs.org/api/ngRoute.$route) after the navigation data has been loaded.
   # Jump to [`routes.coffee`](routes.html) ☛
   'routes'
-  # Jump to [`controller/header/header-controller.coffee`](header-controller.html) ☛
+  <% if (includeExample) { %># Jump to [`controller/header/header-controller.coffee`](header-controller.html) ☛
   'controller/header/header-controller'
   # Jump to [`controller/footer-controller.coffee`](footer-controller.html) ☛
   'controller/footer-controller'
@@ -21,20 +21,20 @@ define [
   # everything testable.
   # Jump to [`factory/page-title-factory.coffee`](page-title-factory.html) ☛
   'factory/page-title-factory'
-], (cfg, A) ->
+<% } %>], (cfg, A) ->
   # Every controller class in radian follows the same pattern. It's also preferable to explicity specify the `$inject`
   # modules as this code will be minified.
   class AppController
     @$inject = [
-      '$scope'
+      '$scope'<% if (includeExample) { %>
       'pageTitleFactory'
-    ]
+    <% } %>]
 
-    constructor: (@$scope, @pageTitleFactory) ->
+    constructor: (@$scope<% if (includeExample) { %>, @pageTitleFactory<% } %>) ->
       @init()
 
     init: () ->
-      @addListeners()
+      <% if (includeExample) { %>@addListeners()
       @addPartials()
 
     addListeners: () ->
@@ -46,7 +46,7 @@ define [
       @$scope.headerPartial = cfg.path.partial + 'header/header-partial.html'
 
     handlePageTitleChange: (event, title) ->
-      @$scope.pageTitle = "Radian ~ A scalable AngularJS framework ~ #{title}"
+      @$scope.pageTitle = "Radian ~ A scalable AngularJS framework ~ #{title}"<% } %>
 
   app = A.module cfg.ngApp
   app.controller 'appController', AppController

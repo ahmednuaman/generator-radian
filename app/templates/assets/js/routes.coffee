@@ -3,13 +3,13 @@ define [
   # Jump to [`config.coffee`](config.html) ☛
   'config'
   'angular'
-  # Jump to [`controller/error-controller.coffee`](error-controller.html) ☛
+  <% if (includeExample) { %># Jump to [`controller/error-controller.coffee`](error-controller.html) ☛
   'controller/error-controller'
   # Jump to [`controller/home-controller.coffee`](home-controller.html) ☛
   'controller/home-controller'
-], (cfg, A) ->
+<% } %>], (cfg, A) ->
   routes = ($routeProvider, $locationProvider) ->
-    $routeProvider
+    $routeProvider<% if (includeExample) { %>
       .when '/code',
         templateUrl: cfg.path.partial + 'code-partial.html'
 
@@ -22,7 +22,7 @@ define [
       .when '/faqs',
         templateUrl: cfg.path.partial + 'faqs-partial.html'
 
-      .when '/',
+      <% } %>.when '/',
         templateUrl: cfg.path.partial + 'home-partial.html'
 
     $routeProvider.otherwise
