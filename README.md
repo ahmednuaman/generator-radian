@@ -39,21 +39,84 @@ Finally, initiate the generator:
 $ yo radian
 ```
 
-You can also use the generator to create stub files for a `controller`, `service`, `factory`, `directive`, `collection` and `vo`, by running `yo radian:TYPE 'NAME'`, eg:
+You can then make use of the built in subgenerators to create your project files, you have the choice of two types of generators, you use them by running:
 
-```
-$ yo radian:controller 'Foo Bar'
-```
+    yo radian:TYPE 'NAME'
 
-And this'll create a new controller called `FooBarController` (the ngApp name is `fooBarController`) here: `assets/js/controller/foo-bar-controller.coffee` and a unit test spec file here: `test/unit/controller/foo-bar-controller-spec.coffee`.
+- **TYPE**: is the generator you're wanting to use and...
+- **NAME**: is the file/class/module name; this will be automatically slugified/camelized/classified for you, so it's better to write something like 'foo bar', rather than 'fooBar'.
 
-There is also a special generator for partials, simply run:
+### Generating CoffeeScript files
 
-```
-$ yo radian:partial 'Foo Bar'
-```
+This generator will create a **TYPE**, say controller, in `assets/js/TYPE` and create a test spec in `test/unit/TYPE`; where **TYPE** is one of the following:
 
-And this'll create a new partial `assets/partial/foo-bar-partial.jade` as well as a new `sass` partial `assets/css/partial/_foo-bar.sass`.
+- controller
+- service
+- factory
+- directive
+- collection
+- vo
+
+Eg running:
+
+    yo radian:controller 'foo bar'
+
+Creates `assets/js/controller/foo-bar-controller.coffee` containing:
+
+    define [
+      'config'
+      'angular'
+    ], (cfg, A) ->
+      class FooBarController
+        @$inject = [
+          '$scope'
+        ]
+
+        constructor: (@$scope) ->
+          @init()
+
+        init: () ->
+
+      app = A.module cfg.ngApp
+      app.controller 'fooBarController', FooBarController
+
+And `test/unit/controller/foo-bar-controller-spec.coffee` containing:
+
+    define [
+      'config'
+      'angular'
+      'controller/foo-bar-controller'
+    ], (cfg, A) ->
+      describe 'Foo Bar controller', () ->
+        $scope = null
+        createController = null
+
+        beforeEach module cfg.ngApp
+
+        beforeEach inject ($injector) ->
+          $controller = $injector.get '$controller'
+          $rootScope = $injector.get '$rootScope'
+
+          $scope = $rootScope.$new()
+
+          createController = () ->
+            $controller 'fooBarController',
+              $scope: $scope
+
+        it 'should load', () ->
+          controller = createController()
+
+### Generating Jade and SASS files
+
+This generator creates a Jade partial and an accompanying SASS partial, eg running:
+
+    yo radian:partial 'my new view'
+
+Creates `assets/css/partial/_my-new-view.sass` and `assets/partial/my-new-view-partial.jade`, and finally updates `assets/css/_partials.sass` to include the newly created SASS file.
+
+### And then...
+
+Running `grunt` will generate all the JS, CSS and HTML, and it'll also start the local server, so point your browser to [http://localhost:8000](http://localhost:8000) and you're laughing.
 
 ### Getting To Know Yeoman
 
