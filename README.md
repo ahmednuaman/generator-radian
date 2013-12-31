@@ -53,6 +53,7 @@ This generator will create a **TYPE**, say controller, in `assets/js/TYPE` and c
 - controller
 - service
 - factory
+- filter
 - directive
 - collection
 - vo
