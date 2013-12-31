@@ -81,6 +81,10 @@ describe('radian generator', function () {
     generatorTest('factory', done);
   });
 
+  it('should create a stub filter', function (done) {
+    generatorTest('filter', done);
+  });
+
   it('should create a stub directive', function (done) {
     generatorTest('directive', done);
   });
