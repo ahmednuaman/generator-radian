@@ -61,7 +61,7 @@ RadianGenerator.prototype.app = function app() {
   this.template('_package.json', 'package.json');
   this.template('_index.jade', 'index.jade');
 
-  this.remote('ahmednuaman', 'radian', 'v0.3.1', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', 'v0.4.0', function (err, remote) {
     remote.copy('.bowerrc', '.bowerrc');
     remote.copy('.editorconfig', '.editorconfig');
     remote.copy('.gitignore', '.gitignore');
@@ -79,10 +79,10 @@ RadianGenerator.prototype.app = function app() {
       remote.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
       remote.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
 
-      this.mkdir('assets/js/controller');
       this.mkdir('assets/css/partial');
       this.mkdir('assets/img');
       this.mkdir('assets/js/collection');
+      this.mkdir('assets/js/controller');
       this.mkdir('assets/js/directive');
       this.mkdir('assets/js/factory');
       this.mkdir('assets/js/service');
@@ -94,6 +94,9 @@ RadianGenerator.prototype.app = function app() {
       this.mkdir('test/unit/factory');
       this.mkdir('test/unit/service');
       this.mkdir('test/unit/vo');
+
+      remote.copy('assets/js/controller/radian-controller.coffee', 'assets/js/controller/radian-controller.coffee');
+      remote.copy('assets/js/service/radian-service.coffee', 'assets/js/service/radian-service.coffee');
 
       if (this.includeStubs) {
         remote.copy('assets/js/collection/stub-collection.coffee', 'assets/js/collection/stub-collection.coffee');

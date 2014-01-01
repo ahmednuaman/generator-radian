@@ -1,16 +1,9 @@
 define [
-  'config'
-  'angular'
-], (cfg, A) ->
-  class <%= _.classify(name) %>Controller
-    @$inject = [
+  'controller/radian-controller'
+], (RC) ->
+  class extends RC
+    @register '<%= _.classify(name) %>Controller', [
       '$scope'
     ]
 
-    constructor: (@$scope) ->
-      @init()
-
     init: () ->
-
-  app = A.module cfg.ngApp
-  app.controller '<%= _.camelize(name) %>Controller', <%= _.classify(name) %>Controller

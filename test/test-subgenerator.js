@@ -28,7 +28,8 @@ describe('radian generator', function () {
           [
             'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
             'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
-          ];
+          ],
+          method;
 
         helpers.assertFiles(files);
 
@@ -36,10 +37,12 @@ describe('radian generator', function () {
           helpers.assertFile('assets/css/_partials.sass', new RegExp(_.slugify(name)));
           helpers.assertFile('assets/css/partial/_' + _.slugify(name) + '.sass', new RegExp('#' + _.slugify(name)));
           helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.jade', new RegExp('div#' + _.slugify(name)));
-        } else if (generatorType !== 'vo' && generatorType !== 'collection') {
+        } else if (generatorType !== 'collection' && generatorType !== 'vo') {
+          method = generatorType === 'controller' || generatorType === 'service' ? _.classify : _.camelize;
+
           helpers.assertFile(
             'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
-            new RegExp(_.camelize(name + ' ' + generatorType))
+            new RegExp(method(name + ' ' + generatorType))
           );
           helpers.assertFile(
             'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee',
