@@ -65,21 +65,14 @@ Eg running:
 Creates `assets/js/controller/foo-bar-controller.coffee` containing:
 
     define [
-      'config'
-      'angular'
-    ], (cfg, A) ->
-      class FooBarController
-        @$inject = [
+      'controller/radian-controller'
+    ], (RC) ->
+      class extends RC
+        @register 'FooBarController', [
           '$scope'
         ]
 
-        constructor: (@$scope) ->
-          @init()
-
         init: () ->
-
-      app = A.module cfg.ngApp
-      app.controller 'fooBarController', FooBarController
 
 And `test/unit/controller/foo-bar-controller-spec.coffee` containing:
 
