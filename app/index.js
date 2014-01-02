@@ -61,7 +61,7 @@ RadianGenerator.prototype.app = function app() {
   this.template('_package.json', 'package.json');
   this.template('_index.jade', 'index.jade');
 
-  this.remote('ahmednuaman', 'radian', 'v0.4.1', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', 'v0.5.0', function (err, remote) {
     remote.copy('.bowerrc', '.bowerrc');
     remote.copy('.editorconfig', '.editorconfig');
     remote.copy('.gitignore', '.gitignore');
