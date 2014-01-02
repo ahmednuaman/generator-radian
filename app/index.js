@@ -68,7 +68,6 @@ RadianGenerator.prototype.app = function app() {
     remote.copy('crawler.coffee', 'crawler.coffee');
     remote.copy('Gruntfile.coffee', 'Gruntfile.coffee');
     remote.copy('server.coffee', 'server.coffee');
-    remote.copy('assets/css/styles.sass', 'assets/css/styles.sass');
 
     remote.directory('grunt', 'grunt');
 
@@ -108,6 +107,7 @@ RadianGenerator.prototype.app = function app() {
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
 
+      this.template('assets/css/styles.sass', 'assets/css/styles.sass');
       this.template('assets/css/_partials.sass', 'assets/css/_partials.sass');
       this.template('assets/js/config.coffee', 'assets/js/config.coffee');
       this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
