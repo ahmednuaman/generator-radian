@@ -31,6 +31,9 @@ var alwaysExpected = [
   'assets/js/config.coffee',
   'assets/js/routes.coffee',
   'assets/js/controller/app-controller.coffee',
+  'assets/js/controller/radian-controller.coffee',
+  'assets/js/service/radian-service.coffee',
+  'assets/js/helper/radian-module-helper.coffee',
   '.bowerrc',
   '.editorconfig',
   '.gitignore'
