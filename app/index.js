@@ -96,6 +96,7 @@ RadianGenerator.prototype.app = function app() {
 
       remote.copy('assets/js/controller/radian-controller.coffee', 'assets/js/controller/radian-controller.coffee');
       remote.copy('assets/js/service/radian-service.coffee', 'assets/js/service/radian-service.coffee');
+      remote.copy('assets/js/helper/radian-module-helper.coffee', 'assets/js/helper/radian-module-helper.coffee');
 
       if (this.includeStubs) {
         remote.copy('assets/js/collection/stub-collection.coffee', 'assets/js/collection/stub-collection.coffee');
