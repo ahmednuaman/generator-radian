@@ -95,6 +95,9 @@ RadianGenerator.prototype.app = function app() {
       this.mkdir('test/unit/vo');
 
       remote.copy('assets/js/controller/radian-controller.coffee', 'assets/js/controller/radian-controller.coffee');
+      remote.copy('assets/js/directive/radian-directive.coffee', 'assets/js/directive/radian-directive.coffee');
+      remote.copy('assets/js/factory/radian-factory.coffee', 'assets/js/factory/radian-factory.coffee');
+      remote.copy('assets/js/filter/radian-filter.coffee', 'assets/js/filter/radian-filter.coffee');
       remote.copy('assets/js/service/radian-service.coffee', 'assets/js/service/radian-service.coffee');
       remote.copy('assets/js/helper/radian-module-helper.coffee', 'assets/js/helper/radian-module-helper.coffee');
 
