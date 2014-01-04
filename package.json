@@ -1,6 +1,6 @@
 {
   "name": "generator-radian",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "A Yeoman generator for http://radian.io",
   "keywords": [
     "yeoman-generator",
