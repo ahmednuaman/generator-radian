@@ -42,7 +42,7 @@ describe('radian generator', function () {
 
           helpers.assertFile(
             'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
-            new RegExp(method(name + ' ' + generatorType))
+            new RegExp(method(name + ' ' + (generatorType !== 'filter' && generatorType !== 'directive' ? generatorType : '')))
           );
           helpers.assertFile(
             'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee',
