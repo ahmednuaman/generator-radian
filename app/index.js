@@ -138,7 +138,8 @@ RadianGenerator.prototype.askFor = function askFor() {
 };
 
 RadianGenerator.prototype.app = function app() {
-  var done = this.async();
+  var done = this.async(),
+      extCSS = '.' + (this.precompilerCSS || 'sass');
 
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
@@ -195,8 +196,8 @@ RadianGenerator.prototype.app = function app() {
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
 
-      this.template('assets/css/styles.sass', 'assets/css/styles.sass');
-      this.template('assets/css/_partials.sass', 'assets/css/_partials.sass');
+      this.template('assets/css/styles' + extCSS, 'assets/css/styles' + extCSS);
+      this.template('assets/css/_partials' + extCSS, 'assets/css/_partials' + extCSS);
       this.template('assets/js/config.coffee', 'assets/js/config.coffee');
       this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
       this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
