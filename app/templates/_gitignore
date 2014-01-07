@@ -1,0 +1,15 @@
+<% if (precompilerSass || precompilerScss) { %>.sass-*
+<% } %><% if (precompilerCSS) { %>*.css
+<% } %><% if (precompilerJade) { %>*.html
+<% } %><% if (precompilerCoffee) { %>*.js
+<% } %>*.log
+<% if (usePrecompilers) { %>*.map
+<% } %><% if (precompilerSass || precompilerScss) { %>*.sassc
+<% } %>*.sublime-workspace
+assets/img/*.png
+!assets/img/logo.png
+assets/vendor
+build
+docs
+node_modules
+test/report

@@ -1,0 +1,7 @@
+{
+  "precompilers": {
+    "js": "<%= precompilerJS %>",
+    "css": "<%= precompilerCSS %>",
+    "html": "<%= precompilerHTML %>"
+  }
+}

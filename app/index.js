@@ -21,35 +21,118 @@ RadianGenerator.prototype.askFor = function askFor() {
   // have Yeoman greet the user.
   console.log(this.yeoman);
 
+  var skipToExampleAndStubs = function () {
+    this.precompilerJS = this.precompilerCoffee ? 'coffee' : 'js';
+    this.precompilerHTML = this.precompilerJade ? 'jade' : 'html';
+    this.precompilerCSS = this.precompilerCSS || 'css';
+
+    prompts = [{
+      type: 'confirm',
+      name: 'includeExample',
+      message: 'Do you want the example files?',
+      default: true
+    }];
+
+    this.prompt(prompts, function (props) {
+      this.includeExample = props.includeExample;
+
+      if (!this.includeExample) {
+        prompts = [{
+          type: 'confirm',
+          name: 'includeStubs',
+          message: 'Do you want the stub files?',
+          default: true
+        }];
+
+        this.prompt(prompts, function (props) {
+          this.includeStubs = props.includeStubs;
+
+          cb();
+        }.bind(this));
+      }
+    }.bind(this));
+  }.bind(this);
+
   var prompts = [{
     name: 'appName',
-    message: 'What do you want to call your ngApp?'
+    message: 'What do you want to call your ngApp?',
+    filter: function (input) {
+      return input.replace(/\'/g, '');
+    }
   }, {
     type: 'confirm',
-    name: 'includeExample',
-    message: 'Do you want the example site code?',
+    name: 'usePrecompilers',
+    message: 'Do you want to use any precompilers? (eg CoffeeScript, Jade, SASS, SCSS, Stylus or Less)',
     default: true
   }];
 
   this.prompt(prompts, function (props) {
     this.appName = props.appName;
-    this.includeExample = props.includeExample;
+    this.usePrecompilers = props.usePrecompilers;
 
-    if (!this.includeExample) {
+    if (this.usePrecompilers) {
       prompts = [{
         type: 'confirm',
-        name: 'includeStubs',
-        message: 'Do you want the stub files?',
+        name: 'precompilerCoffee',
+        message: 'Do you want to use CoffeeScript instead of JavaScript? (http://coffeescript.org)',
+        default: true
+      }, {
+        type: 'confirm',
+        name: 'precompilerJade',
+        message: 'Do you want to use Jade instead of HTML? (http://jade-lang.com)',
+        default: true
+      }, {
+        type: 'confirm',
+        name: 'precompilerCSS',
+        message: 'Do you want to use a CSS precompiler?',
         default: true
       }];
 
       this.prompt(prompts, function (props) {
-        this.includeStubs = props.includeStubs;
+        this.precompilerCoffee = props.precompilerCoffee;
+        this.precompilerJade = props.precompilerJade;
 
-        cb();
+        if (props.precompilerCSS) {
+          prompts = [{
+            type: 'list',
+            name: 'precompilerCSS',
+            message: 'What CSS precompiler do you want to use? (Choose either sass, scss, stylus or less)',
+            choices: ['sass', 'scss', 'stylus', 'less']
+          }];
+
+          this.prompt(prompts, function (props) {
+            this.precompilerCSS = props.precompilerCSS;
+
+            switch (this.precompilerCSS) {
+              case 'sass':
+                this.precompilerSass = true;
+
+                break;
+
+              case 'scss':
+                this.precompilerScss = true;
+
+                break;
+
+              case 'less':
+                this.precompilerLess = true;
+
+                break;
+
+              case 'stylus':
+                this.precompilerStylus = true;
+
+                break;
+            }
+
+            skipToExampleAndStubs();
+          }.bind(this));
+        } else {
+          skipToExampleAndStubs();
+        }
       }.bind(this));
     } else {
-      cb();
+      skipToExampleAndStubs();
     }
   }.bind(this));
 };
@@ -60,8 +143,9 @@ RadianGenerator.prototype.app = function app() {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_index.jade', 'index.jade');
+  this.template('_radianrc', '.radianrc');
 
-  this.remote('ahmednuaman', 'radian', 'v0.6.0', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', 'feature-29-an', function (err, remote) {
     remote.copy('.bowerrc', '.bowerrc');
     remote.copy('.editorconfig', '.editorconfig');
     remote.copy('.gitignore', '.gitignore');

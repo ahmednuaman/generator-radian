@@ -6,7 +6,8 @@
     "angular-mocks": "1.2.5",
     "angular-resource": "1.2.5",
     "angular-route": "1.2.5",
-    "lodash": "2.4.1",
+    <% if (precompilerLess) { %>"lesshat": "2.0.13",
+    <% } %>"lodash": "2.4.1",
     "normalize-css": "2.1.3",
     "requirejs": "2.1.9"
   }
