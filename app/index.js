@@ -2,6 +2,8 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var compass = require('node-compass');
+var fs = require('fs');
 
 var RadianGenerator = module.exports = function RadianGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
@@ -120,6 +122,7 @@ RadianGenerator.prototype.askFor = function askFor() {
                 break;
 
               case 'stylus':
+                this.precompilerCSS = 'styl';
                 this.precompilerStylus = true;
 
                 break;
@@ -202,9 +205,24 @@ RadianGenerator.prototype.app = function app() {
       this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
       this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
     } else {
-      remote.directory('assets', 'assets');
+      remote.directory('assets/img', 'assets/img');
+      remote.directory('assets/js', 'assets/js');
+      remote.directory('assets/partial', 'assets/partial');
       remote.directory('data', 'data');
       remote.directory('test', 'test');
+
+      remote.copy('assets/css/**/*' + extCSS, 'assets/css');
+
+      if (!this.precompilerCSS) {
+        var folder = path.join(__dirname, 'assets/css');
+
+        compass({
+          project: folder,
+          mode: 'expanded',
+          css: folder,
+          sass: folder
+        });
+      }
     }
 
     done();
