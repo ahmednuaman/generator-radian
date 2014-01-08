@@ -13,6 +13,6 @@ var FilterGenerator = module.exports = function FilterGenerator(args, options, c
 util.inherits(FilterGenerator, yeoman.generators.NamedBase);
 
 FilterGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/js/filter/' + this._.slugify(this.name) + '-filter.coffee');
+  this.template('_template.coffee', 'assets/coffee/filter/' + this._.slugify(this.name) + '-filter.coffee');
   this.template('_spec.coffee', 'test/unit/filter/' + this._.slugify(this.name) + '-filter-spec.coffee');
 };

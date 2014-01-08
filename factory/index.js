@@ -13,6 +13,6 @@ var FactoryGenerator = module.exports = function FactoryGenerator(args, options,
 util.inherits(FactoryGenerator, yeoman.generators.NamedBase);
 
 FactoryGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/js/factory/' + this._.slugify(this.name) + '-factory.coffee');
+  this.template('_template.coffee', 'assets/coffee/factory/' + this._.slugify(this.name) + '-factory.coffee');
   this.template('_spec.coffee', 'test/unit/factory/' + this._.slugify(this.name) + '-factory-spec.coffee');
 };

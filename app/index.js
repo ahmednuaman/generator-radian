@@ -160,9 +160,9 @@ RadianGenerator.prototype.app = function app() {
     remote.directory('grunt', 'grunt');
 
     if (!this.includeExample) {
-      remote.copy('assets/js/app.coffee', 'assets/js/app.coffee');
-      remote.copy('assets/js/partials.coffee', 'assets/js/partials.coffee');
-      remote.copy('assets/js/startup.coffee', 'assets/js/startup.coffee');
+      remote.copy('assets/js/app.coffee', 'assets/coffee/app.coffee');
+      remote.copy('assets/js/partials.coffee', 'assets/coffee/partials.coffee');
+      remote.copy('assets/js/startup.coffee', 'assets/coffee/startup.coffee');
       remote.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
       remote.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
 
@@ -182,28 +182,28 @@ RadianGenerator.prototype.app = function app() {
       this.mkdir('test/unit/service');
       this.mkdir('test/unit/vo');
 
-      remote.copy('assets/js/controller/radian-controller.coffee', 'assets/js/controller/radian-controller.coffee');
-      remote.copy('assets/js/directive/radian-directive.coffee', 'assets/js/directive/radian-directive.coffee');
-      remote.copy('assets/js/factory/radian-factory.coffee', 'assets/js/factory/radian-factory.coffee');
-      remote.copy('assets/js/filter/radian-filter.coffee', 'assets/js/filter/radian-filter.coffee');
-      remote.copy('assets/js/service/radian-service.coffee', 'assets/js/service/radian-service.coffee');
-      remote.copy('assets/js/helper/radian-module-helper.coffee', 'assets/js/helper/radian-module-helper.coffee');
+      remote.copy('assets/js/controller/radian-controller.coffee', 'assets/coffee/controller/radian-controller.coffee');
+      remote.copy('assets/js/directive/radian-directive.coffee', 'assets/coffee/directive/radian-directive.coffee');
+      remote.copy('assets/js/factory/radian-factory.coffee', 'assets/coffee/factory/radian-factory.coffee');
+      remote.copy('assets/js/filter/radian-filter.coffee', 'assets/coffee/filter/radian-filter.coffee');
+      remote.copy('assets/js/service/radian-service.coffee', 'assets/coffee/service/radian-service.coffee');
+      remote.copy('assets/js/helper/radian-module-helper.coffee', 'assets/coffee/helper/radian-module-helper.coffee');
 
       if (this.includeStubs) {
-        remote.copy('assets/js/collection/stub-collection.coffee', 'assets/js/collection/stub-collection.coffee');
-        remote.copy('assets/js/controller/stub-controller.coffee', 'assets/js/controller/stub-controller.coffee');
-        remote.copy('assets/js/directive/stub-directive.coffee', 'assets/js/directive/stub-directive.coffee');
-        remote.copy('assets/js/factory/stub-factory.coffee', 'assets/js/factory/stub-factory.coffee');
-        remote.copy('assets/js/service/stub-service.coffee', 'assets/js/service/stub-service.coffee');
-        remote.copy('assets/js/vo/stub-vo.coffee', 'assets/js/vo/stub-vo.coffee');
+        remote.copy('assets/js/collection/stub-collection.coffee', 'assets/coffee/collection/stub-collection.coffee');
+        remote.copy('assets/js/controller/stub-controller.coffee', 'assets/coffee/controller/stub-controller.coffee');
+        remote.copy('assets/js/directive/stub-directive.coffee', 'assets/coffee/directive/stub-directive.coffee');
+        remote.copy('assets/js/factory/stub-factory.coffee', 'assets/coffee/factory/stub-factory.coffee');
+        remote.copy('assets/js/service/stub-service.coffee', 'assets/coffee/service/stub-service.coffee');
+        remote.copy('assets/js/vo/stub-vo.coffee', 'assets/coffee/vo/stub-vo.coffee');
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
 
       this.template('assets/css/styles' + extCSS, 'assets/css/styles' + extCSS);
       this.template('assets/css/_partials' + extCSS, 'assets/css/_partials' + extCSS);
-      this.template('assets/js/config.coffee', 'assets/js/config.coffee');
-      this.template('assets/js/routes.coffee', 'assets/js/routes.coffee');
-      this.template('assets/js/controller/app-controller.coffee', 'assets/js/controller/app-controller.coffee');
+      this.template('assets/js/config.coffee', 'assets/coffee/config.coffee');
+      this.template('assets/js/routes.coffee', 'assets/coffee/routes.coffee');
+      this.template('assets/js/controller/app-controller.coffee', 'assets/coffee/controller/app-controller.coffee');
     } else {
       remote.directory('assets/img', 'assets/img');
       remote.directory('assets/js', 'assets/js');

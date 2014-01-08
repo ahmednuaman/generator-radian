@@ -13,6 +13,6 @@ var DirectiveGenerator = module.exports = function DirectiveGenerator(args, opti
 util.inherits(DirectiveGenerator, yeoman.generators.NamedBase);
 
 DirectiveGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/js/directive/' + this._.slugify(this.name) + '-directive.coffee');
+  this.template('_template.coffee', 'assets/coffee/directive/' + this._.slugify(this.name) + '-directive.coffee');
   this.template('_spec.coffee', 'test/unit/directive/' + this._.slugify(this.name) + '-directive-spec.coffee');
 };
