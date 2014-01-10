@@ -1,11 +1,12 @@
-'use strict';
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
-var compass = require('node-compass');
-var fs = require('fs');
+var fs = require('fs'),
+    path = require('path'),
+    util = require('util'),
+    yeoman = require('yeoman-generator');
 
-var RadianGenerator = module.exports = function RadianGenerator(args, options, config) {
+module.exports = RadianGenerator;
+util.inherits(RadianGenerator, yeoman.generators.Base);
+
+function RadianGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.on('end', function () {
@@ -15,47 +16,13 @@ var RadianGenerator = module.exports = function RadianGenerator(args, options, c
   this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
-util.inherits(RadianGenerator, yeoman.generators.Base);
+RadianGenerator.prototype.askFor = function () {
+  var done = this.async(),
+      that = this,
+      prompts,
+      skipToExampleAndStubs;
 
-RadianGenerator.prototype.askFor = function askFor() {
-  var cb = this.async();
-
-  // have Yeoman greet the user.
-  console.log(this.yeoman);
-
-  var skipToExampleAndStubs = function () {
-    this.precompilerJS = this.precompilerCoffee ? 'coffee' : 'js';
-    this.precompilerHTML = this.precompilerJade ? 'jade' : 'html';
-    this.precompilerCSS = this.precompilerCSS || 'css';
-
-    prompts = [{
-      type: 'confirm',
-      name: 'includeExample',
-      message: 'Do you want the example files?',
-      default: true
-    }];
-
-    this.prompt(prompts, function (props) {
-      this.includeExample = props.includeExample;
-
-      if (!this.includeExample) {
-        prompts = [{
-          type: 'confirm',
-          name: 'includeStubs',
-          message: 'Do you want the stub files?',
-          default: true
-        }];
-
-        this.prompt(prompts, function (props) {
-          this.includeStubs = props.includeStubs;
-
-          cb();
-        }.bind(this));
-      }
-    }.bind(this));
-  }.bind(this);
-
-  var prompts = [{
+  prompts = [[{
     name: 'appName',
     message: 'What do you want to call your ngApp?',
     filter: function (input) {
@@ -66,78 +33,104 @@ RadianGenerator.prototype.askFor = function askFor() {
     name: 'usePrecompilers',
     message: 'Do you want to use any precompilers? (eg CoffeeScript, Jade, SASS, SCSS, Stylus or Less)',
     default: true
-  }];
+  }], [/*{
+    type: 'confirm',
+    name: 'precompilerCoffee',
+    message: 'Do you want to use CoffeeScript instead of JavaScript? (http://coffeescript.org)',
+    default: true
+  }, */{
+    type: 'confirm',
+    name: 'precompilerJade',
+    message: 'Do you want to use Jade instead of HTML? (http://jade-lang.com)',
+    default: true
+  }, {
+    type: 'confirm',
+    name: 'precompilerCSS',
+    message: 'Do you want to use a CSS precompiler?',
+    default: true
+  }], [{
+    type: 'list',
+    name: 'precompilerCSS',
+    message: 'What CSS precompiler do you want to use? (Choose either sass, scss, stylus or less)',
+    choices: ['sass', 'scss', 'stylus', 'less']
+  }], [{
+    type: 'confirm',
+    name: 'includeExample',
+    message: 'Do you want the example files?',
+    default: true
+  }], [{
+    type: 'confirm',
+    name: 'includeStubs',
+    message: 'Do you want the stub files?',
+    default: true
+  }]];
 
-  this.prompt(prompts, function (props) {
-    this.appName = props.appName;
-    this.usePrecompilers = props.usePrecompilers;
+  console.log(this.yeoman);
 
-    if (this.usePrecompilers) {
-      prompts = [{
-        type: 'confirm',
-        name: 'precompilerCoffee',
-        message: 'Do you want to use CoffeeScript instead of JavaScript? (http://coffeescript.org)',
-        default: true
-      }, {
-        type: 'confirm',
-        name: 'precompilerJade',
-        message: 'Do you want to use Jade instead of HTML? (http://jade-lang.com)',
-        default: true
-      }, {
-        type: 'confirm',
-        name: 'precompilerCSS',
-        message: 'Do you want to use a CSS precompiler?',
-        default: true
-      }];
+  skipToExampleAndStubs = function () {
+    that.precompilerJS = that.precompilerCoffee ? 'coffee' : 'js';
+    that.precompilerHTML = that.precompilerJade ? 'jade' : 'html';
+    that.precompilerCSS = that.precompilerCSS || 'css';
 
-      this.prompt(prompts, function (props) {
-        this.precompilerCoffee = props.precompilerCoffee;
-        this.precompilerJade = props.precompilerJade;
+    that.prompt(prompts[3], function (props) {
+      that.includeExample = props.includeExample;
+
+      if (!that.includeExample) {
+        that.prompt(prompts[4], function (props) {
+          that.includeStubs = props.includeStubs;
+
+          done();
+        });
+      }
+    });
+  };
+
+  this.prompt(prompts[0], function (props) {
+    that.appName = props.appName;
+    that.usePrecompilers = props.usePrecompilers;
+
+    if (that.usePrecompilers) {
+      that.prompt(prompts[1], function (props) {
+        that.precompilerCoffee = true; //props.precompilerCoffee;
+        that.precompilerJade = props.precompilerJade;
 
         if (props.precompilerCSS) {
-          prompts = [{
-            type: 'list',
-            name: 'precompilerCSS',
-            message: 'What CSS precompiler do you want to use? (Choose either sass, scss, stylus or less)',
-            choices: ['sass', 'scss', 'stylus', 'less']
-          }];
+          that.prompt(prompts[2], function (props) {
+            that.precompilerCSS = props.precompilerCSS;
 
-          this.prompt(prompts, function (props) {
-            this.precompilerCSS = props.precompilerCSS;
-
-            switch (this.precompilerCSS) {
+            switch (that.precompilerCSS) {
               case 'sass':
-                this.precompilerSass = true;
+                that.precompilerSass = true;
 
                 break;
 
               case 'scss':
-                this.precompilerScss = true;
+                that.precompilerScss = true;
 
                 break;
 
               case 'less':
-                this.precompilerLess = true;
+                that.precompilerLess = true;
 
                 break;
 
               case 'stylus':
-                this.precompilerCSS = 'styl';
-                this.precompilerStylus = true;
+                that.precompilerCSS = 'styl';
+                that.precompilerStylus = true;
 
                 break;
             }
 
             skipToExampleAndStubs();
-          }.bind(this));
+          });
         } else {
           skipToExampleAndStubs();
         }
-      }.bind(this));
+      });
     } else {
       skipToExampleAndStubs();
     }
-  }.bind(this));
+  });
 };
 
 RadianGenerator.prototype.app = function app() {
@@ -149,7 +142,7 @@ RadianGenerator.prototype.app = function app() {
   this.template('_index.jade', 'index.jade');
   this.template('_radianrc', '.radianrc');
 
-  this.remote('ahmednuaman', 'radian', 'feature-29-an', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', 'v0.7.0', function (err, remote) {
     remote.copy('.bowerrc', '.bowerrc');
     remote.copy('.editorconfig', '.editorconfig');
     remote.copy('.gitignore', '.gitignore');
@@ -160,20 +153,21 @@ RadianGenerator.prototype.app = function app() {
     remote.directory('grunt', 'grunt');
 
     if (!this.includeExample) {
-      remote.copy('assets/js/app.coffee', 'assets/coffee/app.coffee');
-      remote.copy('assets/js/partials.coffee', 'assets/coffee/partials.coffee');
-      remote.copy('assets/js/startup.coffee', 'assets/coffee/startup.coffee');
+      remote.copy('assets/coffee/app.coffee', 'assets/coffee/app.coffee');
+      remote.copy('assets/coffee/partials.coffee', 'assets/coffee/partials.coffee');
+      remote.copy('assets/coffee/startup.coffee', 'assets/coffee/startup.coffee');
+      remote.copy('test/e2e/protractor.conf.coffee', 'test/e2e/protractor.conf.coffee');
       remote.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
       remote.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
 
-      this.mkdir('assets/css/partial');
+      this.mkdir('assets/' + extCSS + '/partial');
       this.mkdir('assets/img');
-      this.mkdir('assets/js/collection');
-      this.mkdir('assets/js/controller');
-      this.mkdir('assets/js/directive');
-      this.mkdir('assets/js/factory');
-      this.mkdir('assets/js/service');
-      this.mkdir('assets/js/vo');
+      this.mkdir('assets/coffee/collection');
+      this.mkdir('assets/coffee/controller');
+      this.mkdir('assets/coffee/directive');
+      this.mkdir('assets/coffee/factory');
+      this.mkdir('assets/coffee/service');
+      this.mkdir('assets/coffee/vo');
       this.mkdir('assets/partial');
       this.mkdir('test/unit/collection');
       this.mkdir('test/unit/controller');
@@ -182,25 +176,25 @@ RadianGenerator.prototype.app = function app() {
       this.mkdir('test/unit/service');
       this.mkdir('test/unit/vo');
 
-      remote.copy('assets/js/controller/radian-controller.coffee', 'assets/coffee/controller/radian-controller.coffee');
-      remote.copy('assets/js/directive/radian-directive.coffee', 'assets/coffee/directive/radian-directive.coffee');
-      remote.copy('assets/js/factory/radian-factory.coffee', 'assets/coffee/factory/radian-factory.coffee');
-      remote.copy('assets/js/filter/radian-filter.coffee', 'assets/coffee/filter/radian-filter.coffee');
-      remote.copy('assets/js/service/radian-service.coffee', 'assets/coffee/service/radian-service.coffee');
-      remote.copy('assets/js/helper/radian-module-helper.coffee', 'assets/coffee/helper/radian-module-helper.coffee');
+      remote.copy('assets/coffee/controller/radian-controller.coffee', 'assets/coffee/controller/radian-controller.coffee');
+      remote.copy('assets/coffee/directive/radian-directive.coffee', 'assets/coffee/directive/radian-directive.coffee');
+      remote.copy('assets/coffee/factory/radian-factory.coffee', 'assets/coffee/factory/radian-factory.coffee');
+      remote.copy('assets/coffee/filter/radian-filter.coffee', 'assets/coffee/filter/radian-filter.coffee');
+      remote.copy('assets/coffee/service/radian-service.coffee', 'assets/coffee/service/radian-service.coffee');
+      remote.copy('assets/coffee/helper/radian-module-helper.coffee', 'assets/coffee/helper/radian-module-helper.coffee');
 
       if (this.includeStubs) {
-        remote.copy('assets/js/collection/stub-collection.coffee', 'assets/coffee/collection/stub-collection.coffee');
-        remote.copy('assets/js/controller/stub-controller.coffee', 'assets/coffee/controller/stub-controller.coffee');
-        remote.copy('assets/js/directive/stub-directive.coffee', 'assets/coffee/directive/stub-directive.coffee');
-        remote.copy('assets/js/factory/stub-factory.coffee', 'assets/coffee/factory/stub-factory.coffee');
-        remote.copy('assets/js/service/stub-service.coffee', 'assets/coffee/service/stub-service.coffee');
-        remote.copy('assets/js/vo/stub-vo.coffee', 'assets/coffee/vo/stub-vo.coffee');
+        remote.copy('assets/coffee/collection/stub-collection.coffee', 'assets/coffee/collection/stub-collection.coffee');
+        remote.copy('assets/coffee/controller/stub-controller.coffee', 'assets/coffee/controller/stub-controller.coffee');
+        remote.copy('assets/coffee/directive/stub-directive.coffee', 'assets/coffee/directive/stub-directive.coffee');
+        remote.copy('assets/coffee/factory/stub-factory.coffee', 'assets/coffee/factory/stub-factory.coffee');
+        remote.copy('assets/coffee/service/stub-service.coffee', 'assets/coffee/service/stub-service.coffee');
+        remote.copy('assets/coffee/vo/stub-vo.coffee', 'assets/coffee/vo/stub-vo.coffee');
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
 
-      this.template('assets/css/styles' + extCSS, 'assets/css/styles' + extCSS);
-      this.template('assets/css/_partials' + extCSS, 'assets/css/_partials' + extCSS);
+      this.template('assets/' + extCSS + '/styles' + extCSS, 'assets/' + extCSS + '/styles' + extCSS);
+      this.template('assets/' + extCSS + '/_partials' + extCSS, 'assets/' + extCSS + '/_partials' + extCSS);
       this.template('assets/js/config.coffee', 'assets/coffee/config.coffee');
       this.template('assets/js/routes.coffee', 'assets/coffee/routes.coffee');
       this.template('assets/js/controller/app-controller.coffee', 'assets/coffee/controller/app-controller.coffee');
@@ -214,14 +208,7 @@ RadianGenerator.prototype.app = function app() {
       remote.copy('assets/css/**/*' + extCSS, 'assets/css');
 
       if (!this.precompilerCSS) {
-        var folder = path.join(__dirname, 'assets/css');
 
-        compass({
-          project: folder,
-          mode: 'expanded',
-          css: folder,
-          sass: folder
-        });
       }
     }
 
