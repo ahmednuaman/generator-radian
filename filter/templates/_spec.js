@@ -9,9 +9,8 @@ define([
 
     beforeEach(module(cfg.ngApp));
     beforeEach(inject(function($injector) {
-      var $filter;
+      var $filter = $injector.get('$filter');
 
-      $filter = $injector.get('$filter');
       $location = $injector.get('$location');
       filter = $filter('<%= _.camelize(name) %>Filter');
     }));
