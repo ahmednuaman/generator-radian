@@ -11,10 +11,6 @@ util.inherits(RadianGenerator, yeoman.generators.Base);
 function RadianGenerator (args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
-  this.on('end', function () {
-    this.installDependencies({ skipInstall: options['skip-install'] });
-  });
-
   this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
@@ -23,6 +19,13 @@ RadianGenerator.prototype.askFor = function () {
       that = this,
       prompts,
       skipToExampleAndStubs;
+
+  this.precompilerSass = false;
+  this.precompilerScss = false;
+  this.precompilerLess = false;
+  this.precompilerStylus = false;
+  this.precompilerCoffee = true; //false;
+  this.precompilerJade = false;
 
   prompts = [[{
     name: 'appName',
@@ -47,7 +50,7 @@ RadianGenerator.prototype.askFor = function () {
     default: true
   }, {
     type: 'confirm',
-    name: 'precompilerCSS',
+    name: 'useCSSPrecompiler',
     message: 'Do you want to use a CSS precompiler?',
     default: true
   }], [{
@@ -96,7 +99,7 @@ RadianGenerator.prototype.askFor = function () {
         that.precompilerCoffee = true; //props.precompilerCoffee;
         that.precompilerJade = props.precompilerJade;
 
-        if (props.precompilerCSS) {
+        if (props.useCSSPrecompiler) {
           that.prompt(prompts[2], function (props) {
             that.precompilerCSS = props.precompilerCSS;
 
@@ -137,7 +140,7 @@ RadianGenerator.prototype.askFor = function () {
 
 RadianGenerator.prototype.app = function () {
   var done = this.async(),
-      extCSS = this.precompilerCSS || 'less',
+      extCSS = this.useCSSPrecompiler ? this.precompilerCSS : 'less',
       that = this,
       css;
 
@@ -146,7 +149,7 @@ RadianGenerator.prototype.app = function () {
   this.template('_index.jade', 'index.jade');
   this.template('_radianrc', '.radianrc');
 
-  this.remote('ahmednuaman', 'radian', 'v0.7.0', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', 'v0.7.1', function (err, remote) {
     if (err) {
       done(err);
     }
@@ -190,6 +193,7 @@ RadianGenerator.prototype.app = function () {
       remote.copy('assets/coffee/filter/radian-filter.coffee', 'assets/coffee/filter/radian-filter.coffee');
       remote.copy('assets/coffee/service/radian-service.coffee', 'assets/coffee/service/radian-service.coffee');
       remote.copy('assets/coffee/helper/radian-module-helper.coffee', 'assets/coffee/helper/radian-module-helper.coffee');
+      remote.copy('assets/' + extCSS + '/template.mustache', 'assets/' + extCSS + '/template.mustache');
 
       if (that.includeStubs) {
         remote.copy('assets/coffee/collection/stub-collection.coffee', 'assets/coffee/collection/stub-collection.coffee');
@@ -207,29 +211,30 @@ RadianGenerator.prototype.app = function () {
       that.template('assets/coffee/routes.coffee', 'assets/coffee/routes.coffee');
       that.template('assets/coffee/controller/app-controller.coffee', 'assets/coffee/controller/app-controller.coffee');
     } else {
+      remote.directory('assets/' + extCSS, 'assets/' + extCSS);
       remote.directory('assets/img', 'assets/img');
       remote.directory('assets/coffee', 'assets/coffee');
       remote.directory('assets/partial', 'assets/partial');
       remote.directory('data', 'data');
       remote.directory('test', 'test');
-
-      remote.copy('assets/' + extCSS, 'assets/' + extCSS);
     }
 
-    if (!that.precompilerCSS) {
-      less.render(that.readFileAsString(path.join(__dirname, 'assets/less/styles.less')), function (err, css) {
-        if (err) {
-          done(err);
-        }
+    if (!that.useCSSPrecompiler) {
+      that.on('end', function () {
+        less.render(that.readFileAsString('assets/' + extCSS + '/styles.' + extCSS), function (err, css) {
+          that.write('assets/css/styles.css', css);
 
-        that.write('assets/css/styles.css', css);
-
-        rimraf('assets/' + extCSS, function (err) {
-          done(err);
+          rimraf('assets/' + extCSS, function (err) {
+            that.installDependencies({ skipInstall: options['skip-install'] });
+          });
         });
       });
     } else {
-      done();
+      that.on('end', function () {
+        that.installDependencies({ skipInstall: options['skip-install'] });
+      });
     }
+
+    done();
   });
 };
