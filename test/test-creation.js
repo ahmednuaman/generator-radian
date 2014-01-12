@@ -4,42 +4,7 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 var alwaysExpected = [
-  'bower.json',
-  'package.json',
-  'index.jade',
-  'crawler.coffee',
-  'Gruntfile.coffee',
-  'server.coffee',
-  'grunt/coffeelint.coffee',
-  'grunt/contrib-coffee.coffee',
-  'grunt/contrib-compass.coffee',
-  'grunt/contrib-copy.coffee',
-  'grunt/contrib-imagemin.coffee',
-  'grunt/contrib-requirejs.coffee',
-  'grunt/contrib-watch.coffee',
-  'grunt/docco.coffee',
-  'grunt/exec.coffee',
-  'grunt/express-server.coffee',
-  'grunt/jade.coffee',
-  'grunt/karma.coffee',
-  'grunt/text-replace.coffee',
-  'assets/js/app.coffee',
-  'assets/js/startup.coffee',
-  'test/unit/karma.conf.coffee',
-  'test/unit/test-main.coffee',
-  'assets/css/styles.sass',
-  'assets/js/config.coffee',
-  'assets/js/routes.coffee',
-  'assets/js/controller/app-controller.coffee',
-  'assets/js/controller/radian-controller.coffee',
-  'assets/js/directive/radian-directive.coffee',
-  'assets/js/factory/radian-factory.coffee',
-  'assets/js/filter/radian-filter.coffee',
-  'assets/js/service/radian-service.coffee',
-  'assets/js/helper/radian-module-helper.coffee',
-  '.bowerrc',
-  '.editorconfig',
-  '.gitignore'
+
 ];
 var stubsExpected = [
   'assets/js/collection/stub-collection.coffee',

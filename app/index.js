@@ -153,7 +153,8 @@ RadianGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_index.jade', 'index.jade');
-  this.template('_radianrc', '.radianrc');
+  this.template('gitignore', '.gitignore');
+  this.template('radianrc', '.radianrc');
 
   this.remote('ahmednuaman', 'radian', '38907e5', function (err, remote) {
     if (err) {
@@ -162,7 +163,6 @@ RadianGenerator.prototype.app = function () {
 
     remote.copy('.bowerrc', '.bowerrc');
     remote.copy('.editorconfig', '.editorconfig');
-    remote.copy('.gitignore', '.gitignore');
     remote.copy('crawler.coffee', 'crawler.coffee');
     remote.copy('Gruntfile.coffee', 'Gruntfile.coffee');
     remote.copy('server.coffee', 'server.coffee');
@@ -257,6 +257,8 @@ RadianGenerator.prototype.app = function () {
 
           cb(files.pop());
         });
+
+        fs.unlinkSync('grunt/jade.coffee');
       }
     });
 
