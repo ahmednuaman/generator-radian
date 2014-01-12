@@ -140,7 +140,7 @@ RadianGenerator.prototype.askFor = function () {
 
 RadianGenerator.prototype.app = function () {
   var done = this.async(),
-      extCSS = this.useCSSPrecompiler ? this.precompilerCSS : 'less',
+      extCSS = this.precompilerCSS,
       that = this,
       css;
 
@@ -149,7 +149,7 @@ RadianGenerator.prototype.app = function () {
   this.template('_index.jade', 'index.jade');
   this.template('_radianrc', '.radianrc');
 
-  this.remote('ahmednuaman', 'radian', 'v0.7.1', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', '38907e5', function (err, remote) {
     if (err) {
       done(err);
     }
@@ -206,10 +206,13 @@ RadianGenerator.prototype.app = function () {
       }
 
       that.template('assets/' + extCSS + '/styles.' + extCSS, 'assets/' + extCSS + '/styles.' + extCSS);
-      that.template('assets/' + extCSS + '/_partials.' + extCSS, 'assets/' + extCSS + '/_partials.' + extCSS);
       that.template('assets/coffee/config.coffee', 'assets/coffee/config.coffee');
       that.template('assets/coffee/routes.coffee', 'assets/coffee/routes.coffee');
       that.template('assets/coffee/controller/app-controller.coffee', 'assets/coffee/controller/app-controller.coffee');
+
+      if (useCSSPrecompiler) {
+        that.template('assets/' + extCSS + '/_partials.' + extCSS, 'assets/' + extCSS + '/_partials.' + extCSS);
+      }
     } else {
       remote.directory('assets/' + extCSS, 'assets/' + extCSS);
       remote.directory('assets/img', 'assets/img');
@@ -219,21 +222,11 @@ RadianGenerator.prototype.app = function () {
       remote.directory('test', 'test');
     }
 
-    if (!that.useCSSPrecompiler) {
-      that.on('end', function () {
-        less.render(that.readFileAsString('assets/' + extCSS + '/styles.' + extCSS), function (err, css) {
-          that.write('assets/css/styles.css', css);
 
-          rimraf('assets/' + extCSS, function (err) {
-            that.installDependencies({ skipInstall: options['skip-install'] });
-          });
-        });
-      });
-    } else {
-      that.on('end', function () {
-        that.installDependencies({ skipInstall: options['skip-install'] });
-      });
-    }
+
+    that.on('end', function () {
+      that.installDependencies({ skipInstall: options['skip-install'] });
+    });
 
     done();
   });
