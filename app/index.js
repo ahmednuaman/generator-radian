@@ -1,4 +1,6 @@
 var fs = require('fs'),
+    glob = require('glob'),
+    jade = require('jade'),
     less = require('less'),
     path = require('path'),
     rimraf = require('rimraf'),
@@ -10,6 +12,10 @@ util.inherits(RadianGenerator, yeoman.generators.Base);
 
 function RadianGenerator (args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
+
+  this.on('end', function () {
+    this.installDependencies({ skipInstall: options['skip-install'] });
+  });
 
   this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
@@ -193,7 +199,6 @@ RadianGenerator.prototype.app = function () {
       remote.copy('assets/coffee/filter/radian-filter.coffee', 'assets/coffee/filter/radian-filter.coffee');
       remote.copy('assets/coffee/service/radian-service.coffee', 'assets/coffee/service/radian-service.coffee');
       remote.copy('assets/coffee/helper/radian-module-helper.coffee', 'assets/coffee/helper/radian-module-helper.coffee');
-      remote.copy('assets/' + extCSS + '/template.mustache', 'assets/' + extCSS + '/template.mustache');
 
       if (that.includeStubs) {
         remote.copy('assets/coffee/collection/stub-collection.coffee', 'assets/coffee/collection/stub-collection.coffee');
@@ -205,13 +210,16 @@ RadianGenerator.prototype.app = function () {
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
 
-      that.template('assets/' + extCSS + '/styles.' + extCSS, 'assets/' + extCSS + '/styles.' + extCSS);
       that.template('assets/coffee/config.coffee', 'assets/coffee/config.coffee');
       that.template('assets/coffee/routes.coffee', 'assets/coffee/routes.coffee');
       that.template('assets/coffee/controller/app-controller.coffee', 'assets/coffee/controller/app-controller.coffee');
 
-      if (useCSSPrecompiler) {
+      if (that.useCSSPrecompiler) {
+        that.template('assets/' + extCSS + '/styles.' + extCSS, 'assets/' + extCSS + '/styles.' + extCSS);
         that.template('assets/' + extCSS + '/_partials.' + extCSS, 'assets/' + extCSS + '/_partials.' + extCSS);
+        remote.copy('assets/' + extCSS + '/template.mustache', 'assets/' + extCSS + '/template.mustache');
+      } else {
+        that.write('assets/' + extCSS + '/styles.' + extCSS, '');
       }
     } else {
       remote.directory('assets/' + extCSS, 'assets/' + extCSS);
@@ -222,10 +230,34 @@ RadianGenerator.prototype.app = function () {
       remote.directory('test', 'test');
     }
 
-
-
     that.on('end', function () {
-      that.installDependencies({ skipInstall: options['skip-install'] });
+      if (!that.precompilerJade) {
+        var files = ['index.jade'],
+            opts = {
+              pretty: true
+            },
+            cb;
+
+        cb = function (file) {
+          if (!file) {
+            return;
+          }
+
+          jade.renderFile(file, opts, function (err, html) {
+            fs.writeFileSync(file.replace('.jade', '.html'), html);
+
+            rimraf(file, function () {
+              cb(files.pop());
+            });
+          });
+        };
+
+        glob('assets/partial/**/*.jade', function (err, matches) {
+          files = files.concat(matches);
+
+          cb(files.pop());
+        });
+      }
     });
 
     done();

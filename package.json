@@ -29,6 +29,8 @@
     "test": "mocha --timeout 60000"
   },
   "dependencies": {
+    "glob": "~3.2.8",
+    "jade": "~1.1.4",
     "less": "~1.6.0",
     "rimraf": "~2.2.5",
     "underscore.string": "~2.3.1",
