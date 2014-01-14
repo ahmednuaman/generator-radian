@@ -1,5 +1,4 @@
 var fs = require('fs'),
-    glob = require('glob'),
     jade = require('jade'),
     less = require('less'),
     path = require('path'),
@@ -157,7 +156,7 @@ RadianGenerator.prototype.app = function () {
   this.template('Gruntfile.coffee', 'Gruntfile.coffee');
   this.template('grunt/contrib-watch.coffee', 'grunt/contrib-watch.coffee');
 
-  this.remote('ahmednuaman', 'radian', '38907e5', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', '444791f53c66c80d377ab29d5259a54891c36801', function (err, remote) {
     if (err) {
       done(err);
     }
@@ -167,7 +166,38 @@ RadianGenerator.prototype.app = function () {
     remote.copy('crawler.coffee', 'crawler.coffee');
     remote.copy('server.coffee', 'server.coffee');
 
-    remote.directory('grunt', 'grunt');
+    remote.copy('grunt/angular-templates.coffee', 'grunt/angular-templates.coffee');
+    remote.copy('grunt/contrib-clean.coffee', 'grunt/contrib-clean.coffee');
+    remote.copy('grunt/contrib-copy.coffee', 'grunt/contrib-copy.coffee');
+    remote.copy('grunt/contrib-imagemin.coffee', 'grunt/contrib-imagemin.coffee');
+    remote.copy('grunt/contrib-requirejs.coffee', 'grunt/contrib-requirejs.coffee');
+    remote.copy('grunt/exec.coffee', 'grunt/exec.coffee');
+    remote.copy('grunt/express-server.coffee', 'grunt/express-server.coffee');
+    remote.copy('grunt/karma.coffee', 'grunt/karma.coffee');
+    remote.copy('grunt/spritesmith.coffee', 'grunt/spritesmith.coffee');
+    remote.copy('grunt/text-replace.coffee', 'grunt/text-replace.coffee');
+
+    if (that.precompilerCoffee) {
+      remote.copy('grunt/coffeelint.coffee', 'grunt/coffeelint.coffee');
+      remote.copy('grunt/contrib-coffee.coffee', 'grunt/contrib-coffee.coffee');
+      remote.copy('grunt/docco.coffee', 'grunt/docco.coffee');
+    }
+
+    if (that.precompilerJade) {
+      remote.copy('grunt/jade.coffee', 'grunt/jade.coffee');
+    }
+
+    if (that.precompilerSass) {
+      remote.copy('grunt/contrib-compass.coffee', 'grunt/contrib-compass.coffee');
+    }
+
+    if (that.precompilerLess) {
+      remote.copy('grunt/contrib-less.coffee', 'grunt/contrib-less.coffee');
+    }
+
+    if (that.precompilerStylus) {
+      remote.copy('grunt/contrib-stylus.coffee', 'grunt/contrib-stylus.coffee');
+    }
 
     if (!that.includeExample) {
       remote.copy('assets/coffee/app.coffee', 'assets/coffee/app.coffee');
@@ -220,9 +250,16 @@ RadianGenerator.prototype.app = function () {
         remote.copy('assets/' + extCSS + '/template.mustache', 'assets/' + extCSS + '/template.mustache');
       } else {
         that.write('assets/' + extCSS + '/styles.' + extCSS, '');
+        that.copy('assets/' + extCSS + '/template.mustache', 'assets/' + extCSS + '/template.mustache');
       }
     } else {
-      remote.directory('assets/' + extCSS, 'assets/' + extCSS);
+      if (that.useCSSPrecompiler) {
+        remote.directory('assets/' + extCSS, 'assets/' + extCSS);
+      } else {
+        that.copy('assets/' + extCSS + '/styles.' + extCSS, 'assets/' + extCSS + '/styles.' + extCSS);
+        that.copy('assets/' + extCSS + '/template.mustache', 'assets/' + extCSS + '/template.mustache');
+      }
+
       remote.directory('assets/img', 'assets/img');
       remote.directory('assets/coffee', 'assets/coffee');
       remote.directory('assets/partial', 'assets/partial');
@@ -252,35 +289,11 @@ RadianGenerator.prototype.app = function () {
           });
         };
 
-        glob('assets/partial/**/*.jade', function (err, matches) {
+        that.expand('assets/partial/**/*.jade', function (err, matches) {
           files = files.concat(matches);
 
           cb(files.pop());
         });
-
-        fs.unlinkSync('grunt/jade.coffee');
-      }
-
-      if (!that.precompilerSass) {
-        fs.unlinkSync('grunt/contrib-compass.coffee');
-      }
-
-      if (!that.precompilerLess) {
-        fs.unlinkSync('grunt/contrib-less.coffee');
-      }
-
-      if (!that.precompilerStylus) {
-        fs.unlinkSync('grunt/contrib-stylus.coffee');
-      }
-
-      if (!that.precompilerJade) {
-        fs.unlinkSync('grunt/contrib-jade.coffee');
-      }
-
-      if (!that.precompilerCoffee) {
-        fs.unlinkSync('grunt/contrib-coffee.coffee');
-        fs.unlinkSync('grunt/coffeelint.coffee');
-        fs.unlinkSync('grunt/docco.coffee');
       }
     });
 
