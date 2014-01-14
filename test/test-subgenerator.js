@@ -6,7 +6,7 @@ var helpers = require('yeoman-generator').test;
 var _ = require('underscore.string');
 var app;
 
-describe('radian generator', function () {
+xdescribe('radian generator', function () {
   var generatorTest = function (generatorType, done) {
     var name = 'foo bar';
     var deps = [path.join('../..', generatorType)];

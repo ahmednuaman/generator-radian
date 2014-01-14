@@ -102,6 +102,7 @@ RadianGenerator.prototype.askFor = function () {
       that.prompt(prompts[1], function (props) {
         that.precompilerCoffee = true; //props.precompilerCoffee;
         that.precompilerJade = props.precompilerJade;
+        that.useCSSPrecompiler = props.useCSSPrecompiler;
 
         if (props.useCSSPrecompiler) {
           that.prompt(prompts[2], function (props) {
@@ -187,7 +188,7 @@ RadianGenerator.prototype.app = function () {
       remote.copy('grunt/jade.coffee', 'grunt/jade.coffee');
     }
 
-    if (that.precompilerSass) {
+    if (that.precompilerSass || that.precompilerScss) {
       remote.copy('grunt/contrib-compass.coffee', 'grunt/contrib-compass.coffee');
     }
 
