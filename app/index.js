@@ -3,7 +3,6 @@ var fs = require('fs'),
     jade = require('jade'),
     less = require('less'),
     path = require('path'),
-    rimraf = require('rimraf'),
     util = require('util'),
     yeoman = require('yeoman-generator');
 
@@ -155,6 +154,8 @@ RadianGenerator.prototype.app = function () {
   this.template('_index.jade', 'index.jade');
   this.template('gitignore', '.gitignore');
   this.template('radianrc', '.radianrc');
+  this.template('Gruntfile.coffee', 'Gruntfile.coffee');
+  this.template('grunt/contrib-watch.coffee', 'grunt/contrib-watch.coffee');
 
   this.remote('ahmednuaman', 'radian', '38907e5', function (err, remote) {
     if (err) {
@@ -164,7 +165,6 @@ RadianGenerator.prototype.app = function () {
     remote.copy('.bowerrc', '.bowerrc');
     remote.copy('.editorconfig', '.editorconfig');
     remote.copy('crawler.coffee', 'crawler.coffee');
-    remote.copy('Gruntfile.coffee', 'Gruntfile.coffee');
     remote.copy('server.coffee', 'server.coffee');
 
     remote.directory('grunt', 'grunt');
@@ -246,7 +246,7 @@ RadianGenerator.prototype.app = function () {
           jade.renderFile(file, opts, function (err, html) {
             fs.writeFileSync(file.replace('.jade', '.html'), html);
 
-            rimraf(file, function () {
+            fs.unlink(file, function () {
               cb(files.pop());
             });
           });
@@ -259,6 +259,28 @@ RadianGenerator.prototype.app = function () {
         });
 
         fs.unlinkSync('grunt/jade.coffee');
+      }
+
+      if (!that.precompilerSass) {
+        fs.unlinkSync('grunt/contrib-compass.coffee');
+      }
+
+      if (!that.precompilerLess) {
+        fs.unlinkSync('grunt/contrib-less.coffee');
+      }
+
+      if (!that.precompilerStylus) {
+        fs.unlinkSync('grunt/contrib-stylus.coffee');
+      }
+
+      if (!that.precompilerJade) {
+        fs.unlinkSync('grunt/contrib-jade.coffee');
+      }
+
+      if (!that.precompilerCoffee) {
+        fs.unlinkSync('grunt/contrib-coffee.coffee');
+        fs.unlinkSync('grunt/coffeelint.coffee');
+        fs.unlinkSync('grunt/docco.coffee');
       }
     });
 
