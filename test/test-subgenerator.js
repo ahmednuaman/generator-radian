@@ -1,26 +1,39 @@
 var _ = require('underscore.string');
 var helpers = require('yeoman-generator').test;
 var path = require('path');
+var i = 100;
 var app;
 
-xdescribe('radian generator', function () {
-  var generatorTest = function (generatorType, done) {
+describe('radian generator', function () {
+  var generatorTest = function (generatorType, done, html, css) {
     var name = 'foo bar';
-    var deps = [path.join('../..', generatorType)];
+    var deps = [path.join('../../../', generatorType)];
     var generator = helpers.createGenerator('radian:' + generatorType, deps, [name]);
-
-    helpers.mockPrompt(app, {
+    var config = {
       'appName': name,
       'includeExample': false,
       'includeStubs': false
-    });
+    };
+
+    config.precompilerJade = html === 'jade'
+    config.useCSSPrecompiler = css !== 'css'
+
+    if (config.useCSSPrecompiler) {
+      config.precompilerCSS = css;
+
+      if (css === 'styl') {
+        config.precompilerCSS = 'stylus';
+      }
+    }
+
+    helpers.mockPrompt(app, config);
 
     app.run([], function () {
       generator.run([], function () {
         var files = generatorType === 'partial' ?
           [
-            'assets/css/partial/_' + _.slugify(name) + '.sass',
-            'assets/partial/' + _.slugify(name) + '-partial.jade'
+            'assets/' + css + '/partial/_' + _.slugify(name) + '.' + css,
+            'assets/partial/' + _.slugify(name) + '-partial.' + html
           ] :
           [
             'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
@@ -31,9 +44,9 @@ xdescribe('radian generator', function () {
         helpers.assertFiles(files);
 
         if (generatorType === 'partial') {
-          helpers.assertFile('assets/css/_partials.sass', new RegExp(_.slugify(name)));
-          helpers.assertFile('assets/css/partial/_' + _.slugify(name) + '.sass', new RegExp('#' + _.slugify(name)));
-          helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.jade', new RegExp('div#' + _.slugify(name)));
+          helpers.assertFile('assets/' + css + '/_partials.' + css, new RegExp(_.slugify(name)));
+          helpers.assertFile('assets/' + css + '/partial/_' + _.slugify(name) + '.' + css, new RegExp('#' + _.slugify(name)));
+          helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('div#' + _.slugify(name)));
         } else if (generatorType !== 'collection' && generatorType !== 'vo') {
           method = generatorType === 'controller' || generatorType === 'service' ? _.classify : _.camelize;
 
@@ -55,13 +68,13 @@ xdescribe('radian generator', function () {
   beforeEach(function (done) {
     app = this.app;
 
-    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+    helpers.testDirectory(path.join(__dirname, 'temp/' + ++i), function (err) {
       if (err) {
         return done(err);
       }
 
       app = helpers.createGenerator('radian:app', [
-        '../../app'
+        '../../../app'
       ]);
       app.options['skip-install'] = true;
 
@@ -97,7 +110,47 @@ xdescribe('radian generator', function () {
     generatorTest('vo', done);
   });
 
-  it('should create a stub jade and sass partial', function (done) {
-    generatorTest('partial', done);
+  describe('Jade:', function () {
+    it('should create a css partial', function (done) {
+      generatorTest('partial', done, 'jade', 'css');
+    });
+
+    it('should create a sass partial', function (done) {
+      generatorTest('partial', done, 'jade', 'sass');
+    });
+
+    it('should create a scss partial', function (done) {
+      generatorTest('partial', done, 'jade', 'scss');
+    });
+
+    it('should create a less partial', function (done) {
+      generatorTest('partial', done, 'jade', 'less');
+    });
+
+    it('should create a stylus partial', function (done) {
+      generatorTest('partial', done, 'jade', 'styl');
+    });
+  });
+
+  describe('HTML:', function () {
+    it('should create a css partial', function (done) {
+      generatorTest('partial', done, 'html', 'css');
+    });
+
+    it('should create a sass partial', function (done) {
+      generatorTest('partial', done, 'html', 'sass');
+    });
+
+    it('should create a scss partial', function (done) {
+      generatorTest('partial', done, 'html', 'scss');
+    });
+
+    it('should create a less partial', function (done) {
+      generatorTest('partial', done, 'html', 'less');
+    });
+
+    it('should create a stylus partial', function (done) {
+      generatorTest('partial', done, 'html', 'styl');
+    });
   });
 });
