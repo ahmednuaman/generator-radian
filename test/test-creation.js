@@ -192,6 +192,7 @@ var exampleExpectedHTML = [
   'assets/partial/home-partial.html'
 ];
 var i = 0;
+var radianrc = '.radianrc';
 
 describe('radian generator', function () {
   beforeEach(function (done) {
@@ -224,6 +225,9 @@ describe('radian generator', function () {
         setTimeout(function () {
           helpers.assertFiles(alwaysExpected
             .concat('index.html'));
+          helpers.assertFile(radianrc, new RegExp('"js": "coffee"'));
+          helpers.assertFile(radianrc, new RegExp('"css": "css"'));
+          helpers.assertFile(radianrc, new RegExp('"html": "html"'));
           done();
         }, 250);
       });
@@ -241,6 +245,7 @@ describe('radian generator', function () {
       this.app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedJade));
+          helpers.assertFile(radianrc, new RegExp('"html": "jade"'));
         done();
       });
     });
@@ -258,6 +263,7 @@ describe('radian generator', function () {
       this.app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedSass));
+          helpers.assertFile(radianrc, new RegExp('"css": "sass"'));
         done();
       });
     });
@@ -275,6 +281,7 @@ describe('radian generator', function () {
       this.app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedScss));
+          helpers.assertFile(radianrc, new RegExp('"css": "scss"'));
         done();
       });
     });
@@ -292,6 +299,7 @@ describe('radian generator', function () {
       this.app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedLess));
+          helpers.assertFile(radianrc, new RegExp('"css": "less"'));
         done();
       });
     });
@@ -309,6 +317,7 @@ describe('radian generator', function () {
       this.app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedStylus));
+          helpers.assertFile(radianrc, new RegExp('"css": "styl"'));
         done();
       });
     });
