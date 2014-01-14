@@ -40,7 +40,7 @@ RadianGenerator.prototype.askFor = function () {
   }, {
     type: 'confirm',
     name: 'usePrecompilers',
-    message: 'Do you want to use any precompilers? (eg CoffeeScript, Jade, SASS, SCSS, Stylus or Less)',
+    message: 'Do you want to use any precompilers? (eg: Jade, SASS, SCSS, Stylus or Less)',
     default: true
   }], [/*{
     type: 'confirm',
