@@ -1,6 +1,5 @@
 var helpers = require('yeoman-generator').test;
 var path = require('path');
-var rimraf = require('rimraf');
 
 var alwaysExpected = [
   'bower.json',
@@ -192,28 +191,23 @@ var exampleExpectedHTML = [
   'assets/partial/header/header-partial.html',
   'assets/partial/home-partial.html'
 ];
+var i = 0;
 
 describe('radian generator', function () {
   beforeEach(function (done) {
-    var dir = path.join(__dirname, 'temp');
+    var dir = path.join(__dirname, 'temp/' + ++i);
 
-    rimraf(dir, function (err) {
+    helpers.testDirectory(dir, function (err) {
       if (err) {
-        done(err);
+        return done(err);
       }
 
-      helpers.testDirectory(dir, function (err) {
-        if (err) {
-          return done(err);
-        }
+      this.app = helpers.createGenerator('radian:app', [
+        '../../../app'
+      ]);
+      this.app.options['skip-install'] = true;
 
-        this.app = helpers.createGenerator('radian:app', [
-          '../../app'
-        ]);
-        this.app.options['skip-install'] = true;
-
-        done();
-      }.bind(this));
+      done();
     }.bind(this));
   });
 
@@ -436,8 +430,7 @@ describe('radian generator', function () {
       helpers.mockPrompt(this.app, {
         'appName': 'foo bar',
         'usePrecompilers': false,
-        'includeExample': true,
-        'includeStubs': true
+        'includeExample': true
       });
 
       this.app.run({}, function () {
@@ -458,8 +451,7 @@ describe('radian generator', function () {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'precompilerJade': true,
-        'includeExample': true,
-        'includeStubs': true
+        'includeExample': true
       });
 
       this.app.run({}, function () {
@@ -479,8 +471,7 @@ describe('radian generator', function () {
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
         'precompilerCSS': 'sass',
-        'includeExample': true,
-        'includeStubs': true
+        'includeExample': true
       });
 
       this.app.run({}, function () {
@@ -499,8 +490,7 @@ describe('radian generator', function () {
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
         'precompilerCSS': 'scss',
-        'includeExample': true,
-        'includeStubs': true
+        'includeExample': true
       });
 
       this.app.run({}, function () {
@@ -519,8 +509,7 @@ describe('radian generator', function () {
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
         'precompilerCSS': 'less',
-        'includeExample': true,
-        'includeStubs': true
+        'includeExample': true
       });
 
       this.app.run({}, function () {
@@ -539,8 +528,7 @@ describe('radian generator', function () {
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
         'precompilerCSS': 'stylus',
-        'includeExample': true,
-        'includeStubs': true
+        'includeExample': true
       });
 
       this.app.run({}, function () {

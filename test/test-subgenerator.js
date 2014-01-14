@@ -1,9 +1,6 @@
-/*global describe, beforeEach, it*/
-'use strict';
-
-var path = require('path');
-var helpers = require('yeoman-generator').test;
 var _ = require('underscore.string');
+var helpers = require('yeoman-generator').test;
+var path = require('path');
 var app;
 
 xdescribe('radian generator', function () {

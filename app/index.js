@@ -90,6 +90,8 @@ RadianGenerator.prototype.askFor = function () {
 
           done();
         });
+      } else {
+        done();
       }
     });
   };
@@ -282,10 +284,10 @@ RadianGenerator.prototype.app = function () {
           }
 
           jade.renderFile(file, opts, function (err, html) {
-            fs.writeFileSync(file.replace('.jade', '.html'), html);
-
-            fs.unlink(file, function () {
-              cb(files.pop());
+            fs.writeFile(file.replace('.jade', '.html'), html, function () {
+              fs.unlink(file, function () {
+                cb(files.pop());
+              });
             });
           });
         };
