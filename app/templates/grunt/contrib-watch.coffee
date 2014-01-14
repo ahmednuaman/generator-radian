@@ -13,8 +13,8 @@ module.exports = (grunt) ->
         spawn: false
     <% } %><% if (precompilerSass || precompilerScss) { %>compass:
       files: [<% if (precompilerSass) { %>
-        '<%= compass.dev.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>
-        '<%= compass.dev.options.sassDir %>/**/*.scss'
+        '<%%= compass.dev.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>
+        '<%%= compass.dev.options.sassDir %>/**/*.scss'
       <% } %>]
       tasks: [
         'compass:dev'
@@ -35,10 +35,13 @@ module.exports = (grunt) ->
       tasks: [
         'jade:dev'
       ]
-      options: '<%= watch.coffee.options %>'
+      <% if (precompilerCoffee) { %>options: '<%%= watch.coffee.options %>'<% } else { %>options:
+        livereload: true
+        spawn: false
+    <% } %>
     <% } %><% if (precompilerLess) { %>less:
       files: [
-        '<%= less.dev.options.paths[0] %>/**/*.less'
+        '<%%= less.dev.options.paths[0] %>/**/*.less'
       ]
       tasks: [
         'less:dev'
