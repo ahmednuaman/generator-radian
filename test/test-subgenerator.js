@@ -28,15 +28,15 @@ describe('radian generator', function () {
 
     helpers.mockPrompt(app, config);
 
-    app.run([], function () {
-      generator.run([], function () {
+    app.run({}, function () {
+      generator.run({}, function () {
         var files = generatorType === 'partial' ?
           [
             'assets/' + css + '/partial/_' + _.slugify(name) + '.' + css,
             'assets/partial/' + _.slugify(name) + '-partial.' + html
           ] :
           [
-            'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
+            'assets/coffee/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
             'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
           ],
           method;
@@ -51,7 +51,7 @@ describe('radian generator', function () {
           method = generatorType === 'controller' || generatorType === 'service' ? _.classify : _.camelize;
 
           helpers.assertFile(
-            'assets/js/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
+            'assets/coffee/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
             new RegExp(method(name + ' ' + (generatorType !== 'filter' && generatorType !== 'directive' ? generatorType : '')))
           );
           helpers.assertFile(
