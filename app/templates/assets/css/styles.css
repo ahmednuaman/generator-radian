@@ -4,47 +4,42 @@
   width: 30px;
   height: 30px;
 }
-
 .icon-lightweight {
   background-image: url(../img/icon-.png);
   background-position: 0px -30px;
   width: 30px;
   height: 30px;
 }
-
 .icon-scale {
   background-image: url(../img/icon-.png);
   background-position: 0px -60px;
   width: 30px;
   height: 30px;
 }
-
 .icon-setup {
   background-image: url(../img/icon-.png);
   background-position: 0px -90px;
   width: 30px;
   height: 30px;
 }
-
 .icon-tests {
   background-image: url(../img/icon-.png);
   background-position: 0px -120px;
   width: 30px;
   height: 30px;
 }
-
 .icon-yeoman {
   background-image: url(../img/icon-.png);
   background-position: 0px -150px;
   width: 30px;
   height: 30px;
 }
-
-.block, .left, .col-3, .row, #home .icon, .relative, #app, #header h1, .right {
+.block {
   display: block;
 }
-
 .col-3 {
+  display: block;
+  float: left;
   padding-left: 20px;
   width: 33%;
 }
@@ -52,51 +47,51 @@
   padding-left: 0;
 }
 @media only screen and (max-width: 768px) {
-
-.col-3 {
+  .col-3 {
     width: 100%;
     padding-left: 0;
   }
 }
-
-.left, .col-3, .row, #home .icon {
+.fixed {
+  display: block;
+  position: fixed;
+}
+.left {
+  display: block;
   float: left;
 }
-
-.relative, #app, #header h1 {
+.relative {
+  display: block;
   position: relative;
 }
-
 .right {
+  display: block;
   float: right;
 }
-
 .row {
+  display: block;
+  float: left;
   width: 100%;
 }
-
 .text-centre {
   text-align: center;
 }
-
 * {
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: "Droid Sans", Arial, sans-serif;
+  font-family: 'Droid Sans', Arial, sans-serif;
 }
-
 body,
 div,
 p {
   color: #444444;
   line-height: 1.7em;
 }
-
 a {
+  -webkit-transition: color 250ms;
   -moz-transition: color 250ms;
   -o-transition: color 250ms;
-  -webkit-transition: color 250ms;
   transition: color 250ms;
   color: #a6120d;
   font-weight: bold;
@@ -105,22 +100,22 @@ a {
 a:hover {
   color: black;
 }
-
 code,
 pre {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
   border-radius: 3px;
-  font-family: "Droid Sans Mono", monospace, serif;
+  background-clip: padding-box;
+  font-family: 'Droid Sans Mono', monospace, serif;
   font-size: 0.8em;
 }
-
 code {
   background: #f8f8f8;
   border: 1px solid #cccccc;
   padding: 1px 2px;
 }
-
 pre {
   background: #333333;
   color: #f8f8f8;
@@ -132,7 +127,6 @@ pre code {
   font-size: 1em;
   padding: 0;
 }
-
 ul.list-menu,
 ul.list-menu li {
   list-style: none;
@@ -145,42 +139,61 @@ ul.list-menu li {
 ul.list-menu li a {
   display: inline-block;
 }
-
 #app {
+  display: block;
+  position: relative;
   padding: 10px;
   width: 100%;
 }
 @media only screen and (min-width: 768px) {
-
-#app {
+  #app {
     padding: 20px;
   }
 }
 @media only screen and (min-width: 992px) {
-
-#app {
+  #app {
     margin: 40px auto;
     padding: 0;
     width: 992px;
   }
 }
-
+#mask {
+  -webkit-transition: opacity 250ms;
+  -moz-transition: opacity 250ms;
+  -o-transition: opacity 250ms;
+  transition: opacity 250ms;
+  display: block;
+  position: fixed;
+  background: url('../img/ajax-loader.gif') no-repeat center center #ffffff;
+  height: 100%;
+  left: 0;
+  opacity: 1;
+  top: 0;
+  width: 100%;
+}
+#mask.ng-animate {
+  display: block !important;
+}
+#mask.ng-hide {
+  opacity: 0;
+}
 #header h1 {
+  display: block;
+  position: relative;
   font-weight: lighter;
   line-height: normal;
   margin: 60px auto;
   max-width: 605px;
 }
 @media only screen and (max-width: 768px) {
-
-#header h1 {
+  #header h1 {
     font-size: 1.5em;
     margin: 30px auto;
   }
 }
 #header #logo {
-  background-image: url('/assets/img/logo.png?1389204835');
-  background-image: url('/assets/img/logo.svg?1388606932');
+  background-image: url('../img/logo.png');
+  background-image: url('../img/logo.svg');
   background-repeat: no-repeat;
   background-size: 100%;
   display: inline-block;
@@ -188,27 +201,23 @@ ul.list-menu li a {
   width: 100px;
 }
 @media only screen and (min-width: 768px) {
-
-#header #logo {
+  #header #logo {
     height: 200px;
     width: 200px;
   }
 }
 @media only screen and (min-width: 992px) {
-
-#header #logo {
+  #header #logo {
     height: 300px;
     width: 300px;
   }
 }
-
 #header-menu {
   margin: 40px 0;
   text-align: center;
 }
 @media only screen and (min-width: 992px) {
-
-#header-menu {
+  #header-menu {
     margin: 60px 0;
   }
 }
@@ -220,36 +229,37 @@ ul.list-menu li a {
   color: #666666;
 }
 #header-menu li a.selected:before {
-  content: "> ";
+  content: '> ';
 }
 #header-menu li:first-child a {
   padding-left: 0;
 }
-
 #cta {
   margin: 30px 0;
   text-align: center;
 }
 @media only screen and (min-width: 992px) {
-
-#cta {
+  #cta {
     margin: 50px 0;
   }
 }
 #cta a {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
   border-radius: 3px;
-  -moz-box-shadow: #666666 2px 2px 0;
-  -webkit-box-shadow: #666666 2px 2px 0;
-  box-shadow: #666666 2px 2px 0;
+  background-clip: padding-box;
+  -webkit-box-shadow: #666666 2px 2px 0px;
+  -moz-box-shadow: #666666 2px 2px 0px;
+  box-shadow: #666666 2px 2px 0px;
+  -webkit-transition: background-color 250ms;
   -moz-transition: background-color 250ms;
   -o-transition: background-color 250ms;
-  -webkit-transition: background-color 250ms;
   transition: background-color 250ms;
-  -moz-transition: box-shadow 250ms;
+  -webkit-transition: -webkit-box-shadow 250ms;
+  -moz-transition: -moz-box-shadow 250ms;
   -o-transition: box-shadow 250ms;
-  -webkit-transition: box-shadow 250ms;
   transition: box-shadow 250ms;
   background: #c1272d;
   color: white;
@@ -257,48 +267,67 @@ ul.list-menu li a {
   padding: 1em;
 }
 @media only screen and (max-width: 768px) {
-
-#cta a {
+  #cta a {
     padding: 0.5em;
   }
 }
 #cta a:hover {
-  -moz-box-shadow: #333333 2px 2px 0;
-  -webkit-box-shadow: #333333 2px 2px 0;
-  box-shadow: #333333 2px 2px 0;
+  -webkit-box-shadow: #333333 2px 2px 0px;
+  -moz-box-shadow: #333333 2px 2px 0px;
+  box-shadow: #333333 2px 2px 0px;
   background: #666666;
 }
 #cta a:active {
-  -moz-box-shadow: none;
   -webkit-box-shadow: none;
+  -moz-box-shadow: none;
   box-shadow: none;
   margin: 3px 0 0 3px;
 }
-
 #footer {
-  -moz-border-radius-topleft: 3px;
-  -webkit-border-top-left-radius: 3px;
-  border-top-left-radius: 3px;
-  -moz-border-radius-topright: 3px;
-  -webkit-border-top-right-radius: 3px;
-  border-top-right-radius: 3px;
+  -webkit-border-radius: 3px 3px 0px 0px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px 3px 0px 0px;
+  -moz-background-clip: padding;
+  border-radius: 3px 3px 0px 0px;
+  background-clip: padding-box;
   background: #eeeeee;
   margin-top: 10px;
   padding: 1em;
 }
-#footer ul {
-  float: right;
+@media only screen and (max-width: 768px) {
+  #footer {
+    text-align: center;
+  }
+}
+#footer a {
+  font-size: 0.8em;
+}
+@media only screen and (min-width: 992px) {
+  #footer a {
+    font-size: 1em;
+  }
+}
+@media only screen and (min-width: 768px) {
+  #footer ul {
+    float: right;
+  }
 }
 #footer ul li a {
   border-left: 1px solid #999999;
   padding: 0 0.5em;
 }
+@media only screen and (max-width: 768px) {
+  #footer ul li a {
+    border: 0;
+  }
+}
 #footer ul li:first-child a {
   border: 0;
   padding-left: 0;
 }
-
 #home .icon {
+  display: block;
+  float: left;
   height: 29px;
   margin: 1em 10px 0 0;
   width: 29px;
