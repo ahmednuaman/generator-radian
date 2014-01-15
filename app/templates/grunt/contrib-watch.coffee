@@ -2,7 +2,7 @@ module.exports = (grunt) ->
   grunt.config 'watch',
     <% if (precompilerCoffee) { %>coffee:
       files: [
-        'assets/js/**/*.coffee'
+        'assets/coffee/**/*.coffee'
       ]
       tasks: [
         'coffeelint'
@@ -67,8 +67,9 @@ module.exports = (grunt) ->
     <% } %><% if (precompilerJade) { %>changedJadeFiles = changedFiles['jade']<% } %>
 
     <% if (precompilerCoffee) { %>if changedCoffeeFiles
-      grunt.config 'coffee.dev.src', changedCoffeeFiles
       grunt.config 'coffeelint.all', changedCoffeeFiles
+      grunt.config 'coffee.dev.src', _.map changedCoffeeFiles, (file) ->
+        file.replace 'assets/coffee/', ''
     <% } %><% if (precompilerJade) { %>
     if changedJadeFiles
       grunt.config 'jade.dev.files',

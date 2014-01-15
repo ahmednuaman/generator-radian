@@ -6,7 +6,8 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "test": "grunt unit"
+    "build": "grunt build",
+    "test": "grunt test"
   },
   "devDependencies": {<% if (precompilerCoffee) { %>
     "coffee-script": "1.6.3",

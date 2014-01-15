@@ -4,6 +4,15 @@ define [
   # Jump to [`config.coffee`](config.html) ☛
   'config'
   'angular'
+  # Load up the base controller, all controllers inherit from it. All hail the base controller. Wow.
+  # Jump to [`controller/radian-controller.coffee`](radian-controller.html) ☛
+  'controller/radian-controller'
+  # Fast apps are nice, and in order to keep your app nice and fast it's a good idea to make use of
+  # [`$templateCache`](http://docs.angularjs.org/api/ng.$templateCache), so here we have a file that takes care of that;
+  # during development it's left empty on purpose and it's then filled with the compiled [Jade](http://jade-lang.com)
+  # templates during build time.
+  # Jump to [`partials.coffee`](partials.html) ☛
+  'partials'
   # Before `appController` is added to the app it is vital to load in the
   # [`ngRoute`](http://docs.angularjs.org/api/ngRoute.$routeProvider) configuration. If your app is driven from an API
   # and thus the navigation needs to be loaded before the app can work out where to go then it's a good idea to use
@@ -19,25 +28,30 @@ define [
   # broadcasts updates to the document's title and any module that can inject the factory can set the title.
   # This deals with issues around misuse of the `$rootScope`/`$scope` to pass data up and down the chain and keeps
   # everything testable.
+  # Jump to [`factory/page-loader-factory.coffee`](page-loader-factory.html) ☛
+  'factory/page-loader-factory'
   # Jump to [`factory/page-title-factory.coffee`](page-title-factory.html) ☛
   'factory/page-title-factory'
-<% } %>], (cfg, A) ->
+<% } %>], (cfg, A, RC) ->
   # Every controller class in radian follows the same pattern. It's also preferable to explicity specify the `$inject`
   # modules as this code will be minified.
-  class AppController
-    @$inject = [
+  class extends RC
+    # You register your controller by calling `@register` and passing in the class's name and then the dependancies as
+    # an array.
+    @register 'AppController', [
       '$scope'<% if (includeExample) { %>
+      'pageLoaderFactory'
       'pageTitleFactory'
     <% } %>]
 
-    constructor: (@$scope<% if (includeExample) { %>, @pageTitleFactory<% } %>) ->
-      @init()
-
     init: () ->
       <% if (includeExample) { %>@addListeners()
+      @addListeners()
       @addPartials()
+      @addScopeMethods()
 
     addListeners: () ->
+      @pageLoaderFactory.addListener A.bind @, @handlePageLoaderChange
       @pageTitleFactory.addListener A.bind @, @handlePageTitleChange
 
     addPartials: () ->
@@ -45,8 +59,20 @@ define [
       @$scope.footerPartial = cfg.path.partial + 'footer-partial.html'
       @$scope.headerPartial = cfg.path.partial + 'header/header-partial.html'
 
-    handlePageTitleChange: (event, title) ->
-      @$scope.pageTitle = "Radian ~ A scalable AngularJS framework ~ #{title}"<% } %>
+    addScopeMethods: () ->
+      @$scope.handleViewLoaded = A.bind @, @handleViewLoaded
 
-  app = A.module cfg.ngApp
-  app.controller 'appController', AppController
+    handlePageTitleChange: (event, title) ->
+      @$scope.pageTitle = "Radian ~ A scalable AngularJS framework ~ #{title}"
+
+    handlePageLoaderChange: (event, show) ->
+      # _'Why is it `@$scope.hideLoader` instead of `@$scope.showLoader`?'_ Well, my old chum, by default we show the
+      # loader until our application sends an event via the [`pageLoaderFactory`](page-loader-factory.html), this way
+      # it is a more elegant experience.
+      @$scope.hideLoader = !show
+
+    handleViewLoaded: () ->
+      # _'Why not just set `@$scope.hideLoader` here instead of using `@pageLoaderFactory.hide()`?'_ Well, there may be
+      # more modules in the app that are listening to `pageLoaderFactory` than just this controller, so it's only polite
+      # to let them know what's up.
+      @pageLoaderFactory.hide()<% } %>
