@@ -193,8 +193,9 @@ var exampleExpectedHTML = [
 ];
 var i = 0;
 var radianrc = '.radianrc';
+var app;
 
-describe('radian generator', function () {
+describe('Radian generator:', function () {
   beforeEach(function (done) {
     var dir = path.join(__dirname, 'temp/' + ++i);
 
@@ -203,25 +204,25 @@ describe('radian generator', function () {
         return done(err);
       }
 
-      this.app = helpers.createGenerator('radian:app', [
+      app = helpers.createGenerator('radian:app', [
         '../../../app'
       ]);
-      this.app.options['skip-install'] = true;
+      app.options['skip-install'] = true;
 
       done();
-    }.bind(this));
+    });
   });
 
-  describe('No examples, no stubs:', function () {
+  describe('no examples, no stubs:', function () {
     it('should use no precompilers (except for coffee, for now...)', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': false,
         'includeExample': false,
         'includeStubs': false
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         setTimeout(function () {
           helpers.assertFiles(alwaysExpected
             .concat('index.html'));
@@ -229,12 +230,12 @@ describe('radian generator', function () {
           helpers.assertFile(radianrc, new RegExp('"css": "css"'));
           helpers.assertFile(radianrc, new RegExp('"html": "html"'));
           done();
-        }, 250);
+        }, 500);
       });
     });
 
     it('should use jade', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'precompilerJade': true,
@@ -242,7 +243,7 @@ describe('radian generator', function () {
         'includeStubs': false
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedJade));
           helpers.assertFile(radianrc, new RegExp('"html": "jade"'));
@@ -251,7 +252,7 @@ describe('radian generator', function () {
     });
 
     it('should use sass', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -260,7 +261,7 @@ describe('radian generator', function () {
         'includeStubs': false
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedSass));
           helpers.assertFile(radianrc, new RegExp('"css": "sass"'));
@@ -269,7 +270,7 @@ describe('radian generator', function () {
     });
 
     it('should use scss', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -278,7 +279,7 @@ describe('radian generator', function () {
         'includeStubs': false
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedScss));
           helpers.assertFile(radianrc, new RegExp('"css": "scss"'));
@@ -287,7 +288,7 @@ describe('radian generator', function () {
     });
 
     it('should use less', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -296,7 +297,7 @@ describe('radian generator', function () {
         'includeStubs': false
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedLess));
           helpers.assertFile(radianrc, new RegExp('"css": "less"'));
@@ -305,7 +306,7 @@ describe('radian generator', function () {
     });
 
     it('should use stylus', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -314,7 +315,7 @@ describe('radian generator', function () {
         'includeStubs': false
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(alwaysExpectedStylus));
           helpers.assertFile(radianrc, new RegExp('"css": "styl"'));
@@ -323,28 +324,28 @@ describe('radian generator', function () {
     });
   });
 
-  describe('No examples, yes stubs:', function () {
+  describe('no examples, yes stubs:', function () {
     it('should use no precompilers (except for coffee, for now...)', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': false,
         'includeExample': false,
         'includeStubs': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         setTimeout(function () {
           helpers.assertFiles(alwaysExpected
             .concat(stubsExpectedCoffee)
             .concat(stubsExpectedHTML)
             .concat('index.html'));
           done();
-        }, 250);
+        }, 500);
       });
     });
 
     it('should use jade', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'precompilerJade': true,
@@ -352,7 +353,7 @@ describe('radian generator', function () {
         'includeStubs': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedJade)
@@ -362,7 +363,7 @@ describe('radian generator', function () {
     });
 
     it('should use sass', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -371,7 +372,7 @@ describe('radian generator', function () {
         'includeStubs': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedSass));
@@ -380,7 +381,7 @@ describe('radian generator', function () {
     });
 
     it('should use scss', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -389,7 +390,7 @@ describe('radian generator', function () {
         'includeStubs': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedScss));
@@ -398,7 +399,7 @@ describe('radian generator', function () {
     });
 
     it('should use less', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -407,7 +408,7 @@ describe('radian generator', function () {
         'includeStubs': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedLess));
@@ -416,7 +417,7 @@ describe('radian generator', function () {
     });
 
     it('should use stylus', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -425,7 +426,7 @@ describe('radian generator', function () {
         'includeStubs': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedStylus));
@@ -434,15 +435,15 @@ describe('radian generator', function () {
     });
   });
 
-  describe('Yes examples, yes stubs:', function () {
+  describe('yes examples, yes stubs:', function () {
     it('should use no precompilers (except for coffee, for now...)', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': false,
         'includeExample': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         setTimeout(function () {
           helpers.assertFiles(alwaysExpected
             .concat(stubsExpectedCoffee)
@@ -451,19 +452,19 @@ describe('radian generator', function () {
             .concat(exampleExpectedHTML)
             .concat('index.html'));
           done();
-        }, 250);
+        }, 500);
       });
     });
 
     it('should use jade', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'precompilerJade': true,
         'includeExample': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(exampleExpected)
@@ -475,7 +476,7 @@ describe('radian generator', function () {
     });
 
     it('should use sass', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -483,7 +484,7 @@ describe('radian generator', function () {
         'includeExample': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(exampleExpected)
@@ -494,7 +495,7 @@ describe('radian generator', function () {
     });
 
     it('should use scss', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -502,7 +503,7 @@ describe('radian generator', function () {
         'includeExample': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(exampleExpected)
@@ -513,7 +514,7 @@ describe('radian generator', function () {
     });
 
     it('should use less', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -521,7 +522,7 @@ describe('radian generator', function () {
         'includeExample': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(exampleExpected)
@@ -532,7 +533,7 @@ describe('radian generator', function () {
     });
 
     it('should use stylus', function (done) {
-      helpers.mockPrompt(this.app, {
+      helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': true,
         'useCSSPrecompiler': true,
@@ -540,7 +541,7 @@ describe('radian generator', function () {
         'includeExample': true
       });
 
-      this.app.run({}, function () {
+      app.run({}, function () {
         helpers.assertFiles(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(exampleExpected)

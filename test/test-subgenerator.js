@@ -4,7 +4,7 @@ var path = require('path');
 var i = 100;
 var app;
 
-describe('radian generator', function () {
+describe('Radian generator:', function () {
   var generatorTest = function (generatorType, done, html, css) {
     var name = 'foo bar';
     var deps = [path.join('../../../', generatorType)];
@@ -15,8 +15,9 @@ describe('radian generator', function () {
       'includeStubs': false
     };
 
-    config.precompilerJade = html === 'jade'
-    config.useCSSPrecompiler = css !== 'css'
+    config.precompilerJade = html === 'jade';
+    config.useCSSPrecompiler = css !== 'css' && !!css;
+    config.usePrecompilers = config.useCSSPrecompiler || config.precompilerJade;
 
     if (config.useCSSPrecompiler) {
       config.precompilerCSS = css;
@@ -29,6 +30,8 @@ describe('radian generator', function () {
     helpers.mockPrompt(app, config);
 
     app.run({}, function () {
+      helpers.assertFile('.radianrc');
+
       generator.run({}, function () {
         var files = generatorType === 'partial' ?
           [
@@ -66,9 +69,9 @@ describe('radian generator', function () {
   };
 
   beforeEach(function (done) {
-    app = this.app;
+    var dir = path.join(__dirname, 'temp/' + ++i);
 
-    helpers.testDirectory(path.join(__dirname, 'temp/' + ++i), function (err) {
+    helpers.testDirectory(dir, function (err) {
       if (err) {
         return done(err);
       }
@@ -110,7 +113,7 @@ describe('radian generator', function () {
     generatorTest('vo', done);
   });
 
-  describe('Jade:', function () {
+  describe('using Jade precompiler:', function () {
     it('should create a css partial', function (done) {
       generatorTest('partial', done, 'jade', 'css');
     });
@@ -132,7 +135,7 @@ describe('radian generator', function () {
     });
   });
 
-  describe('HTML:', function () {
+  describe('using HTML:', function () {
     it('should create a css partial', function (done) {
       generatorTest('partial', done, 'html', 'css');
     });
