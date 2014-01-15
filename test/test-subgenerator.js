@@ -8,7 +8,6 @@ describe('Radian generator:', function () {
   var generatorTest = function (generatorType, done, html, css) {
     var name = 'foo bar';
     var deps = [path.join('../../../', generatorType)];
-    var generator = helpers.createGenerator('radian:' + generatorType, deps, [name]);
     var config = {
       'appName': name,
       'includeExample': false,
@@ -30,6 +29,8 @@ describe('Radian generator:', function () {
     helpers.mockPrompt(app, config);
 
     app.run({}, function () {
+      var generator = helpers.createGenerator('radian:' + generatorType, deps, [name]);
+
       helpers.assertFile('.radianrc');
 
       generator.run({}, function () {
@@ -47,9 +48,18 @@ describe('Radian generator:', function () {
         helpers.assertFiles(files);
 
         if (generatorType === 'partial') {
-          helpers.assertFile('assets/' + css + '/_partials.' + css, new RegExp(_.slugify(name)));
           helpers.assertFile('assets/' + css + '/partial/_' + _.slugify(name) + '.' + css, new RegExp('#' + _.slugify(name)));
-          helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('div#' + _.slugify(name)));
+
+          if (css !== 'css') {
+            helpers.assertFile('assets/' + css + '/_partials.' + css, new RegExp(_.slugify(name)));
+          }
+
+          if (html === 'html') {
+            helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('<div id="' + _.slugify(name) + '"'));
+          } else {
+            helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('div#' + _.slugify(name)));
+          }
+
         } else if (generatorType !== 'collection' && generatorType !== 'vo') {
           method = generatorType === 'controller' || generatorType === 'service' ? _.classify : _.camelize;
 
