@@ -13,8 +13,10 @@ var alwaysExpected = [
   'crawler.coffee',
   'server.coffee',
   'grunt/angular-templates.coffee',
+  'grunt/combine-media-queries.coffee',
   'grunt/contrib-clean.coffee',
   'grunt/contrib-copy.coffee',
+  'grunt/contrib-cssmin.coffee',
   'grunt/contrib-imagemin.coffee',
   'grunt/contrib-requirejs.coffee',
   'grunt/exec.coffee',
@@ -39,6 +41,7 @@ var alwaysExpected = [
   'assets/coffee/helper/radian-module-helper.coffee',
   'assets/coffee/config.coffee',
   'assets/coffee/routes.coffee',
+  'assets/coffee/partials.coffee',
   'assets/coffee/controller/app-controller.coffee'
 ];
 var alwaysExpectedCSS = [
@@ -102,6 +105,7 @@ var exampleExpected = [
   'assets/coffee/directive/menu-component-directive.coffee',
   'assets/coffee/factory/menu-factory.coffee',
   'assets/coffee/factory/page-error-factory.coffee',
+  'assets/coffee/factory/page-loader-factory.coffee',
   'assets/coffee/factory/page-title-factory.coffee',
   'assets/coffee/service/menu-service.coffee',
   'assets/coffee/vo/menu-item-vo.coffee',
@@ -115,6 +119,7 @@ var exampleExpected = [
   'test/unit/directive/menu-component-directive-spec.coffee',
   'test/unit/factory/menu-factory-spec.coffee',
   'test/unit/factory/page-error-factory-spec.coffee',
+  'test/unit/factory/page-loader-factory-spec.coffee',
   'test/unit/factory/page-title-factory-spec.coffee',
   'test/unit/service/menu-service-spec.coffee',
   'test/unit/vo/menu-item-vo-spec.coffee'
