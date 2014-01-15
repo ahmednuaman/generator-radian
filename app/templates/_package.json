@@ -20,7 +20,8 @@
     "grunt-contrib-cssmin": "0.7.0",
     "grunt-contrib-imagemin": "0.4.0",
     "grunt-contrib-less": "0.8.3",
-    "grunt-contrib-requirejs": "0.4.1",
+    "grunt-contrib-requirejs": "0.4.1"<% if (precompilerStylus) { %>,
+    "grunt-contrib-stylus": "0.11.0"<% } %>,
     "grunt-contrib-uglify": "0.2.7",
     "grunt-contrib-watch": "0.5.3",
     <% if (precompilerCoffee) { %>"grunt-docco": "0.3.0",
@@ -40,8 +41,7 @@
     "karma-phantomjs-launcher": "0.1.1",
     "karma-requirejs": "0.2.1",
     "marked": "0.3.0",
-    "wrench": "1.5.4"<% if (precompilerStylus) { %>,
-    "grunt-contrib-stylus": "~0.11.0"<% } %>
+    "wrench": "1.5.4"
   },
   "peerDependencies": {
     "express": "3.4.7",
