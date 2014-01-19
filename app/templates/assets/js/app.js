@@ -18,7 +18,3 @@ require.config({
 });
 
 require(['startup']);
-
-/*
-//# sourceMappingURL=../../assets/js/app.js.map
-*/

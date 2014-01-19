@@ -9,7 +9,3 @@ define([], function() {
     }
   };
 });
-
-/*
-//# sourceMappingURL=../../assets/js/config.js.map
-*/
