@@ -2,13 +2,12 @@ define([
   'lodash'
   'helper/radian-module-helper'
 ], function(_, helper) {
-  RadianController.register = function(name, deps) {
-    return helper.registerController([name, deps, this]);
-  };
+  return function(name, deps, funcs) {
+    klass = function() {};
 
-  function RadianController() {
-    helper.construct(this, arguments);
+    _.assign(klass.prototype, funcs);
+
+    helper.registerController([name, deps, klass]);
+    helper.construct(klass, deps);
   }
-
-  return RadianController;
 });

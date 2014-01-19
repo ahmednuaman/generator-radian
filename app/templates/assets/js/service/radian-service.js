@@ -1,19 +1,13 @@
-define(['helper/radian-module-helper'], function(helper) {
-  var RadianService;
-  return RadianService = (function() {
-    RadianService.register = function(name, deps) {
-      return helper.registerService([name, deps, this]);
-    };
+define([
+  'lodash'
+  'helper/radian-module-helper'
+], function(_, helper) {
+  return function(name, deps, funcs) {
+    klass = function() {};
 
-    function RadianService() {
-      helper.construct(this, arguments);
-    }
+    _.assign(klass.prototype, funcs);
 
-    return RadianService;
-
-  })();
+    helper.registerService([name, deps, klass]);
+    helper.construct(klass, deps);
+  }
 });
-
-/*
-//# sourceMappingURL=../../../assets/js/radian-service.js.map
-*/
