@@ -28,7 +28,7 @@ RadianGenerator.prototype.askFor = function () {
   this.precompilerScss = false;
   this.precompilerLess = false;
   this.precompilerStylus = false;
-  this.precompilerCoffee = true; //false;
+  this.precompilerCoffee = false;
   this.precompilerJade = false;
 
   prompts = [[{
@@ -42,12 +42,12 @@ RadianGenerator.prototype.askFor = function () {
     name: 'usePrecompilers',
     message: 'Do you want to use any precompilers? (eg: Jade, SASS, SCSS, Stylus or Less)',
     default: true
-  }], [/*{
+  }], [{
     type: 'confirm',
     name: 'precompilerCoffee',
     message: 'Do you want to use CoffeeScript instead of JavaScript? (http://coffeescript.org)',
     default: true
-  }, */{
+  }, {
     type: 'confirm',
     name: 'precompilerJade',
     message: 'Do you want to use Jade instead of HTML? (http://jade-lang.com)',
@@ -102,7 +102,8 @@ RadianGenerator.prototype.askFor = function () {
 
     if (that.usePrecompilers) {
       that.prompt(prompts[1], function (props) {
-        that.precompilerCoffee = true; //props.precompilerCoffee;
+        that.precompilerCoffee = props.precompilerCoffee;
+        that.precompilerJS = !props.precompilerCoffee;
         that.precompilerJade = props.precompilerJade;
         that.useCSSPrecompiler = props.useCSSPrecompiler;
 
@@ -161,6 +162,9 @@ RadianGenerator.prototype.app = function () {
   that.template('grunt/spritesmith.coffee', 'grunt/spritesmith.coffee');
 
   this.remote('ahmednuaman', 'radian', 'v0.8.0', function (err, remote) {
+    var js = this.precompilerCoffee ? 'coffee' : 'js',
+        jsDir = this.precompilerCoffee ? 'coffee' : 'javascript';
+
     if (err) {
       done(err);
     }
@@ -188,6 +192,13 @@ RadianGenerator.prototype.app = function () {
       remote.copy('grunt/docco.coffee', 'grunt/docco.coffee');
     }
 
+    if (that.precompilerJS) {
+      remote.copy('grunt/contrib-jshint.coffee', 'grunt/contrib-jshint.coffee');
+      remote.copy('grunt/jscs-checker.coffee', 'grunt/jscs-checker.coffee');
+      remote.copy('.jscs.json', '.jscs.json');
+      remote.copy('.jshintrc', '.jshintrc');
+    }
+
     if (that.precompilerJade) {
       remote.copy('grunt/jade.coffee', 'grunt/jade.coffee');
     }
@@ -205,21 +216,21 @@ RadianGenerator.prototype.app = function () {
     }
 
     if (!that.includeExample) {
-      remote.copy('assets/coffee/app.coffee', 'assets/coffee/app.coffee');
-      remote.copy('assets/coffee/partials.coffee', 'assets/coffee/partials.coffee');
-      remote.copy('assets/coffee/startup.coffee', 'assets/coffee/startup.coffee');
+      remote.copy('assets/' + jsDir + '/app.' + js, 'assets/' + js + '/app.' + js);
+      remote.copy('assets/' + jsDir + '/partials.' + js, 'assets/' + js + '/partials.' + js);
+      remote.copy('assets/' + jsDir + '/startup.' + js, 'assets/' + js + '/startup.' + js);
       remote.copy('test/e2e/protractor.conf.coffee', 'test/e2e/protractor.conf.coffee');
       remote.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
       remote.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
 
       that.mkdir('assets/' + extCSS + '/partial');
       that.mkdir('assets/img');
-      that.mkdir('assets/coffee/collection');
-      that.mkdir('assets/coffee/controller');
-      that.mkdir('assets/coffee/directive');
-      that.mkdir('assets/coffee/factory');
-      that.mkdir('assets/coffee/service');
-      that.mkdir('assets/coffee/vo');
+      that.mkdir('assets/' + js + '/collection');
+      that.mkdir('assets/' + js + '/controller');
+      that.mkdir('assets/' + js + '/directive');
+      that.mkdir('assets/' + js + '/factory');
+      that.mkdir('assets/' + js + '/service');
+      that.mkdir('assets/' + js + '/vo');
       that.mkdir('assets/partial');
       that.mkdir('test/unit/collection');
       that.mkdir('test/unit/controller');
@@ -228,26 +239,26 @@ RadianGenerator.prototype.app = function () {
       that.mkdir('test/unit/service');
       that.mkdir('test/unit/vo');
 
-      remote.copy('assets/coffee/controller/radian-controller.coffee', 'assets/coffee/controller/radian-controller.coffee');
-      remote.copy('assets/coffee/directive/radian-directive.coffee', 'assets/coffee/directive/radian-directive.coffee');
-      remote.copy('assets/coffee/factory/radian-factory.coffee', 'assets/coffee/factory/radian-factory.coffee');
-      remote.copy('assets/coffee/filter/radian-filter.coffee', 'assets/coffee/filter/radian-filter.coffee');
-      remote.copy('assets/coffee/service/radian-service.coffee', 'assets/coffee/service/radian-service.coffee');
-      remote.copy('assets/coffee/helper/radian-module-helper.coffee', 'assets/coffee/helper/radian-module-helper.coffee');
+      remote.copy('assets/' + jsDir + '/controller/radian-controller.' + js, 'assets/' + js + '/controller/radian-controller.' + js);
+      remote.copy('assets/' + jsDir + '/directive/radian-directive.' + js, 'assets/' + js + '/directive/radian-directive.' + js);
+      remote.copy('assets/' + jsDir + '/factory/radian-factory.' + js, 'assets/' + js + '/factory/radian-factory.' + js);
+      remote.copy('assets/' + jsDir + '/filter/radian-filter.' + js, 'assets/' + js + '/filter/radian-filter.' + js);
+      remote.copy('assets/' + jsDir + '/service/radian-service.' + js, 'assets/' + js + '/service/radian-service.' + js);
+      remote.copy('assets/' + jsDir + '/helper/radian-module-helper.' + js, 'assets/' + js + '/helper/radian-module-helper.' + js);
 
       if (that.includeStubs) {
-        remote.copy('assets/coffee/collection/stub-collection.coffee', 'assets/coffee/collection/stub-collection.coffee');
-        remote.copy('assets/coffee/controller/stub-controller.coffee', 'assets/coffee/controller/stub-controller.coffee');
-        remote.copy('assets/coffee/directive/stub-directive.coffee', 'assets/coffee/directive/stub-directive.coffee');
-        remote.copy('assets/coffee/factory/stub-factory.coffee', 'assets/coffee/factory/stub-factory.coffee');
-        remote.copy('assets/coffee/service/stub-service.coffee', 'assets/coffee/service/stub-service.coffee');
-        remote.copy('assets/coffee/vo/stub-vo.coffee', 'assets/coffee/vo/stub-vo.coffee');
+        remote.copy('assets/' + jsDir + '/collection/stub-collection.' + js, 'assets/' + js + '/collection/stub-collection.' + js);
+        remote.copy('assets/' + jsDir + '/controller/stub-controller.' + js, 'assets/' + js + '/controller/stub-controller.' + js);
+        remote.copy('assets/' + jsDir + '/directive/stub-directive.' + js, 'assets/' + js + '/directive/stub-directive.' + js);
+        remote.copy('assets/' + jsDir + '/factory/stub-factory.' + js, 'assets/' + js + '/factory/stub-factory.' + js);
+        remote.copy('assets/' + jsDir + '/service/stub-service.' + js, 'assets/' + js + '/service/stub-service.' + js);
+        remote.copy('assets/' + jsDir + '/vo/stub-vo.' + js, 'assets/' + js + '/vo/stub-vo.' + js);
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
 
-      that.template('assets/coffee/config.coffee', 'assets/coffee/config.coffee');
-      that.template('assets/coffee/routes.coffee', 'assets/coffee/routes.coffee');
-      that.template('assets/coffee/controller/app-controller.coffee', 'assets/coffee/controller/app-controller.coffee');
+      that.template('assets/' + js + '/config.' + js, 'assets/' + js + '/config.' + js);
+      that.template('assets/' + js + '/routes.' + js, 'assets/' + js + '/routes.' + js);
+      that.template('assets/' + js + '/controller/app-controller.' + js, 'assets/' + js + '/controller/app-controller.' + js);
 
       if (that.useCSSPrecompiler) {
         that.template('assets/' + extCSS + '/styles.' + extCSS, 'assets/' + extCSS + '/styles.' + extCSS);
@@ -266,7 +277,7 @@ RadianGenerator.prototype.app = function () {
       }
 
       remote.directory('assets/img', 'assets/img');
-      remote.directory('assets/coffee', 'assets/coffee');
+      remote.directory('assets/' + jsDir, 'assets/' + js);
       remote.directory('assets/partial', 'assets/partial');
       remote.directory('data', 'data');
       remote.directory('test', 'test');
