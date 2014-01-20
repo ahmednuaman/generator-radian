@@ -6,12 +6,14 @@ var CollectionGenerator = module.exports = function CollectionGenerator(args, op
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.config = JSON.parse(this.readFileAsString('.radianrc'));
+
   console.log('Creating a collection called ' + this.name + '.');
 };
 
 util.inherits(CollectionGenerator, yeoman.generators.NamedBase);
 
 CollectionGenerator.prototype.files = function files() {
-  this.copy('_template.coffee', 'assets/coffee/collection/' + this._.slugify(this.name) + '-collection.coffee');
-  this.template('_spec.coffee', 'test/unit/collection/' + this._.slugify(this.name) + '-collection-spec.coffee');
+  this.copy('_template.' + this.config.precompilers.js, 'assets/' + this.config.precompilers.js + '/collection/' + this._.slugify(this.name) + '-collection.' + this.config.precompilers.js);
+  this.template('_spec.' + this.config.precompilers.js, 'test/unit/collection/' + this._.slugify(this.name) + '-collection-spec.' + this.config.precompilers.js);
 };

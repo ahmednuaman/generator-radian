@@ -6,12 +6,14 @@ var ControllerGenerator = module.exports = function ControllerGenerator(args, op
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.config = JSON.parse(this.readFileAsString('.radianrc'));
+
   console.log('Creating a controller called ' + this.name + '.');
 };
 
 util.inherits(ControllerGenerator, yeoman.generators.NamedBase);
 
 ControllerGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/coffee/controller/' + this._.slugify(this.name) + '-controller.coffee');
-  this.template('_spec.coffee', 'test/unit/controller/' + this._.slugify(this.name) + '-controller-spec.coffee');
+  this.template('_template.' + this.config.precompilers.js, 'assets/' + this.config.precompilers.js + '/controller/' + this._.slugify(this.name) + '-controller.' + this.config.precompilers.js);
+  this.template('_spec.' + this.config.precompilers.js, 'test/unit/controller/' + this._.slugify(this.name) + '-controller-spec.' + this.config.precompilers.js);
 };

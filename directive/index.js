@@ -6,12 +6,14 @@ var DirectiveGenerator = module.exports = function DirectiveGenerator(args, opti
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.config = JSON.parse(this.readFileAsString('.radianrc'));
+
   console.log('Creating a directive called ' + this.name + '.');
 };
 
 util.inherits(DirectiveGenerator, yeoman.generators.NamedBase);
 
 DirectiveGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/coffee/directive/' + this._.slugify(this.name) + '-directive.coffee');
-  this.template('_spec.coffee', 'test/unit/directive/' + this._.slugify(this.name) + '-directive-spec.coffee');
+  this.template('_template.' + this.config.precompilers.js, 'assets/' + this.config.precompilers.js + '/directive/' + this._.slugify(this.name) + '-directive.' + this.config.precompilers.js);
+  this.template('_spec.' + this.config.precompilers.js, 'test/unit/directive/' + this._.slugify(this.name) + '-directive-spec.' + this.config.precompilers.js);
 };

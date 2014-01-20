@@ -6,12 +6,14 @@ var FilterGenerator = module.exports = function FilterGenerator(args, options, c
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.config = JSON.parse(this.readFileAsString('.radianrc'));
+
   console.log('Creating a filter called ' + this.name + '.');
 };
 
 util.inherits(FilterGenerator, yeoman.generators.NamedBase);
 
 FilterGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/coffee/filter/' + this._.slugify(this.name) + '-filter.coffee');
-  this.template('_spec.coffee', 'test/unit/filter/' + this._.slugify(this.name) + '-filter-spec.coffee');
+  this.template('_template.' + this.config.precompilers.js, 'assets/' + this.config.precompilers.js + '/filter/' + this._.slugify(this.name) + '-filter.' + this.config.precompilers.js);
+  this.template('_spec.' + this.config.precompilers.js, 'test/unit/filter/' + this._.slugify(this.name) + '-filter-spec.' + this.config.precompilers.js);
 };

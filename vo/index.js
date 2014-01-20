@@ -6,12 +6,14 @@ var VOGenerator = module.exports = function VOGenerator(args, options, config) {
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.config = JSON.parse(this.readFileAsString('.radianrc'));
+
   console.log('Creating a vo called ' + this.name + '.');
 };
 
 util.inherits(VOGenerator, yeoman.generators.NamedBase);
 
 VOGenerator.prototype.files = function files() {
-  this.copy('_template.coffee', 'assets/coffee/vo/' + this._.slugify(this.name) + '-vo.coffee');
-  this.template('_spec.coffee', 'test/unit/vo/' + this._.slugify(this.name) + '-vo-spec.coffee');
+  this.copy('_template.' + this.config.precompilers.js, 'assets/' + this.config.precompilers.js + '/vo/' + this._.slugify(this.name) + '-vo.' + this.config.precompilers.js);
+  this.template('_spec.' + this.config.precompilers.js, 'test/unit/vo/' + this._.slugify(this.name) + '-vo-spec.' + this.config.precompilers.js);
 };

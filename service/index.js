@@ -6,12 +6,14 @@ var ServiceGenerator = module.exports = function ServiceGenerator(args, options,
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.config = JSON.parse(this.readFileAsString('.radianrc'));
+
   console.log('Creating a service called ' + this.name + '.');
 };
 
 util.inherits(ServiceGenerator, yeoman.generators.NamedBase);
 
 ServiceGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/coffee/service/' + this._.slugify(this.name) + '-service.coffee');
-  this.template('_spec.coffee', 'test/unit/service/' + this._.slugify(this.name) + '-service-spec.coffee');
+  this.template('_template.' + this.config.precompilers.js, 'assets/' + this.config.precompilers.js + '/service/' + this._.slugify(this.name) + '-service.' + this.config.precompilers.js);
+  this.template('_spec.' + this.config.precompilers.js, 'test/unit/service/' + this._.slugify(this.name) + '-service-spec.' + this.config.precompilers.js);
 };

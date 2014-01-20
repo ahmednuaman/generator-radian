@@ -6,12 +6,14 @@ var FactoryGenerator = module.exports = function FactoryGenerator(args, options,
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.config = JSON.parse(this.readFileAsString('.radianrc'));
+
   console.log('Creating a factory called ' + this.name + '.');
 };
 
 util.inherits(FactoryGenerator, yeoman.generators.NamedBase);
 
 FactoryGenerator.prototype.files = function files() {
-  this.template('_template.coffee', 'assets/coffee/factory/' + this._.slugify(this.name) + '-factory.coffee');
-  this.template('_spec.coffee', 'test/unit/factory/' + this._.slugify(this.name) + '-factory-spec.coffee');
+  this.template('_template.' + this.config.precompilers.js, 'assets/' + this.config.precompilers.js + '/factory/' + this._.slugify(this.name) + '-factory.' + this.config.precompilers.js);
+  this.template('_spec.' + this.config.precompilers.js, 'test/unit/factory/' + this._.slugify(this.name) + '-factory-spec.' + this.config.precompilers.js);
 };
