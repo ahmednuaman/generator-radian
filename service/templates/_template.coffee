@@ -2,7 +2,7 @@ define [
   'service/radian-service'
 ], (RS) ->
   class extends RS
-    @register '<%= _.classify(name) %>Service', [
+    @register '<%= _.camelize(name) %>Service', [
       '$q'
       '$resource'
     ]
