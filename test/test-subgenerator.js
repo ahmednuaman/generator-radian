@@ -50,26 +50,26 @@ describe('Radian generator:', function () {
         helpers.assertFiles(files);
 
         if (generatorType === 'partial') {
-          helpers.assertFile('assets/' + css + '/partial/_' + _.slugify(name) + '.' + css, new RegExp('#' + _.slugify(name)));
+          helpers.assertFileContent('assets/' + css + '/partial/_' + _.slugify(name) + '.' + css, new RegExp('#' + _.slugify(name)));
 
           if (css !== 'css') {
-            helpers.assertFile('assets/' + css + '/_partials.' + css, new RegExp(_.slugify(name)));
+            helpers.assertFileContent('assets/' + css + '/_partials.' + css, new RegExp(_.slugify(name)));
           }
 
           if (html === 'html') {
-            helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('<div id="' + _.slugify(name) + '"'));
+            helpers.assertFileContent('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('<div id="' + _.slugify(name) + '"'));
           } else {
-            helpers.assertFile('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('div#' + _.slugify(name)));
+            helpers.assertFileContent('assets/partial/' + _.slugify(name) + '-partial.' + html, new RegExp('div#' + _.slugify(name)));
           }
 
         } else if (generatorType !== 'collection' && generatorType !== 'vo') {
           method = generatorType === 'controller' ? _.classify : _.camelize;
 
-          helpers.assertFile(
+          helpers.assertFileContent(
             'assets/' + js + '/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.' + js,
             new RegExp(method(name + ' ' + (generatorType !== 'filter' && generatorType !== 'directive' ? generatorType : '')))
           );
-          helpers.assertFile(
+          helpers.assertFileContent(
             'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.' + js,
             new RegExp(_.slugify(name + ' ' + generatorType))
           );
