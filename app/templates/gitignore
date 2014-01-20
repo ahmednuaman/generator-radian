@@ -9,7 +9,7 @@
 assets/*/partial/_sprite*
 assets/img/*.png
 !assets/img/logo.png
-<% if (precompilerJs) { %>!assets/javascript/**/*.js
+<% if (precompilerJS) { %>!assets/javascript/**/*.js
 <% } %>assets/vendor
 build
 docs
