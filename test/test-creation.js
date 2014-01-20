@@ -23,10 +23,7 @@ var alwaysExpected = [
   'grunt/express-server.coffee',
   'grunt/karma.coffee',
   'grunt/spritesmith.coffee',
-  'grunt/text-replace.coffee',
-  'test/e2e/protractor.conf.coffee',
-  'test/unit/karma.conf.coffee',
-  'test/unit/test-main.coffee'
+  'grunt/text-replace.coffee'
 ];
 var alwaysExpectedCoffee = [
   'grunt/coffeelint.coffee',
@@ -44,7 +41,10 @@ var alwaysExpectedCoffee = [
   'assets/coffee/config.coffee',
   'assets/coffee/routes.coffee',
   'assets/coffee/partials.coffee',
-  'assets/coffee/controller/app-controller.coffee'
+  'assets/coffee/controller/app-controller.coffee',
+  'test/e2e/protractor.conf.coffee',
+  'test/unit/karma.conf.coffee',
+  'test/unit/test-main.coffee'
 ];
 var alwaysExpectedJS = [
   '.jscs.json',
@@ -63,7 +63,10 @@ var alwaysExpectedJS = [
   'assets/js/config.js',
   'assets/js/routes.js',
   'assets/js/partials.js',
-  'assets/js/controller/app-controller.js'
+  'assets/js/controller/app-controller.js',
+  'test/e2e/protractor.conf.js',
+  'test/unit/karma.conf.js',
+  'test/unit/test-main.js'
 ];
 var alwaysExpectedCSS = [
   'assets/css/styles.css',
