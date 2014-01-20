@@ -2,6 +2,7 @@ var fs = require('fs'),
     jade = require('jade'),
     less = require('less'),
     path = require('path'),
+    rimraf = require('rimraf'),
     util = require('util'),
     yeoman = require('yeoman-generator');
 
@@ -313,6 +314,10 @@ RadianGenerator.prototype.app = function () {
 
           cb(files.pop());
         });
+      }
+
+      if (that.precompilerCoffee) {
+        rimraf.sync('test/js');
       }
     });
 
