@@ -141,6 +141,8 @@ RadianGenerator.prototype.askFor = function () {
         }
       });
     } else {
+      that.precompilerJS = true;
+
       skipToExampleAndStubs();
     }
   });

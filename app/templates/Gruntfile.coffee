@@ -89,7 +89,7 @@ module.exports = (grunt) ->
     'install'
     <% if (precompilerJS) { %>'jshint'
     'jscs'
-    <% if (precompilerCoffee) { %>'coffeelint'
+    <% } %><% if (precompilerCoffee) { %>'coffeelint'
     'coffee:dev'
     <% } %>'karma'
   ]
