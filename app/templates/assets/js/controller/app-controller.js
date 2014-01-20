@@ -4,18 +4,18 @@ define([
   'controller/radian-controller',
   'partials',
   'routes',
-  'controller/header/header-controller',
+  <% if (includeExample) { %>'controller/header/header-controller',
   'controller/footer-controller',
   'factory/page-loader-factory',
   'factory/page-title-factory'
-], function(cfg, A, RC) {
+<% } %>], function(cfg, A, RC) {
   RC('AppController', [
-    '$scope',
+    '$scope'<% if (includeExample) { %>,
     'pageLoaderFactory',
     'pageTitleFactory'
-  ], {
+  <% } %>], {
     init: function() {
-      this.addListeners();
+      <% if (includeExample) { %>this.addListeners();
       this.addPartials();
       this.addScopeMethods();
     },
@@ -45,6 +45,6 @@ define([
 
     handleViewLoaded: function() {
       this.pageLoaderFactory.hide();
-    }
+    <% } %>}
   });
 });

@@ -1,10 +1,10 @@
 define([], function() {
   return {
-    ngApp: 'radian',
-    api: {
+    ngApp: '<%= _.camelize(appName) %>',
+    <% if (includeExample) { %>api: {
       data: '/data/menu.json'
     },
-    path: {
+    <% } %>path: {
       partial: '/assets/partial/'
     }
   };

@@ -1,14 +1,14 @@
 define([
   'config',
   'angular',
-  'controller/error-controller',
+  <% if (includeExample) { %>'controller/error-controller',
   'controller/home-controller'
-], function(cfg, A) {
+<% } %>], function(cfg, A) {
   var app,
       routes;
 
   routes = function($routeProvider, $locationProvider) {
-    $routeProvider.when('/code', {
+    $routeProvider<% if (includeExample) { %>.when('/code', {
       templateUrl: cfg.path.partial + 'code-partial.html'
     })
     .when('/error/:code', {
@@ -20,7 +20,7 @@ define([
     .when('/faqs', {
       templateUrl: cfg.path.partial + 'faqs-partial.html'
     })
-    .when('/', {
+    <% } %>.when('/', {
       templateUrl: cfg.path.partial + 'home-partial.html'
     });
 
