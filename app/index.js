@@ -165,7 +165,8 @@ RadianGenerator.prototype.app = function () {
 
   this.remote('ahmednuaman', 'radian', 'ada7d7b', function (err, remote) {
     var js = this.precompilerCoffee ? 'coffee' : 'js',
-        jsDir = this.precompilerCoffee ? 'coffee' : 'javascript';
+        jsDir = this.precompilerCoffee ? 'coffee' : 'javascript',
+        testDir = this.precompilerCoffee ? '' : 'js/';
 
     if (err) {
       done(err);
@@ -221,9 +222,9 @@ RadianGenerator.prototype.app = function () {
       remote.copy('assets/' + jsDir + '/app.' + js, 'assets/' + js + '/app.' + js);
       remote.copy('assets/' + jsDir + '/partials.' + js, 'assets/' + js + '/partials.' + js);
       remote.copy('assets/' + jsDir + '/startup.' + js, 'assets/' + js + '/startup.' + js);
-      remote.copy('test/e2e/protractor.conf.coffee', 'test/e2e/protractor.conf.coffee');
-      remote.copy('test/unit/karma.conf.coffee', 'test/unit/karma.conf.coffee');
-      remote.copy('test/unit/test-main.coffee', 'test/unit/test-main.coffee');
+      remote.copy('test/' + testDir + 'e2e/protractor.conf.' + js, 'test/e2e/protractor.conf.' + js);
+      remote.copy('test/' + testDir + 'unit/karma.conf.' + js, 'test/unit/karma.conf.' + js);
+      remote.copy('test/' + testDir + 'unit/test-main.' + js, 'test/unit/test-main.' + js);
 
       that.mkdir('assets/' + extCSS + '/partial');
       that.mkdir('assets/img');
@@ -282,7 +283,7 @@ RadianGenerator.prototype.app = function () {
       remote.directory('assets/' + jsDir, 'assets/' + js);
       remote.directory('assets/partial', 'assets/partial');
       remote.directory('data', 'data');
-      remote.directory('test', 'test');
+      remote.directory('test/' + testDir, 'test');
     }
 
     that.on('end', function () {
