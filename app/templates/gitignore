@@ -6,9 +6,11 @@
 <% if (usePrecompilers) { %>*.map
 <% } %><% if (precompilerSass || precompilerScss) { %>*.sassc
 <% } %>*.sublime-workspace
+assets/*/partial/_sprite*
 assets/img/*.png
 !assets/img/logo.png
-assets/vendor
+<% if (precompilerJs) { %>!assets/javascript/**/*.js
+<% } %>assets/vendor
 build
 docs
 node_modules
