@@ -6,11 +6,10 @@ var alwaysExpected = [
   'package.json',
   '.gitignore',
   '.radianrc',
-  'Gruntfile.coffee',
-  'grunt/contrib-watch.coffee',
   '.bowerrc',
   '.editorconfig',
   'crawler.coffee',
+  'Gruntfile.coffee',
   'server.coffee',
   'grunt/angular-templates.coffee',
   'grunt/combine-media-queries.coffee',
@@ -19,20 +18,23 @@ var alwaysExpected = [
   'grunt/contrib-cssmin.coffee',
   'grunt/contrib-imagemin.coffee',
   'grunt/contrib-requirejs.coffee',
+  'grunt/contrib-watch.coffee',
   'grunt/exec.coffee',
   'grunt/express-server.coffee',
   'grunt/karma.coffee',
   'grunt/spritesmith.coffee',
   'grunt/text-replace.coffee',
+  'test/e2e/protractor.conf.coffee',
+  'test/unit/karma.conf.coffee',
+  'test/unit/test-main.coffee'
+];
+var alwaysExpectedCoffee = [
   'grunt/coffeelint.coffee',
   'grunt/contrib-coffee.coffee',
   'grunt/docco.coffee',
   'assets/coffee/app.coffee',
   'assets/coffee/partials.coffee',
   'assets/coffee/startup.coffee',
-  'test/e2e/protractor.conf.coffee',
-  'test/unit/karma.conf.coffee',
-  'test/unit/test-main.coffee',
   'assets/coffee/controller/radian-controller.coffee',
   'assets/coffee/directive/radian-directive.coffee',
   'assets/coffee/factory/radian-factory.coffee',
@@ -43,6 +45,25 @@ var alwaysExpected = [
   'assets/coffee/routes.coffee',
   'assets/coffee/partials.coffee',
   'assets/coffee/controller/app-controller.coffee'
+];
+var alwaysExpectedJS = [
+  '.jscs.json',
+  '.jshintrc',
+  'grunt/contrib-jshint.coffee',
+  'grunt/jscs-checker.coffee',
+  'assets/js/app.js',
+  'assets/js/partials.js',
+  'assets/js/startup.js',
+  'assets/js/controller/radian-controller.js',
+  'assets/js/directive/radian-directive.js',
+  'assets/js/factory/radian-factory.js',
+  'assets/js/filter/radian-filter.js',
+  'assets/js/service/radian-service.js',
+  'assets/js/helper/radian-module-helper.js',
+  'assets/js/config.js',
+  'assets/js/routes.js',
+  'assets/js/partials.js',
+  'assets/js/controller/app-controller.js'
 ];
 var alwaysExpectedCSS = [
   'assets/css/styles.css',
@@ -85,6 +106,14 @@ var stubsExpectedCoffee = [
   'assets/coffee/service/stub-service.coffee',
   'assets/coffee/vo/stub-vo.coffee'
 ];
+var stubsExpectedJS = [
+  'assets/js/collection/stub-collection.js',
+  'assets/js/controller/stub-controller.js',
+  'assets/js/directive/stub-directive.js',
+  'assets/js/factory/stub-factory.js',
+  'assets/js/service/stub-service.js',
+  'assets/js/vo/stub-vo.js'
+];
 var stubsExpectedJade = [
   'assets/partial/directive/stub-partial.jade'
 ];
@@ -95,7 +124,9 @@ var stubsExpectedHTML = [
 var exampleExpected = [
   'assets/img/logo.ai',
   'assets/img/logo.png',
-  'assets/img/logo.svg',
+  'assets/img/logo.svg'
+];
+var exampleExpectedCoffee = [
   'assets/coffee/collection/menu-items-collection.coffee',
   'assets/coffee/controller/error-controller.coffee',
   'assets/coffee/controller/footer-controller.coffee',
@@ -123,6 +154,35 @@ var exampleExpected = [
   'test/unit/factory/page-title-factory-spec.coffee',
   'test/unit/service/menu-service-spec.coffee',
   'test/unit/vo/menu-item-vo-spec.coffee'
+];
+var exampleExpectedJS = [
+  'assets/js/collection/menu-items-collection.js',
+  'assets/js/controller/error-controller.js',
+  'assets/js/controller/footer-controller.js',
+  'assets/js/controller/header/header-controller.js',
+  'assets/js/controller/header/header-menu-controller.js',
+  'assets/js/controller/home-controller.js',
+  'assets/js/directive/menu-component-directive.js',
+  'assets/js/factory/menu-factory.js',
+  'assets/js/factory/page-error-factory.js',
+  'assets/js/factory/page-loader-factory.js',
+  'assets/js/factory/page-title-factory.js',
+  'assets/js/service/menu-service.js',
+  'assets/js/vo/menu-item-vo.js',
+  'test/unit/collection/menu-items-collection-spec.js',
+  'test/unit/controller/app-controller-spec.js',
+  'test/unit/controller/error-controller-spec.js',
+  'test/unit/controller/footer-controller-spec.js',
+  'test/unit/controller/header/header-controller-spec.js',
+  'test/unit/controller/header/header-menu-controller-spec.js',
+  'test/unit/controller/home-controller-spec.js',
+  'test/unit/directive/menu-component-directive-spec.js',
+  'test/unit/factory/menu-factory-spec.js',
+  'test/unit/factory/page-error-factory-spec.js',
+  'test/unit/factory/page-loader-factory-spec.js',
+  'test/unit/factory/page-title-factory-spec.js',
+  'test/unit/service/menu-service-spec.js',
+  'test/unit/vo/menu-item-vo-spec.js'
 ];
 var exampleExpectedLess = [
   'assets/less/partial/_app.less',
@@ -219,7 +279,7 @@ describe('Radian generator:', function () {
   });
 
   describe('no examples, no stubs:', function () {
-    it('should use no precompilers (except for coffee, for now...)', function (done) {
+    it('should use no precompilers', function (done) {
       helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': false,
@@ -230,12 +290,30 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         setTimeout(function () {
           helpers.assertFiles(alwaysExpected
+            .concat(alwaysExpectedJS)
             .concat('index.html'));
-          helpers.assertFile(radianrc, new RegExp('"js": "coffee"'));
+          helpers.assertFile(radianrc, new RegExp('"js": "js"'));
           helpers.assertFile(radianrc, new RegExp('"css": "css"'));
           helpers.assertFile(radianrc, new RegExp('"html": "html"'));
           done();
         }, 500);
+      });
+    });
+
+    it('should use coffee', function (done) {
+      helpers.mockPrompt(app, {
+        'appName': 'foo bar',
+        'usePrecompilers': true,
+        'precompilerCoffee': true,
+        'includeExample': false,
+        'includeStubs': false
+      });
+
+      app.run({}, function () {
+        helpers.assertFiles(alwaysExpected
+          .concat(alwaysExpectedCoffee));
+          helpers.assertFile(radianrc, new RegExp('"js": "coffee"'));
+        done();
       });
     });
 
@@ -330,7 +408,7 @@ describe('Radian generator:', function () {
   });
 
   describe('no examples, yes stubs:', function () {
-    it('should use no precompilers (except for coffee, for now...)', function (done) {
+    it('should use no precompilers', function (done) {
       helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': false,
@@ -341,11 +419,28 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         setTimeout(function () {
           helpers.assertFiles(alwaysExpected
-            .concat(stubsExpectedCoffee)
+            .concat(stubsExpectedJS)
             .concat(stubsExpectedHTML)
             .concat('index.html'));
           done();
         }, 500);
+      });
+    });
+
+    it('should use coffee', function (done) {
+      helpers.mockPrompt(app, {
+        'appName': 'foo bar',
+        'usePrecompilers': true,
+        'precompilerCoffee': true,
+        'includeExample': false,
+        'includeStubs': true
+      });
+
+      app.run({}, function () {
+        helpers.assertFiles(alwaysExpected
+          .concat(stubsExpectedCoffee)
+          .concat(alwaysExpectedCoffee));
+        done();
       });
     });
 
@@ -360,7 +455,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedJade)
           .concat(stubsExpectedJade));
         done();
@@ -379,7 +473,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedSass));
         done();
       });
@@ -397,7 +490,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedScss));
         done();
       });
@@ -415,7 +507,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedLess));
         done();
       });
@@ -433,7 +524,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedStylus));
         done();
       });
@@ -441,7 +531,7 @@ describe('Radian generator:', function () {
   });
 
   describe('yes examples, yes stubs:', function () {
-    it('should use no precompilers (except for coffee, for now...)', function (done) {
+    it('should use no precompilers', function (done) {
       helpers.mockPrompt(app, {
         'appName': 'foo bar',
         'usePrecompilers': false,
@@ -451,13 +541,31 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         setTimeout(function () {
           helpers.assertFiles(alwaysExpected
-            .concat(stubsExpectedCoffee)
+            .concat(stubsExpectedJS)
             .concat(exampleExpected)
+            .concat(exampleExpectedJS)
             .concat(stubsExpectedHTML)
             .concat(exampleExpectedHTML)
             .concat('index.html'));
           done();
         }, 500);
+      });
+    });
+
+    it('should use coffee', function (done) {
+      helpers.mockPrompt(app, {
+        'appName': 'foo bar',
+        'usePrecompilers': true,
+        'precompilerCoffee': true,
+        'includeExample': true
+      });
+
+      app.run({}, function () {
+        helpers.assertFiles(alwaysExpected
+          .concat(stubsExpectedCoffee)
+          .concat(exampleExpected)
+          .concat(exampleExpectedCoffee));
+        done();
       });
     });
 
@@ -471,8 +579,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
-          .concat(exampleExpected)
           .concat(alwaysExpectedJade)
           .concat(stubsExpectedJade)
           .concat(exampleExpectedJade));
@@ -491,8 +597,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
-          .concat(exampleExpected)
           .concat(alwaysExpectedSass)
           .concat(exampleExpectedSass));
         done();
@@ -510,8 +614,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
-          .concat(exampleExpected)
           .concat(alwaysExpectedScss)
           .concat(exampleExpectedScss));
         done();
@@ -529,8 +631,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
-          .concat(exampleExpected)
           .concat(alwaysExpectedLess)
           .concat(exampleExpectedLess));
         done();
@@ -548,8 +648,6 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         helpers.assertFiles(alwaysExpected
-          .concat(stubsExpectedCoffee)
-          .concat(exampleExpected)
           .concat(alwaysExpectedStylus)
           .concat(exampleExpectedStylus));
         done();
