@@ -1,8 +1,8 @@
 define([
   'lodash'
 ], function(_) {
-  function(data) {
-    _.assign(data, {
+  return function(data) {
+    return _.assign(data, {
       aParam: true
     });
   };
