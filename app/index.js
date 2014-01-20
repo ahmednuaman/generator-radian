@@ -176,7 +176,6 @@ RadianGenerator.prototype.app = function () {
     remote.copy('.editorconfig', '.editorconfig');
     remote.copy('crawler.coffee', 'crawler.coffee');
     remote.copy('server.coffee', 'server.coffee');
-
     remote.copy('grunt/angular-templates.coffee', 'grunt/angular-templates.coffee');
     remote.copy('grunt/combine-media-queries.coffee', 'grunt/combine-media-queries.coffee');
     remote.copy('grunt/contrib-clean.coffee', 'grunt/contrib-clean.coffee');
@@ -186,8 +185,9 @@ RadianGenerator.prototype.app = function () {
     remote.copy('grunt/contrib-requirejs.coffee', 'grunt/contrib-requirejs.coffee');
     remote.copy('grunt/exec.coffee', 'grunt/exec.coffee');
     remote.copy('grunt/express-server.coffee', 'grunt/express-server.coffee');
-    remote.copy('grunt/karma.coffee', 'grunt/karma.coffee');
     remote.copy('grunt/text-replace.coffee', 'grunt/text-replace.coffee');
+
+    that.template('grunt/karma.coffee', 'grunt/karma.coffee');
 
     if (that.precompilerCoffee) {
       remote.copy('grunt/coffeelint.coffee', 'grunt/coffeelint.coffee');
