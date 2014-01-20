@@ -5,7 +5,7 @@ var i = 100;
 var app;
 
 describe('Radian generator:', function () {
-  var generatorTest = function (generatorType, done, html, css) {
+  var generatorTest = function (generatorType, done, html, css, js) {
     var name = 'foo bar';
     var deps = [path.join('../../../', generatorType)];
     var config = {
@@ -14,9 +14,11 @@ describe('Radian generator:', function () {
       'includeStubs': false
     };
 
+    config.precompilerJS = js === 'js';
+    config.precompilerCoffee = !config.precompilerJS;
     config.precompilerJade = html === 'jade';
     config.useCSSPrecompiler = css !== 'css' && !!css;
-    config.usePrecompilers = config.useCSSPrecompiler || config.precompilerJade;
+    config.usePrecompilers = config.useCSSPrecompiler || config.precompilerJade || config.precompilerCoffee;
 
     if (config.useCSSPrecompiler) {
       config.precompilerCSS = css;
@@ -40,8 +42,8 @@ describe('Radian generator:', function () {
             'assets/partial/' + _.slugify(name) + '-partial.' + html
           ] :
           [
-            'assets/coffee/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
-            'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee'
+            'assets/' + js + '/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.' + js,
+            'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.' + js
           ],
           method;
 
@@ -61,14 +63,14 @@ describe('Radian generator:', function () {
           }
 
         } else if (generatorType !== 'collection' && generatorType !== 'vo') {
-          method = generatorType === 'controller' || generatorType === 'service' ? _.classify : _.camelize;
+          method = generatorType === 'controller' ? _.classify : _.camelize;
 
           helpers.assertFile(
-            'assets/coffee/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.coffee',
+            'assets/' + js + '/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '.' + js,
             new RegExp(method(name + ' ' + (generatorType !== 'filter' && generatorType !== 'directive' ? generatorType : '')))
           );
           helpers.assertFile(
-            'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.coffee',
+            'test/unit/' + generatorType + '/' + _.slugify(name) + '-' + generatorType + '-spec.' + js,
             new RegExp(_.slugify(name + ' ' + generatorType))
           );
         }
@@ -95,32 +97,64 @@ describe('Radian generator:', function () {
     });
   });
 
-  it('should create a stub controller', function (done) {
-    generatorTest('controller', done);
+  describe('using CoffeeScript precompiler:', function () {
+    it('should create a stub controller', function (done) {
+      generatorTest('controller', done, null, null, 'coffee');
+    });
+
+    it('should create a stub service', function (done) {
+      generatorTest('service', done, null, null, 'coffee');
+    });
+
+    it('should create a stub factory', function (done) {
+      generatorTest('factory', done, null, null, 'coffee');
+    });
+
+    it('should create a stub filter', function (done) {
+      generatorTest('filter', done, null, null, 'coffee');
+    });
+
+    it('should create a stub directive', function (done) {
+      generatorTest('directive', done, null, null, 'coffee');
+    });
+
+    it('should create a stub collection', function (done) {
+      generatorTest('collection', done, null, null, 'coffee');
+    });
+
+    it('should create a stub vo', function (done) {
+      generatorTest('vo', done, null, null, 'coffee');
+    });
   });
 
-  it('should create a stub service', function (done) {
-    generatorTest('service', done);
-  });
+  describe('using JS:', function () {
+    it('should create a stub controller', function (done) {
+      generatorTest('controller', done, null, null, 'js');
+    });
 
-  it('should create a stub factory', function (done) {
-    generatorTest('factory', done);
-  });
+    it('should create a stub service', function (done) {
+      generatorTest('service', done, null, null, 'js');
+    });
 
-  it('should create a stub filter', function (done) {
-    generatorTest('filter', done);
-  });
+    it('should create a stub factory', function (done) {
+      generatorTest('factory', done, null, null, 'js');
+    });
 
-  it('should create a stub directive', function (done) {
-    generatorTest('directive', done);
-  });
+    it('should create a stub filter', function (done) {
+      generatorTest('filter', done, null, null, 'js');
+    });
 
-  it('should create a stub collection', function (done) {
-    generatorTest('collection', done);
-  });
+    it('should create a stub directive', function (done) {
+      generatorTest('directive', done, null, null, 'js');
+    });
 
-  it('should create a stub vo', function (done) {
-    generatorTest('vo', done);
+    it('should create a stub collection', function (done) {
+      generatorTest('collection', done, null, null, 'js');
+    });
+
+    it('should create a stub vo', function (done) {
+      generatorTest('vo', done, null, null, 'js');
+    });
   });
 
   describe('using Jade precompiler:', function () {
