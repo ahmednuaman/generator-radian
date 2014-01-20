@@ -17,8 +17,10 @@ module.exports = (grunt) ->
         '<%%= compass.dev.options.sassDir %>/**/*.scss'
       <% } %>]
       tasks: [
-        'compass:dev'
-      ]
+        <% if (precompilerSass) { %>
+        'compass:devSASS'<% } %><% if (precompilerScss) { %>
+        'compass:devSCSS'
+      <% } %>]
     <% } %>css:
       files: [
         'assets/css/*.css'
@@ -39,6 +41,17 @@ module.exports = (grunt) ->
         livereload: true
         spawn: false
     <% } %>
+    <% } %><% if (precompilerJS) { %>js:
+      files: [
+        'assets/javascript/**/*.js'
+      ]
+      tasks: [
+        'jshint'
+        'jscs'
+      ]
+      options:
+        livereload: true
+        spawn: false
     <% } %><% if (precompilerLess) { %>less:
       files: [
         '<%%= less.dev.options.paths[0] %>/**/*.less'
@@ -64,7 +77,8 @@ module.exports = (grunt) ->
   <% if (precompilerCoffee || precompilerJade) { %>changedFiles = {}
   onChange = grunt.util._.debounce () ->
     <% if (precompilerCoffee) { %>changedCoffeeFiles = changedFiles['coffee']
-    <% } %><% if (precompilerJade) { %>changedJadeFiles = changedFiles['jade']<% } %>
+    <% } %><% if (precompilerJade) { %>changedJadeFiles = changedFiles['jade']
+    <% } %><% if (precompilerJS) { %>changedJSFiles = changedFiles['js']<% } %>
 
     <% if (precompilerCoffee) { %>if changedCoffeeFiles
       grunt.config 'coffeelint.all', changedCoffeeFiles
@@ -74,6 +88,9 @@ module.exports = (grunt) ->
     if changedJadeFiles
       grunt.config 'jade.dev.files',
         './': changedJadeFiles
+    <% } %><% if (precompilerJS) { %>if changedJSFiles
+      grunt.config 'jshint.all', changedJSFiles
+      grunt.config 'jscs.src', changedJSFiles
     <% } %>
     changedFiles = {}
   , 200
