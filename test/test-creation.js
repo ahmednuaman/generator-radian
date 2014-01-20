@@ -292,7 +292,7 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         setTimeout(function () {
-          helpers.assertFiles(alwaysExpected
+          helpers.assertFile(alwaysExpected
             .concat(alwaysExpectedJS)
             .concat('index.html'));
           helpers.assertFile(radianrc, new RegExp('"js": "js"'));
@@ -313,7 +313,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedCoffee));
           helpers.assertFile(radianrc, new RegExp('"js": "coffee"'));
         done();
@@ -330,7 +330,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedJade));
           helpers.assertFile(radianrc, new RegExp('"html": "jade"'));
         done();
@@ -348,7 +348,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedSass));
           helpers.assertFile(radianrc, new RegExp('"css": "sass"'));
         done();
@@ -366,7 +366,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedScss));
           helpers.assertFile(radianrc, new RegExp('"css": "scss"'));
         done();
@@ -384,7 +384,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedLess));
           helpers.assertFile(radianrc, new RegExp('"css": "less"'));
         done();
@@ -402,7 +402,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedStylus));
           helpers.assertFile(radianrc, new RegExp('"css": "styl"'));
         done();
@@ -421,7 +421,7 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         setTimeout(function () {
-          helpers.assertFiles(alwaysExpected
+          helpers.assertFile(alwaysExpected
             .concat(stubsExpectedJS)
             .concat(stubsExpectedHTML)
             .concat('index.html'));
@@ -440,7 +440,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(alwaysExpectedCoffee));
         done();
@@ -457,7 +457,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedJade)
           .concat(stubsExpectedJade));
         done();
@@ -475,7 +475,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedSass));
         done();
       });
@@ -492,7 +492,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedScss));
         done();
       });
@@ -509,7 +509,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedLess));
         done();
       });
@@ -526,7 +526,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedStylus));
         done();
       });
@@ -543,7 +543,7 @@ describe('Radian generator:', function () {
 
       app.run({}, function () {
         setTimeout(function () {
-          helpers.assertFiles(alwaysExpected
+          helpers.assertFile(alwaysExpected
             .concat(stubsExpectedJS)
             .concat(exampleExpected)
             .concat(exampleExpectedJS)
@@ -564,7 +564,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(stubsExpectedCoffee)
           .concat(exampleExpected)
           .concat(exampleExpectedCoffee));
@@ -581,7 +581,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedJade)
           .concat(stubsExpectedJade)
           .concat(exampleExpectedJade));
@@ -599,7 +599,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedSass)
           .concat(exampleExpectedSass));
         done();
@@ -616,7 +616,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedScss)
           .concat(exampleExpectedScss));
         done();
@@ -633,7 +633,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedLess)
           .concat(exampleExpectedLess));
         done();
@@ -650,7 +650,7 @@ describe('Radian generator:', function () {
       });
 
       app.run({}, function () {
-        helpers.assertFiles(alwaysExpected
+        helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedStylus)
           .concat(exampleExpectedStylus));
         done();

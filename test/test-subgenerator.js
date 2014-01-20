@@ -47,7 +47,7 @@ describe('Radian generator:', function () {
           ],
           method;
 
-        helpers.assertFiles(files);
+        helpers.assertFile(files);
 
         if (generatorType === 'partial') {
           helpers.assertFileContent('assets/' + css + '/partial/_' + _.slugify(name) + '.' + css, new RegExp('#' + _.slugify(name)));
