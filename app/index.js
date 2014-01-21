@@ -165,7 +165,7 @@ RadianGenerator.prototype.app = function () {
   this.template('grunt/contrib-watch.coffee', 'grunt/contrib-watch.coffee');
   that.template('grunt/spritesmith.coffee', 'grunt/spritesmith.coffee');
 
-  this.remote('ahmednuaman', 'radian', '27cbf9a', function (err, remote) {
+  this.remote('ahmednuaman', 'radian', '25fcff7', function (err, remote) {
     var js = that.precompilerCoffee ? 'coffee' : 'js',
         jsDir = that.precompilerCoffee ? 'coffee' : 'javascript',
         testDir = that.precompilerCoffee ? '' : 'js/';
