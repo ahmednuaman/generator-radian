@@ -260,7 +260,7 @@ RadianGenerator.prototype.app = function () {
         remote.copy('assets/partial/directive/stub-partial.jade', 'assets/partial/directive/stub-partial.jade');
       }
 
-      that.template('assets/' + js + '/config.' + js, 'assets/' + js + '/config.' + js);
+      that.template('assets/' + js + '/_config.' + js, 'assets/' + js + '/config.' + js);
       that.template('assets/' + js + '/routes.' + js, 'assets/' + js + '/routes.' + js);
       that.template('assets/' + js + '/controller/app-controller.' + js, 'assets/' + js + '/controller/app-controller.' + js);
 
