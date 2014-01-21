@@ -16,7 +16,7 @@ define [
       $scope = $rootScope.$new()
 
       createController = () ->
-        $controller '<%= _.camelize(name) %>Controller',
+        $controller '<%= _.classify(name) %>Controller',
           $scope: $scope
 
     it 'should load', () ->
