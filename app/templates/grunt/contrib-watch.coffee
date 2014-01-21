@@ -81,7 +81,7 @@ module.exports = (grunt) ->
         'stylus:dev'
       ]<% } %>
 
-  <% if (precompilerCoffee || precompilerJade) { %>changedFiles = {}
+  changedFiles = {}
   onChange = grunt.util._.debounce () ->
     <% if (precompilerCoffee) { %>changedCoffeeFiles = changedFiles['coffee']
     <% } %><% if (precompilerJade) { %>changedJadeFiles = changedFiles['jade']
@@ -111,5 +111,5 @@ module.exports = (grunt) ->
     changedFiles[ext].push file
 
     onChange()
-  <% } %>
+
   grunt.loadNpmTasks 'grunt-contrib-watch'
