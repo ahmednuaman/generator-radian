@@ -161,6 +161,7 @@ RadianGenerator.prototype.app = function () {
   this.template('gitignore', '.gitignore');
   this.template('radianrc', '.radianrc');
   this.template('Gruntfile.coffee', 'Gruntfile.coffee');
+  this.template('grunt/angular-templates.coffee', 'grunt/angular-templates.coffee');
   this.template('grunt/contrib-watch.coffee', 'grunt/contrib-watch.coffee');
   that.template('grunt/spritesmith.coffee', 'grunt/spritesmith.coffee');
 
@@ -177,7 +178,6 @@ RadianGenerator.prototype.app = function () {
     remote.copy('.editorconfig', '.editorconfig');
     remote.copy('crawler.coffee', 'crawler.coffee');
     remote.copy('server.coffee', 'server.coffee');
-    remote.copy('grunt/angular-templates.coffee', 'grunt/angular-templates.coffee');
     remote.copy('grunt/combine-media-queries.coffee', 'grunt/combine-media-queries.coffee');
     remote.copy('grunt/contrib-clean.coffee', 'grunt/contrib-clean.coffee');
     remote.copy('grunt/contrib-copy.coffee', 'grunt/contrib-copy.coffee');
