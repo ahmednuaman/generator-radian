@@ -301,9 +301,6 @@ RadianGenerator.prototype.app = function () {
           }
 
           jade.renderFile(file, opts, function (err, html) {
-            // Fixes https://github.com/visionmedia/jade/issues/1391
-            html = html.replace('<document <div id="mask" data-ng-hide="hideLoader"></div> class="write"></document>', 'document.write(\'<div id="mask" data-ng-hide="hideLoader"></div>\')');
-
             fs.writeFile(file.replace('.jade', '.html'), html, function () {
               fs.unlink(file, function () {
                 cb(files.pop());
