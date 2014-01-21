@@ -55,6 +55,7 @@ module.exports = (grunt) ->
     <% } %><% if (!precompilerJade) { %>html:
       files: [
         'assets/partial/**/*.html'
+        '*.html'
       ]
       options:
         livereload: true
