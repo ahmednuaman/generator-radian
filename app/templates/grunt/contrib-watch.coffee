@@ -43,7 +43,7 @@ module.exports = (grunt) ->
     <% } %>
     <% } %><% if (precompilerJS) { %>js:
       files: [
-        'assets/javascript/**/*.js'
+        'assets/js/**/*.js'
       ]
       tasks: [
         'jshint'
@@ -52,6 +52,12 @@ module.exports = (grunt) ->
       options:
         livereload: true
         spawn: false
+    <% } %><% if (!precompilerJade) { %>html:
+      files: [
+        'assets/partial/**/*.html'
+      ]
+      options:
+        livereload: true
     <% } %><% if (precompilerLess) { %>less:
       files: [
         '<%%= less.dev.options.paths[0] %>/**/*.less'
