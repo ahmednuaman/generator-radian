@@ -64,7 +64,7 @@ var alwaysExpectedJS = [
   'assets/js/routes.js',
   'assets/js/partials.js',
   'assets/js/controller/app-controller.js',
-  'test/e2e/protractor.conf.js',
+  'test/e2e/protractor.js',
   'test/unit/karma.conf.js',
   'test/unit/test-main.js'
 ];

@@ -224,9 +224,14 @@ RadianGenerator.prototype.app = function () {
       remote.copy('assets/' + jsDir + '/app.' + js, 'assets/' + js + '/app.' + js);
       remote.copy('assets/' + jsDir + '/partials.' + js, 'assets/' + js + '/partials.' + js);
       remote.copy('assets/' + jsDir + '/startup.' + js, 'assets/' + js + '/startup.' + js);
-      remote.copy('test/' + testDir + 'e2e/protractor.conf.' + js, 'test/e2e/protractor.conf.' + js);
       remote.copy('test/' + testDir + 'unit/karma.conf.' + js, 'test/unit/karma.conf.' + js);
       remote.copy('test/' + testDir + 'unit/test-main.' + js, 'test/unit/test-main.' + js);
+
+      if (js === 'coffee') {
+        remote.copy('test/e2e/protractor.conf.coffee', 'test/e2e/protractor.conf.coffee');
+      } else {
+        remote.copy('test/js/e2e/protractor.js', 'test/e2e/protractor.js');
+      }
 
       that.mkdir('assets/' + extCSS + '/partial');
       that.mkdir('assets/img');
