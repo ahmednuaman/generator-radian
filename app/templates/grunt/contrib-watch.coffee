@@ -1,4 +1,6 @@
 module.exports = (grunt) ->
+  _ = require 'lodash'
+
   grunt.config 'watch',
     <% if (precompilerCoffee) { %>coffee:
       files: [
@@ -82,14 +84,14 @@ module.exports = (grunt) ->
       ]<% } %>
 
   changedFiles = {}
-  onChange = grunt.util._.debounce () ->
+  onChange = _.debounce () ->
     <% if (precompilerCoffee) { %>changedCoffeeFiles = changedFiles['coffee']
     <% } %><% if (precompilerJade) { %>changedJadeFiles = changedFiles['jade']
     <% } %><% if (precompilerJS) { %>changedJSFiles = changedFiles['js']<% } %>
 
     <% if (precompilerCoffee) { %>if changedCoffeeFiles
       grunt.config 'coffeelint.all', changedCoffeeFiles
-      grunt.config 'coffee.dev.src', grunt.util._.map changedCoffeeFiles, (file) ->
+      grunt.config 'coffee.dev.src', _.map changedCoffeeFiles, (file) ->
         file.replace 'assets/coffee/', ''
     <% } %><% if (precompilerJade) { %>
     if changedJadeFiles
