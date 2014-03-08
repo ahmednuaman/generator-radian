@@ -13,8 +13,8 @@ module.exports = (grunt) ->
         spawn: false
     <% } %><% if (precompilerSass || precompilerScss) { %>compass:
       files: [<% if (precompilerSass) { %>
-        '<%%= compass.dev.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>
-        '<%%= compass.dev.options.sassDir %>/**/*.scss'
+        '<%%= compass.devSASS.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>
+        '<%%= compass.devSCSS.options.sassDir %>/**/*.scss'
       <% } %>]
       tasks: [
         <% if (precompilerSass) { %>
