@@ -13,8 +13,8 @@ module.exports = (grunt) ->
         spawn: false
     <% } %><% if (precompilerSass || precompilerScss) { %>compass:
       files: [<% if (precompilerSass) { %>
-        '<%%= compass.dev.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>
-        '<%%= compass.dev.options.sassDir %>/**/*.scss'
+        '<%%= compass.devSASS.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>
+        '<%%= compass.devSCSS.options.sassDir %>/**/*.scss'
       <% } %>]
       tasks: [
         <% if (precompilerSass) { %>
@@ -89,7 +89,7 @@ module.exports = (grunt) ->
 
     <% if (precompilerCoffee) { %>if changedCoffeeFiles
       grunt.config 'coffeelint.all', changedCoffeeFiles
-      grunt.config 'coffee.dev.src', _.map changedCoffeeFiles, (file) ->
+      grunt.config 'coffee.dev.src', grunt.util._.map changedCoffeeFiles, (file) ->
         file.replace 'assets/coffee/', ''
     <% } %><% if (precompilerJade) { %>
     if changedJadeFiles
