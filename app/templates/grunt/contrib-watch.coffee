@@ -89,7 +89,7 @@ module.exports = (grunt) ->
 
     <% if (precompilerCoffee) { %>if changedCoffeeFiles
       grunt.config 'coffeelint.all', changedCoffeeFiles
-      grunt.config 'coffee.dev.src', _.map changedCoffeeFiles, (file) ->
+      grunt.config 'coffee.dev.src', grunt.util._.map changedCoffeeFiles, (file) ->
         file.replace 'assets/coffee/', ''
     <% } %><% if (precompilerJade) { %>
     if changedJadeFiles
