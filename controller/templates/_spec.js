@@ -15,7 +15,7 @@ define([
       $scope = $rootScope.$new();
 
       createController = function() {
-        $controller('<%= _.classify(name) %>Controller', {
+        return $controller('<%= _.classify(name) %>Controller', {
           $scope: $scope
         });
       };
