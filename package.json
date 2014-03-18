@@ -26,7 +26,7 @@
     "url": "git://github.com/ahmednuaman/generator-radian.git"
   },
   "scripts": {
-    "test": "mocha --timeout 60000"
+    "test": "mocha --bail --timeout 60000"
   },
   "dependencies": {
     "jade": "~1.1.5",
