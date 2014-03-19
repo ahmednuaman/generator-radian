@@ -267,18 +267,20 @@ describe('Radian generator:', function () {
   beforeEach(function (done) {
     var dir = path.join(__dirname, 'temp/' + ++i);
 
-    helpers.testDirectory(dir, function (err) {
-      if (err) {
-        return done(err);
-      }
+    setTimeout(function () {
+      helpers.testDirectory(dir, function (err) {
+        if (err) {
+          return done(err);
+        }
 
-      app = helpers.createGenerator('radian:app', [
-        '../../../app'
-      ]);
-      app.options['skip-install'] = true;
+        app = helpers.createGenerator('radian:app', [
+          '../../../app'
+        ]);
+        app.options['skip-install'] = true;
 
-      done();
-    });
+        done();
+      });
+    }, 250);
   });
 
   describe('no examples, no stubs:', function () {
