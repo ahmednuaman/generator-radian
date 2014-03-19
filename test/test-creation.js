@@ -280,7 +280,7 @@ describe('Radian generator:', function () {
 
         done();
       });
-    }, 250);
+    }, 500);
   });
 
   describe('no examples, no stubs:', function () {
@@ -297,9 +297,9 @@ describe('Radian generator:', function () {
           helpers.assertFile(alwaysExpected
             .concat(alwaysExpectedJS)
             .concat('index.html'));
-          helpers.assertFile(radianrc, new RegExp('"js": "js"'));
-          helpers.assertFile(radianrc, new RegExp('"css": "css"'));
-          helpers.assertFile(radianrc, new RegExp('"html": "html"'));
+          helpers.assertFileContent(radianrc, new RegExp('"js": "js"'));
+          helpers.assertFileContent(radianrc, new RegExp('"css": "css"'));
+          helpers.assertFileContent(radianrc, new RegExp('"html": "html"'));
           done();
         }, 500);
       });
@@ -317,7 +317,7 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedCoffee));
-          helpers.assertFile(radianrc, new RegExp('"js": "coffee"'));
+          helpers.assertFileContent(radianrc, new RegExp('"js": "coffee"'));
         done();
       });
     });
@@ -334,7 +334,7 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedJade));
-          helpers.assertFile(radianrc, new RegExp('"html": "jade"'));
+          helpers.assertFileContent(radianrc, new RegExp('"html": "jade"'));
         done();
       });
     });
@@ -352,7 +352,7 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedSass));
-          helpers.assertFile(radianrc, new RegExp('"css": "sass"'));
+          helpers.assertFileContent(radianrc, new RegExp('"css": "sass"'));
         done();
       });
     });
@@ -370,7 +370,7 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedScss));
-          helpers.assertFile(radianrc, new RegExp('"css": "scss"'));
+          helpers.assertFileContent(radianrc, new RegExp('"css": "scss"'));
         done();
       });
     });
@@ -388,7 +388,7 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedLess));
-          helpers.assertFile(radianrc, new RegExp('"css": "less"'));
+          helpers.assertFileContent(radianrc, new RegExp('"css": "less"'));
         done();
       });
     });
@@ -406,7 +406,7 @@ describe('Radian generator:', function () {
       app.run({}, function () {
         helpers.assertFile(alwaysExpected
           .concat(alwaysExpectedStylus));
-          helpers.assertFile(radianrc, new RegExp('"css": "styl"'));
+          helpers.assertFileContent(radianrc, new RegExp('"css": "styl"'));
         done();
       });
     });
