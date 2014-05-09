@@ -1,7 +1,7 @@
 define [
   'vo/<%= _.slugify(name) %>-vo'
 ], (vo) ->
-  describe 'Stub VO', () ->
+  describe '<%= _.humanize(name) %> VO', () ->
     it 'should return a nice VO', () ->
       data =
         foo: 'bar'

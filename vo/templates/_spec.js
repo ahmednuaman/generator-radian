@@ -1,7 +1,7 @@
 define([
   'vo/<%= _.slugify(name) %>-vo'
 ], function(vo) {
-  describe('Stub VO', function() {
+  describe('<%= _.humanize(name) %> VO', function() {
     it('should return a nice VO', function() {
       var data,
           item;
