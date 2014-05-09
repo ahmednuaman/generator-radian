@@ -5,6 +5,9 @@ module.exports = (grunt) ->
     <% if (precompilerCoffee) { %>coffee:
       files: [
         'assets/coffee/**/*.coffee'
+        'grunt/*.coffee'
+        'test/**/*.coffee'
+        '*.coffee'
       ]
       tasks: [
         'coffeelint'
@@ -15,13 +18,10 @@ module.exports = (grunt) ->
         spawn: false
     <% } %><% if (precompilerSass || precompilerScss) { %>compass:
       files: [<% if (precompilerSass) { %>
-        '<%%= compass.devSASS.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>
-        '<%%= compass.devSCSS.options.sassDir %>/**/*.scss'
+        '<%%= compass.devSASS.options.sassDir %>/**/*.sass'<% } %><% if (precompilerScss) { %>'<%%= compass.devSCSS.options.sassDir %>/**/*.scss'
       <% } %>]
-      tasks: [
-        <% if (precompilerSass) { %>
-        'compass:devSASS'<% } %><% if (precompilerScss) { %>
-        'compass:devSCSS'
+      tasks: [<% if (precompilerSass) { %>
+        'compass:devSASS'<% } %><% if (precompilerScss) { %>'compass:devSCSS'
       <% } %>]
     <% } %>css:
       files: [
@@ -42,8 +42,7 @@ module.exports = (grunt) ->
       <% if (precompilerCoffee) { %>options: '<%%= watch.coffee.options %>'<% } else { %>options:
         livereload: true
         spawn: false
-    <% } %>
-    <% } %><% if (precompilerJS) { %>js:
+    <% } %><% } %><% if (precompilerJS) { %>js:
       files: [
         'assets/js/**/*.js'
       ]
