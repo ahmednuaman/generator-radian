@@ -29,14 +29,15 @@ define [
     data = [1, 2, 3, 4]
 
     it 'should load', () ->
-      $httpBackend.expectGET(cfg.path.partial + 'directive/<%= _.slugify(name) %>-partial.html').respond 201, """
-      <div class="<%= _.slugify(name) %>-component">
-        <ul>
-          <li data-ng-repeat="item in items">
-            {{item}}
-          </li>
-        </ul>
-      </div>"""
+      $httpBackend.expectGET("#{cfg.path.partial}directive/<%= _.slugify(name) %>-partial.html")
+        .respond 201, """
+          <div class="<%= _.slugify(name) %>-component">
+            <ul>
+              <li data-ng-repeat="item in items">
+                {{item}}
+              </li>
+            </ul>
+          </div>"""
 
       directive = createDirective()
 
