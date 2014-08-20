@@ -20,7 +20,7 @@ PartialGenerator.prototype.files = function files() {
   if (this.config.precompilers.css !== 'css') {
     var partialsFilePath = 'assets/' + this.config.precompilers.css + '/_partials.' + this.config.precompilers.css,
         partialsFileContent = this.readFileAsString(partialsFilePath);
-
-    this.writeFileFromString(partialsFileContent + "\n@import 'partial/" + this._.slugify(this.name) + "'", partialsFilePath);
+    var semicolonIfNeeded = this.config.precompilers.css === 'scss'? ';' : '';
+    this.writeFileFromString(partialsFileContent + "\n@import 'partial/" + this._.slugify(this.name) + "'" + semicolonIfNeeded, partialsFilePath);
   }
 };
